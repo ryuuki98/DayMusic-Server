@@ -33,6 +33,16 @@
   <url-pattern>/user/service</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>CreateBoard</servlet-name>
+  	<servlet-class>board.controller.CreateBoardAction</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>CreateBoard</servlet-name>
+  <url-pattern>/board</url-pattern>
+  </servlet-mapping>
+  
   <error-page>
   <location>/error</location>
   </error-page>
