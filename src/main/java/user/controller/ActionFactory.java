@@ -1,6 +1,6 @@
 package user.controller;
 
-import user.controller.action.LikeAction;
+import like.action.LikeAction;
 import user.controller.action.LoginAction;
 
 public class ActionFactory {

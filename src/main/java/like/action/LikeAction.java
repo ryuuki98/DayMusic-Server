@@ -1,4 +1,4 @@
-package user.controller.action;
+package like.action;
 
 import java.io.IOException;
 
