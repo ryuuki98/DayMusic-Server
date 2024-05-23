@@ -3,6 +3,7 @@ package board.controller;
 import board.controller.action.CreateBoardAction;
 import board.controller.action.DeleteBoardAction;
 import board.controller.action.SearchBoardAction;
+import board.controller.action.UpdateBoardAction;
 
 public class BoardActionFactory {
 	private BoardActionFactory() {
@@ -24,6 +25,8 @@ public class BoardActionFactory {
 			action = new DeleteBoardAction();
 		else if(command.equals("search"))
 			action = new SearchBoardAction();
+		else if(command.equals("update"))
+			action = new UpdateBoardAction();
 		
 		return action;
 		
