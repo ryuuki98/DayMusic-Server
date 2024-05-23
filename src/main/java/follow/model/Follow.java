@@ -1,7 +1,5 @@
 package follow.model;
 
-import java.sql.Timestamp;
-
 public class Follow {
 	private int followCode;
 	private String followedId;
