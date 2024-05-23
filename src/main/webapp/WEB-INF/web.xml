@@ -34,13 +34,13 @@
   </servlet-mapping>
   
   <servlet>
-  	<servlet-name>CreateBoard</servlet-name>
-  	<servlet-class>board.controller.CreateBoardAction</servlet-class>
+  	<servlet-name>BoardServiceServlet</servlet-name>
+  	<servlet-class>board.controller.ServiceServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
-  <servlet-name>CreateBoard</servlet-name>
-  <url-pattern>/board</url-pattern>
+  <servlet-name>BoardServiceServlet</servlet-name>
+  <url-pattern>/board/service</url-pattern>
   </servlet-mapping>
   
   <error-page>

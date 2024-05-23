@@ -7,11 +7,13 @@ public class BoardRequestDto {
 	private String id;
 	private String contents;
 	private String musicCode;
-	private boolean isPublic;
+	private int isPublic;
 	private java.sql.Timestamp regDate;
 	private java.sql.Timestamp modDate;
 	
-	public BoardRequestDto(int boardCode, String id, String contents, String musicCode, boolean isPublic,
+	public BoardRequestDto() {}
+	
+	public BoardRequestDto(int boardCode, String id, String contents, String musicCode, int isPublic,
 			Timestamp regDate, Timestamp modDate) {
 		super();
 		this.boardCode = boardCode;
@@ -22,7 +24,22 @@ public class BoardRequestDto {
 		this.regDate = regDate;
 		this.modDate = modDate;
 	}
+
+	public BoardRequestDto (String id, String contents, String musicCode, int isPublic) {
+		super();
+		this.id = id;
+		this.contents = contents;
+		this.musicCode = musicCode;
+		this.isPublic = isPublic;
+	}
 	
+	// 글 작성 되는지 먼저 확인
+	public BoardRequestDto (String id, String contents, int isPublic) {
+		super();
+		this.id = id;
+		this.contents = contents;
+		this.isPublic = isPublic;
+	}
 	
 	public int getBoardCode() {
 		return boardCode;
@@ -48,10 +65,10 @@ public class BoardRequestDto {
 	public void setMusicCode(String musicCode) {
 		this.musicCode = musicCode;
 	}
-	public boolean isPublic() {
-		return isPublic;
+	public int isPublic() {
+		return isPublic; 
 	}
-	public void setPublic(boolean isPublic) {
+	public void setPublic(int isPublic) {
 		this.isPublic = isPublic;
 	}
 	public java.sql.Timestamp getRegDate() {

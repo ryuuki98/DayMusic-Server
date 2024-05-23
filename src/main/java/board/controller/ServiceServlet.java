@@ -1,4 +1,4 @@
-package user.controller;
+package board.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -19,8 +19,8 @@ public class ServiceServlet extends HttpServlet {
 		System.out.println("command : " + command);
 		
 		if(command != null) {
-			ActionFactory af = ActionFactory.getInstance();
-			Action action = af.getAction(command);
+			BoardActionFactory af = BoardActionFactory.getInstance();
+			BoardAction action = af.getAction(command);
 			
 			if(action != null) {
 				action.execute(request, response);
