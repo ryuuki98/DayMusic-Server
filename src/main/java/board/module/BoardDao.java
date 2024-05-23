@@ -64,11 +64,12 @@ public class BoardDao {
 	// 게시물 번호로 찾기
 	public BoardResponseDto findBoardByCode(int boardCode) {
 		BoardResponseDto board = null;
+		System.out.println("find code : "+ boardCode);
 		
 		try {
 			conn = DBManager.getConnection();
 			
-			String sql = "SELECT board_code, id, contents, music_code, reg_date, mod_date, is_public FROM board WHERE id=?";
+			String sql = "SELECT board_code, id, contents, music_code, reg_date, mod_date, is_public FROM board WHERE board_code=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardCode);
