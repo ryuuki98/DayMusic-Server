@@ -35,6 +35,7 @@ public class FollowDao {
 			
 			while(rs.next()) {
 				String id = rs.getString(1);
+				list.add(new FollowResponseDto(id));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,6 +60,7 @@ public class FollowDao {
 			
 			while(rs.next()) {
 				String id = rs.getString(1);
+				list.add(new FollowResponseDto(id));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
