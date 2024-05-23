@@ -11,13 +11,6 @@
 <body>
 <h1>hello world</h1>
 
-<%
-Context context = new InitialContext();
-
-String str = (String) context.lookup("java:comp/env/mySecret");
-
-%>
-<h1><%=str %></h1>
 
 </body>
 </html>
