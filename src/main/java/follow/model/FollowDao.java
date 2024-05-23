@@ -37,6 +37,8 @@ public class FollowDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
 		}
 		
 		return list;
@@ -58,6 +60,8 @@ public class FollowDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
 		}
 		
 		return list;
