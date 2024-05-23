@@ -34,7 +34,7 @@ public class DBManager {
 			rs.close();
 			
 			System.out.println("DB 연동 해제");
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("DB 연동 해제 실패");
 			e.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public class DBManager {
 			pstmt.close();
 			
 			System.out.println("DB 연동 해제");
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("DB 연동 해제 실패");
 			e.printStackTrace();
 		}
