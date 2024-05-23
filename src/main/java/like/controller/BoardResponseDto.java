@@ -1,6 +1,6 @@
 package like.controller;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class BoardResponseDto {
 	private int boardCode;

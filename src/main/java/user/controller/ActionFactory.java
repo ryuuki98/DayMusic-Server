@@ -22,6 +22,7 @@ public class ActionFactory {
 			action = new LoginAction();
 		}else if(command.equals("like")) {
 			action = new LikeAction();
+			
 		}
 		else if(command.equals("follow")) {
 			action = new FollowAction();
