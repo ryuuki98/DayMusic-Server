@@ -11,6 +11,8 @@ public class BoardRequestDto {
 	private java.sql.Timestamp regDate;
 	private java.sql.Timestamp modDate;
 	
+	public BoardRequestDto() {}
+	
 	public BoardRequestDto(int boardCode, String id, String contents, String musicCode, int isPublic,
 			Timestamp regDate, Timestamp modDate) {
 		super();

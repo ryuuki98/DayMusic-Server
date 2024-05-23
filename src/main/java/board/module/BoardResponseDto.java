@@ -7,11 +7,13 @@ public class BoardResponseDto {
 	private String id;
 	private String contents;
 	private String musicCode;
-	private boolean isPublic;
+	private int isPublic;
 	private java.sql.Timestamp regDate;
 	private java.sql.Timestamp modDate;
 	
-	public BoardResponseDto(int boardCode, String id, String contents, String musicCode, boolean isPublic,
+	public BoardResponseDto() {}
+	
+	public BoardResponseDto(int boardCode, String id, String contents, String musicCode, int isPublic,
 			Timestamp regDate, Timestamp modDate) {
 		super();
 		this.boardCode = boardCode;
@@ -55,11 +57,11 @@ public class BoardResponseDto {
 		this.musicCode = musicCode;
 	}
 
-	public boolean isPublic() {
+	public int isPublic() {
 		return isPublic;
 	}
 
-	public void setPublic(boolean isPublic) {
+	public void setPublic(int isPublic) {
 		this.isPublic = isPublic;
 	}
 
