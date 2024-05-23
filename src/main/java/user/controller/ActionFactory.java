@@ -1,6 +1,7 @@
 package user.controller;
 
 import like.action.LikeAction;
+import follow.controller.FollowAction;
 import user.controller.action.LoginAction;
 
 public class ActionFactory {
@@ -21,6 +22,9 @@ public class ActionFactory {
 			action = new LoginAction();
 		}else if(command.equals("like")) {
 			action = new LikeAction();
+		}
+		else if(command.equals("follow")) {
+			action = new FollowAction();
 		}
 		return action;
 		
