@@ -6,18 +6,16 @@ public class Follow {
 	private int followCode;
 	private String followedId;
 	private String followerId;
-	private Timestamp regDate;
-	private Timestamp modDate;
+	private String nickname;
 	
-	public Follow(int followCode, String followedId, String followerId, Timestamp regDate, Timestamp modDate) {
+	public Follow(int followCode, String followedId, String followerId, String nickname) {
 		super();
 		this.followCode = followCode;
 		this.followedId = followedId;
 		this.followerId = followerId;
-		this.regDate = regDate;
-		this.modDate = modDate;
+		this.nickname = nickname;
 	}
-
+	
 	public int getFollowCode() {
 		return followCode;
 	}
@@ -42,19 +40,11 @@ public class Follow {
 		this.followerId = followerId;
 	}
 
-	public Timestamp getRegDate() {
-		return regDate;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setRegDate(Timestamp regDate) {
-		this.regDate = regDate;
-	}
-
-	public Timestamp getModDate() {
-		return modDate;
-	}
-
-	public void setModDate(Timestamp modDate) {
-		this.modDate = modDate;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 }
