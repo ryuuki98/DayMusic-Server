@@ -61,6 +61,43 @@ public class BoardDao {
 		
 	}
 	
+	// 공개 게시글 리스트
+	public List<BoardResponseDto> findBoardList(int isPublic) {
+		List<BoardResponseDto> list = new ArrayList<BoardResponseDto>();
+		
+		try {
+			conn = DBManager.getConnection();
+			
+			String sql = "SELECT is_public, id, contents, music_code, board_code, reg_date, mod_date FROM board WHERE is_public=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, isPublic);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+			int publics = 0;  
+				if(publics == isPublic) {
+					String id = rs.getString(2);
+					String contents = rs.getString(3);
+					String musicCode = rs.getString(4);
+					int boardCode = rs.getInt(5);
+					java.sql.Timestamp reg_date = rs.getTimestamp(6);
+					java.sql.Timestamp mod_date = rs.getTimestamp(7);
+					
+					BoardResponseDto board = new BoardResponseDto(boardCode, id, contents, musicCode, isPublic, reg_date, mod_date);
+					list.add(board);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		
+		return list;
+		
+	}
+	
 	// 게시물 번호로 찾기
 	public BoardResponseDto findBoardByCode(int boardCode) {
 		BoardResponseDto board = null;
@@ -96,7 +133,7 @@ public class BoardDao {
 		return board;
 	}
 	
-	// 
+	// 아이디로 개시물 찾기
 	public BoardResponseDto findBoardById(String userId) {
 		BoardResponseDto board = null;
 		
@@ -128,6 +165,7 @@ public class BoardDao {
 		return board;
 	}
 	
+	// 게시글 작성
 	public BoardResponseDto createBoard(BoardRequestDto boardDto) {
 		
 		try {
@@ -153,6 +191,7 @@ public class BoardDao {
 		return null;
 	}
 	
+	// 게시글 삭제
 	public boolean deleteBoard(BoardRequestDto boardDto) {
 		
 		if(findBoardByCode(boardDto.getBoardCode()) == null)
