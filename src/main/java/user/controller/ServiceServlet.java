@@ -16,13 +16,21 @@ public class ServiceServlet extends HttpServlet {
 		
 		//input hidden 으로 넘겨도 되고 경로에 ?command = "ddd" 로 넘겨도 되고 
 		String command = request.getParameter("command");
+		System.out.println("command : " + command);
 		
-		ActionFactory af = ActionFactory.getInstance();
-		Action action = af.getAction(command);
-		
-		if(action != null) {
-			action.execute(request, response);
+		if(command != null) {
+			ActionFactory af = ActionFactory.getInstance();
+			Action action = af.getAction(command);
+			
+			if(action != null) {
+				action.execute(request, response);
+			} else {
+				response.sendError(404);
+			}
+		} else {
+			response.sendError(404);
 		}
+		
 	}
 
 
