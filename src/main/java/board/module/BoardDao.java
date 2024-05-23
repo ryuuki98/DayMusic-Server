@@ -191,6 +191,36 @@ public class BoardDao {
 		return null;
 	}
 	
+	// 게시글 수정
+	public BoardResponseDto updateBoardContents(BoardResponseDto boardDto) {
+		BoardResponseDto board = null;
+		
+		if(findBoardById(boardDto.getId()) == null)
+			return board;
+		
+		try {
+			conn = DBManager.getConnection();
+			
+			String sql = "UPDATE board SET contents=? WHERE id=? AND board_code=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, boardDto.getContents());
+			pstmt.setString(2, boardDto.getId());
+			pstmt.setInt(3, boardDto.getBoardCode());
+			
+			pstmt.execute();
+			
+			board = findBoardByCode(boardDto.getBoardCode());
+			System.out.println("게시글 수정 완료");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("게시글 수정 실패");
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		
+		return board;
+	}
+	
 	// 게시글 삭제
 	public boolean deleteBoard(BoardRequestDto boardDto) {
 		
