@@ -26,31 +26,26 @@ public class DBManager {
 		}
 		return conn;
 	}
-	
-	public static void close(Connection conn , PreparedStatement pstmt, ResultSet rs) {
+	public static void close(Connection conn, PreparedStatement pstmt , ResultSet rs) {
 		try {
-			conn.close();
+			rs.close();			
 			pstmt.close();
-			rs.close();
+			conn.close();
 			
-			System.out.println("DB 연동 해제");
-		} catch (SQLException e) {
-			System.out.println("DB 연동 해제 실패");
-			e.printStackTrace();
+			System.out.println("DB연결 해제");
+		} catch (Exception e) {
+			System.out.println("DB연결 해제 실패");
 		}
-		
 	}
 	
-	public static void close(Connection conn , PreparedStatement pstmt) {
+	public static void close(Connection conn, PreparedStatement pstmt) {
 		try {
-			conn.close();
 			pstmt.close();
+			conn.close();
 			
-			System.out.println("DB 연동 해제");
-		} catch (SQLException e) {
-			System.out.println("DB 연동 해제 실패");
-			e.printStackTrace();
+			System.out.println("DB연결 해제");
+		} catch (Exception e) {
+			System.out.println("DB연결 해제 실패");
 		}
-		
 	}
 }
