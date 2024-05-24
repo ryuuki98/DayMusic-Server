@@ -20,9 +20,6 @@ public class ActionFactory {
 		if (command.equals("login")) {
 			action = new LoginAction();
 		}
-		else if(command.equals("follow")) {
-			action = new FollowAction();
-		}
 		return action;
 		
 	}
