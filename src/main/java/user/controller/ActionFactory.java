@@ -1,6 +1,5 @@
 package user.controller;
 
-import follow.controller.FollowAction;
 import user.controller.action.LoginAction;
 
 public class ActionFactory {
