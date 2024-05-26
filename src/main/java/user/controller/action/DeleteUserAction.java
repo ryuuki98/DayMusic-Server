@@ -8,26 +8,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import user.controller.UserAction;
 import user.model.UserDao;
-import user.model.UserResponseDto;
+import user.model.UserRequestDto;
 
-public class UpdateNicknameAction implements UserAction {
+public class DeleteUserAction implements UserAction {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserDao userDao = UserDao.getInstance();
-
-		String id = request.getParameter("id");
-		String newNickname = request.getParameter("nickname");
+		System.out.println("회원 삭제 로직");
 		
-		System.out.println(id);
-		System.out.println(newNickname);
-
-		if (userDao.duplicateNickname(id,newNickname)) {
-			System.out.println("닉네임이 중복됩니다.");
-		} else {
-			UserResponseDto user = userDao.updateNickname(id, newNickname);
+		UserDao userDao = UserDao.getInstance();
+		
+		String id = request.getParameter("id");
+		
+		boolean isDeleted = userDao.deleteUserById(id);
+		
+		if (isDeleted) {
+			System.out.println("삭제 완료");
+		}else {
+			System.out.println("삭제 실패");
 		}
-
+		
 	}
 
 }

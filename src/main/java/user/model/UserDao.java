@@ -69,7 +69,7 @@ public class UserDao {
 
 	// id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
 	// is_staff
-	private UserResponseDto findUserById(String id) {
+	public UserResponseDto findUserById(String id) {
 		UserResponseDto user = null;
 
 		conn = DBManager.getConnection();
@@ -134,6 +134,64 @@ public class UserDao {
 		return isDuplicated;
 	}
 
+	public boolean duplicatePhone(String id, String newPhone) {
+		boolean isDuplicated = false;
+		conn = DBManager.getConnection();
+		String sql = "SELECT COUNT(*) FROM users WHERE id != ? AND phone = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, newPhone);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				if (count > 0) {
+					isDuplicated = true;
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.println("duplicatePhone method 오류");
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return isDuplicated;
+	}
+
+	public boolean duplicateEmail(String id, String newEmail) {
+		boolean isDuplicated = false;
+		conn = DBManager.getConnection();
+		String sql = "SELECT COUNT(*) FROM users WHERE id != ? AND newEmail = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, newEmail);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				if (count > 0) {
+					isDuplicated = true;
+				}
+			}
+
+		} catch (SQLException e) {
+			System.out.println("duplicateEmail method 오류");
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return isDuplicated;
+	}
+
 	public UserResponseDto updateNickname(String id, String newNickname) {
 		UserResponseDto user = null;
 		conn = DBManager.getConnection();
@@ -159,23 +217,217 @@ public class UserDao {
 		UserResponseDto user = null;
 		conn = DBManager.getConnection();
 		String sql = "UPDATE users SET password = ? WHERE id = ?";
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, PasswordCrypto.encrypt(newPassword));
 			pstmt.setString(2, id);
-			
+
 			pstmt.execute();
-			
+
 			user = findUserById(id);
 		} catch (SQLException e) {
 			System.out.println("updatePassword 메소드 오류");
 			e.printStackTrace();
-		}finally {
+		} finally {
 			DBManager.close(conn, pstmt);
 		}
-		
+
 		return user;
 	}
+
+	public UserResponseDto updateProfileImage(String id, String profile_img_url) {
+		conn = DBManager.getConnection();
+		UserResponseDto user = null;
+
+		System.out.println(id);
+		System.out.println(profile_img_url);
+
+		String sql = "UPDATE users SET profile_img_url = ? WHERE id = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, profile_img_url);
+			pstmt.setString(2, id);
+			pstmt.execute();
+
+			user = findUserById(id);
+		} catch (SQLException e) {
+			System.out.println("updateProfileImage 메소드 오류");
+			e.printStackTrace();
+		}
+
+		return user;
+	}
+
+	public UserResponseDto UpdateInformation(UserRequestDto userRequestDto) {
+		UserResponseDto user = null;
+
+		String id = userRequestDto.getId();
+		String newEmail = userRequestDto.getEmail();
+		String newPhone = userRequestDto.getPhone();
+
+		// unique key에 대한 중복 검증
+		if (duplicateEmail(id, newEmail) || duplicatePhone(id, newPhone)) {
+			return user;
+		}
+
+		conn = DBManager.getConnection();
+		String sql = "UPDATE users SET name = ?, gender = ? ,email = ?,phone = ? ,telecom = ? WHERE id = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userRequestDto.getName());
+			pstmt.setString(2, userRequestDto.getGender());
+			pstmt.setString(3, userRequestDto.getEmail());
+			pstmt.setString(4, userRequestDto.getPhone());
+			pstmt.setString(5, userRequestDto.getTelecom());
+			pstmt.setString(6, userRequestDto.getId());
+			pstmt.execute();
+
+			user = findUserById(userRequestDto.getId());
+		} catch (SQLException e) {
+			System.out.println("updateinformation 메소드 오류");
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+
+		return user;
+	}
+
+	public boolean deleteUserById(String id) {
+		boolean isDeleted = false;
+
+		conn = DBManager.getConnection();
+
+		String sql = "DELETE FROM users WHERE id = ? ";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+
+			int rowsAffected = pstmt.executeUpdate();
+
+			// 삭제가 성공적으로 이루어졌는지 확인
+			if (rowsAffected > 0) {
+				isDeleted = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("deleteUserById 메소드 오류 ");
+			e.printStackTrace();
+		}
+
+		return isDeleted;
+	}
+
+	public UserResponseDto findUserByEmail(String email) {
+		UserResponseDto user = null;
+
+		conn = DBManager.getConnection();
+		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE email = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String id = rs.getString(1);
+				String password = rs.getString(2);
+				String name = rs.getString(3);
+				String gender = rs.getString(4);
+				String phone = rs.getString(6);
+				String telecom = rs.getString(7);
+				String nickname = rs.getString(8);
+				String profile_img_url = rs.getString(9);
+				boolean is_staff = rs.getBoolean(10);
+
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
+						is_staff);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("findUserById 메소드 오류 ");
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return user;
+	}
+
+	public UserResponseDto findUserByPhone(String phone) {
+		UserResponseDto user = null;
+
+		conn = DBManager.getConnection();
+		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE phone = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, phone);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String id = rs.getString(1);
+				String password = rs.getString(2);
+				String name = rs.getString(3);
+				String gender = rs.getString(4);
+				String email = rs.getString(5);
+				String telecom = rs.getString(7);
+				String nickname = rs.getString(8);
+				String profile_img_url = rs.getString(9);
+				boolean is_staff = rs.getBoolean(10);
+
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
+						is_staff);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("findUserById 메소드 오류 ");
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return user;
+	}
+
+	public UserResponseDto findUserByNickname(String nickname) {
+		UserResponseDto user = null;
+
+		conn = DBManager.getConnection();
+		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE nickname = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nickname);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String id = rs.getString(1);
+				String password = rs.getString(2);
+				String name = rs.getString(3);
+				String gender = rs.getString(4);
+				String email = rs.getString(5);
+				String phone = rs.getString(6);
+				String telecom = rs.getString(7);
+				String profile_img_url = rs.getString(9);
+				boolean is_staff = rs.getBoolean(10);
+
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
+						is_staff);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("findUserById 메소드 오류 ");
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return user;
+	}
+
 
 }
