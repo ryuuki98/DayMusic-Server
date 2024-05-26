@@ -1,6 +1,10 @@
 package user.controller;
 
 import user.controller.action.DeleteUserAction;
+import user.controller.action.DuplicateEmail;
+import user.controller.action.DuplicateId;
+import user.controller.action.DuplicateNickname;
+import user.controller.action.DuplicatePhone;
 import user.controller.action.JoinAction;
 import user.controller.action.LoginAction;
 import user.controller.action.UpdateInformation;
@@ -36,6 +40,14 @@ public class UserActionFactory {
 			action = new UpdateInformation();
 		}else if (command.equals("deleteUser")) {
 			action = new DeleteUserAction();
+		}else if (command.equals("duplicateId")) {
+			action = new DuplicateId();
+		}else if (command.equals("duplicateEmail")) {
+			action = new DuplicateEmail();
+		}else if (command.equals("duplicatePhone")) {
+			action = new DuplicatePhone();
+		}else if (command.equals("duplicateNickname")) {
+			action = new DuplicateNickname();
 		}
 		return action;
 		

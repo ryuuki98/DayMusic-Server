@@ -69,7 +69,7 @@ public class UserDao {
 
 	// id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
 	// is_staff
-	private UserResponseDto findUserById(String id) {
+	public UserResponseDto findUserById(String id) {
 		UserResponseDto user = null;
 
 		conn = DBManager.getConnection();
@@ -321,6 +321,113 @@ public class UserDao {
 		return isDeleted;
 	}
 
-	// 아래 두개 메소드를 만들 차례인데 아래두개는 닉네임 중복에서 훔쳐오면 됨
+	public UserResponseDto findUserByEmail(String email) {
+		UserResponseDto user = null;
+
+		conn = DBManager.getConnection();
+		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE email = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String id = rs.getString(1);
+				String password = rs.getString(2);
+				String name = rs.getString(3);
+				String gender = rs.getString(4);
+				String phone = rs.getString(6);
+				String telecom = rs.getString(7);
+				String nickname = rs.getString(8);
+				String profile_img_url = rs.getString(9);
+				boolean is_staff = rs.getBoolean(10);
+
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
+						is_staff);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("findUserById 메소드 오류 ");
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return user;
+	}
+
+	public UserResponseDto findUserByPhone(String phone) {
+		UserResponseDto user = null;
+
+		conn = DBManager.getConnection();
+		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE phone = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, phone);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String id = rs.getString(1);
+				String password = rs.getString(2);
+				String name = rs.getString(3);
+				String gender = rs.getString(4);
+				String email = rs.getString(5);
+				String telecom = rs.getString(7);
+				String nickname = rs.getString(8);
+				String profile_img_url = rs.getString(9);
+				boolean is_staff = rs.getBoolean(10);
+
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
+						is_staff);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("findUserById 메소드 오류 ");
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return user;
+	}
+
+	public UserResponseDto findUserByNickname(String nickname) {
+		UserResponseDto user = null;
+
+		conn = DBManager.getConnection();
+		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE nickname = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nickname);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String id = rs.getString(1);
+				String password = rs.getString(2);
+				String name = rs.getString(3);
+				String gender = rs.getString(4);
+				String email = rs.getString(5);
+				String phone = rs.getString(6);
+				String telecom = rs.getString(7);
+				String profile_img_url = rs.getString(9);
+				boolean is_staff = rs.getBoolean(10);
+
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
+						is_staff);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("findUserById 메소드 오류 ");
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return user;
+	}
+
 
 }

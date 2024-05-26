@@ -22,6 +22,7 @@ public class UserServiceServlet extends HttpServlet {
 		while ((line = reader.readLine()) != null) {
 			sb.append(line);
 		}
+		
 		JSONObject jsonObject = new JSONObject(sb.toString());
 
 		// JSON 데이터 추출
@@ -35,6 +36,8 @@ public class UserServiceServlet extends HttpServlet {
 			action.execute(request, response);
 		}
 	}
+	
+	
 
 
 }
