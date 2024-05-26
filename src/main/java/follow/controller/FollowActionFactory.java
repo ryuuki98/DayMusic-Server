@@ -1,6 +1,7 @@
 package follow.controller;
 
-import follow.controller.action.FollowListAction;
+import follow.controller.action.FollowedListAction;
+import follow.controller.action.FollowerListAction;
 
 public class FollowActionFactory {
 	private FollowActionFactory() {}
@@ -16,7 +17,7 @@ public class FollowActionFactory {
 		System.out.println("command : " + command);
 		
 		if(command.equals("/follow")) {
-			action = new FollowListAction(command);
+			action = new FollowedListAction(command);
 		}
 		return action;
 	}
@@ -28,10 +29,11 @@ public class FollowActionFactory {
 		
 		if(command.equals("/followed_list")) {
 			System.out.println("/followed_list/ 실행");
-			action = new FollowListAction(id);
+			action = new FollowedListAction(id);
 		}
 		else if(command.equals("/follower_list")) {
-			action = new FollowListAction(id);
+			System.out.println("/follower_list/ 실행");
+			action = new FollowerListAction(id);
 		}
 		return action;
 	}
