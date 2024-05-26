@@ -76,7 +76,6 @@ public class FollowDao {
 		return list;
 	}
 	
-	
 	public boolean addFollow(FollowRequestDto frqDto) {
 		try {
 			conn = DBManager.getConnection();
