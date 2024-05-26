@@ -43,6 +43,18 @@
   <url-pattern>/board/service</url-pattern>
   </servlet-mapping>
   
+  
+  
+  <filter>
+    <filter-name>corsFilter</filter-name>
+    <filter-class>util.CORSFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>corsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+  
+  
   <error-page>
   <location>/error</location>
   </error-page>
