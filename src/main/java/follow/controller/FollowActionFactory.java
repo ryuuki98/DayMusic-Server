@@ -16,7 +16,7 @@ public class FollowActionFactory {
 		FollowAction action = null;
 		System.out.println("command : " + command);
 		
-		if(command.equals("/follow")) {
+		if(command == null) {
 			action = new FollowedListAction(command);
 		}
 		return action;
