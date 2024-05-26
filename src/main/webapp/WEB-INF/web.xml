@@ -25,7 +25,7 @@
   <!-- servlet-mapping -->
   <servlet>
   <servlet-name>UserServiceServlet</servlet-name>
-  <servlet-class>user.controller.ServiceServlet</servlet-class>
+  <servlet-class>user.controller.UserServiceServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -36,6 +36,16 @@
   <error-page>
   <location>/error</location>
   </error-page>
+  
+  <filter>
+    <filter-name>corsFilter</filter-name>
+    <filter-class>util.CORSFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>corsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+  
   <!-- jsp-config -->
   <jsp-config>
   <jsp-property-group>
