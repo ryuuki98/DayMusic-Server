@@ -33,6 +33,17 @@
   <url-pattern>/user/service</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  <servlet-name>FollowServiceServlet</servlet-name>
+  <servlet-class>follow.controller.ServiceServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>FollowServiceServlet</servlet-name>
+  <url-pattern>/follow/*</url-pattern>		
+  <!--  *이 와일드카드라서 follow 뒤에 아무거나 들어와도 FollowServiceServlet으로 감 -->
+  </servlet-mapping>
+  
   <error-page>
   <location>/error</location>
   </error-page>
