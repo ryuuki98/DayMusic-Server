@@ -88,6 +88,7 @@ public class FollowDao {
 			pstmt.setString(2, frqDto.getFollowerId());
 			
 			pstmt.execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -107,6 +108,7 @@ public class FollowDao {
 			pstmt.setString(2, frqDto.getFollowerId());
 			
 			pstmt.execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
