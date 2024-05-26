@@ -3,6 +3,7 @@ package board.controller.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,16 +23,26 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
 
+        JSONObject[] jsonObject = (JSONObject[]) request.getAttribute("data");
+        
         int publics = 0;
 
         BoardDao boardDao = BoardDao.getInstance();
         List<BoardResponseDto> boardList = boardDao.findBoardList(publics);
+        
+        List<BoardResponseDto> filteredBoardList = boardList.stream()
+                .filter(board -> board.isPublic() != 0) // Assuming isPublic() returns true for public, false for non-public
+                .collect(Collectors.toList());
 
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("status", 200);
+        
+        System.out.println();
+        
+        
 
         JSONArray boardArray = new JSONArray();
-        for (BoardResponseDto board : boardList) {
+        for (BoardResponseDto board : filteredBoardList) {
             JSONObject boardJson = new JSONObject();
             boardJson.put("id", board.getId());
             boardJson.put("contents", board.getContents());
