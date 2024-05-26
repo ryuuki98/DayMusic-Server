@@ -6,12 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import user.controller.Action;
+import user.controller.UserAction;
 import user.model.UserDao;
 import user.model.UserResponseDto;
 import util.PasswordCrypto;
 
-public class UpdatePasswordAction implements Action {
+public class UpdatePasswordAction implements UserAction {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -6,12 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import user.controller.Action;
+import user.controller.UserAction;
 import user.model.UserDao;
 import user.model.UserRequestDto;
 import user.model.UserResponseDto;
 
-public class JoinAction  implements Action{
+public class JoinAction  implements UserAction{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
