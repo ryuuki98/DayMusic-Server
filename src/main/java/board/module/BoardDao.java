@@ -192,7 +192,7 @@ public class BoardDao {
 	}
 	
 	// 게시글 수정
-	public BoardResponseDto updateBoardContents(BoardResponseDto boardDto) {
+	public BoardResponseDto updateBoardContents(BoardRequestDto boardDto) {
 		BoardResponseDto board = null;
 		
 		if(findBoardById(boardDto.getId()) == null)
