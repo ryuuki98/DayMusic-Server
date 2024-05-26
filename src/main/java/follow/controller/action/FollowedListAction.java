@@ -14,10 +14,10 @@ import org.json.JSONObject;
 import follow.controller.FollowAction;
 import follow.model.FollowDao;
 
-public class FollowListAction extends HttpServlet implements FollowAction {
+public class FollowedListAction extends HttpServlet implements FollowAction {
 	private String id;
 	
-	public FollowListAction(String id) {
+	public FollowedListAction(String id) {
 		this.id = id;
 	}
 
