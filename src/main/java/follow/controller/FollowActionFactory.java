@@ -1,5 +1,7 @@
 package follow.controller;
 
+import follow.controller.action.FollowAddAction;
+import follow.controller.action.FollowDeleteAction;
 import follow.controller.action.FollowedListAction;
 import follow.controller.action.FollowerListAction;
 
@@ -17,8 +19,9 @@ public class FollowActionFactory {
 		System.out.println("command : " + command);
 		
 		if(command == null) {
-			action = new FollowedListAction(command);
+			action = new FollowAddAction();
 		}
+		action = new FollowDeleteAction();
 		return action;
 	}
 	
