@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class ServiceServlet extends HttpServlet {
+public class FollowServiceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getPathInfo();			// / 뒤에 마지막 주소를 가져옴
 		System.out.println("ServiceServlet command : " + command);
