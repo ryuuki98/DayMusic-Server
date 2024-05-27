@@ -15,6 +15,7 @@ import board.controller.BoardAction;
 import board.module.BoardDao;
 import board.module.BoardRequestDto;
 import board.module.BoardResponseDto;
+import user.model.UserResponseDto;
 
 public class CreateBoardAction extends HttpServlet implements BoardAction {
 
@@ -48,16 +49,16 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 	        PrintWriter out = response.getWriter();
 
 	        if (isValid) {
-	            // HttpSession session = request.getSession();
-	            // UserResponseDto user = (UserResponseDto) session.getAttribute("userId");
-	        	// UserResponseDto nickName = (UserResponseDto) session.getAttribute("nickName");
-	            String userId = "user2";
+	             HttpSession session = request.getSession();
+				String user = (String) session.getAttribute("userId");
+	        	 String nickname = (String) session.getAttribute("nickname");
+//	            String userId = "user2";
 
-	            System.out.println("user : " + userId);
+	            System.out.println("user : " + user);
 	            System.out.println("contents : " + contents);
 	            System.out.println("public : " + publics);
 
-	            BoardRequestDto boardDto = new BoardRequestDto(userId, contents, publics);
+	            BoardRequestDto boardDto = new BoardRequestDto(nickname, contents, publics);
 
 	            BoardDao boardDao = BoardDao.getInstance();
 	            BoardResponseDto board = boardDao.createBoard(boardDto);
