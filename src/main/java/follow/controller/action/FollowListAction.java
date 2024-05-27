@@ -8,16 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import follow.model.FollowResponseDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import follow.controller.FollowAction;
 import follow.model.FollowDao;
 
-public class FollowedListAction extends HttpServlet implements FollowAction {
+public class FollowListAction extends HttpServlet implements FollowAction {
 	private String id;
 	
-	public FollowedListAction(String id) {
+	public FollowListAction(String id) {
 		this.id = id;
 	}
 
@@ -28,11 +29,15 @@ public class FollowedListAction extends HttpServlet implements FollowAction {
 		System.out.println("내가 팔로우한 유저(팔로잉) 닉네임 읽어오기");
 		FollowDao followDao = FollowDao.getInstance();
 		
-		List<String> list = followDao.findFollowingList(id);
-		System.out.println("list : " + list);
-		
-		JSONArray result = new JSONArray(list);
-		
+		List<FollowResponseDto> FollowingList = followDao.findFollowingList(id);
+		List<FollowResponseDto> FollowerList = followDao.findFollowerList(id);
+		System.out.println("FollowingList : " + FollowingList);
+		System.out.println("FollowerList : " + FollowerList);
+
+		JSONArray result = new JSONArray();
+		result.put(FollowingList);
+		result.put(FollowerList);
+
 		resObj.put("status", 200);
 		resObj.put("result", result);
 		System.out.println(resObj);
