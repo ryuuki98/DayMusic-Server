@@ -8,6 +8,7 @@
 
 context.xml
 
+.idea
+*.iml
 /docs
-
-
+/out
