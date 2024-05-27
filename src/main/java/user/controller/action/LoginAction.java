@@ -1,11 +1,9 @@
 package user.controller.action;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -39,15 +37,14 @@ public class LoginAction implements UserAction {
             response.getWriter().write("{\"message\":\"Invalid ID or password\"}");
         } else {
             System.out.println("로그인 성공");
-            // 로그인 성공 처리 (예: 세션 설정 등)
-            
-            // 세션에 사용자 정보 저장
-            HttpSession session = request.getSession();
-            session.setAttribute("userId", user.getId());
-            session.setAttribute("nickname", user.getNickname());
-            
+
+            JSONObject jsonResponse = new JSONObject();
+            jsonResponse.put("id", user.getId());
+            jsonResponse.put("nickname", user.getNickname());
+
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("{\"message\":\"Login successful\"}");
+            response.getWriter().write(jsonResponse.toString());
+
         }
     }
 }
