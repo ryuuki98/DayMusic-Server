@@ -18,9 +18,9 @@ public class LikeServiceServlet extends HttpServlet {
 		//input hidden 으로 넘겨도 되고 경로에 ?command = "ddd" 로 넘겨도 되고 
 		request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+		System.out.println("GET실행");
 		String command = request.getParameter("command");
-		
+		System.out.println(command);
 		LikeActionFactory af = LikeActionFactory.getInstance();
 		LikeAction action = af.getAction(command);
 		
@@ -28,18 +28,29 @@ public class LikeServiceServlet extends HttpServlet {
 			action.execute(request, response);
 		}
 	}
-
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
+		System.out.println("POST실행");
         String command = request.getParameter("command");
-		
+		System.out.println(command);
 		LikeActionFactory af = LikeActionFactory.getInstance();
 		LikeAction action = af.getAction(command);
-		
+
+		if(action != null) {
+			action.execute(request, response);
+		}
+	}
+
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		System.out.println("PUT실행");
+		String command = request.getParameter("command");
+		System.out.println(command);
+		LikeActionFactory af = LikeActionFactory.getInstance();
+		LikeAction action = af.getAction(command);
+
 		if(action != null) {
 			action.execute(request, response);
 		}
