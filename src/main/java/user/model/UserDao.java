@@ -429,5 +429,29 @@ public class UserDao {
 		return user;
 	}
 
+	public String findNickNameById(String id) {
+		String nickname = null;
+		conn = DBManager.getConnection();
+		
+		String sql = "SELECT nickname FROM users WHERE id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				id = rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return nickname;
+	}
+
 
 }
