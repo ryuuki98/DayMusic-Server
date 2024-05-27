@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import user.controller.UserAction;
@@ -34,10 +33,6 @@ public class UpdateNicknameAction implements UserAction {
 		} else {
 			UserResponseDto user = userDao.updateNickname(id, newNickname);
 			System.out.println("닉네임 변경 완료");
-
-			HttpSession session = request.getSession();
-
-			session.setAttribute("nickname", user.getNickname());
 			System.out.println(user.getNickname());
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().write("{\"message\":\"Nickname update successful\"}");
