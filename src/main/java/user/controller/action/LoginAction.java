@@ -13,7 +13,6 @@ import user.controller.UserAction;
 import user.model.UserDao;
 import user.model.UserRequestDto;
 import user.model.UserResponseDto;
-
 public class LoginAction implements UserAction {
 
     @Override

@@ -1,8 +1,9 @@
-package like.controller;
+package like.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mysql.cj.xdevapi.PreparableStatement;
@@ -23,36 +24,35 @@ public class LikeDao {
 		return instance;
 	}
 	
-	public List<LikeResponseDto> printAllLikeList(int boardCode){
-		List<LikeResponseDto> list = null;
-		
-		try {
-			conn = DBManager.getConnection();
-			
-			String sql = "SELECT * FROM like WHERE board_code=?";
-			
-			pstmt= conn.prepareStatement(sql);
-			pstmt.setInt(1, boardCode);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				String id = rs.getString(1);
-				UserDao finder = UserDao.getInstace();
-				String[] user = finder.findUser(id);
-				
-				LikeResponseDto like = new LikeResponseDto(boardCode, id, user[0], user[1]);
-				list.add(like);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			DBManager.close(conn, pstmt, rs);
-		}
-				
-		return list;
+	public List<LikeResponseDto> printAllLikeList(int boardCode) {
+	    List<LikeResponseDto> list = new ArrayList<LikeResponseDto>(); // 리스트 초기화
+	    
+	    try {
+	        conn = DBManager.getConnection();
+	        
+	        String sql = "SELECT * FROM `like` WHERE board_code=?";
+	        
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, boardCode);
+	        
+	        rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            String id = rs.getString(1);
+	            UserDao finder = UserDao.getInstace();
+	            String[] user = finder.findUser(id);
+	            LikeResponseDto like = new LikeResponseDto(boardCode, id, user[0], user[1]);
+	            list.add(like);                    
+	        }
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        DBManager.close(conn, pstmt, rs);
+	    }
+	            
+	    return list;
 	}
+
 	
 	public LikeResponseDto findLike(String id,int boardCode){
 		LikeResponseDto result = null;

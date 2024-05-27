@@ -3,7 +3,6 @@ package util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -28,6 +27,7 @@ public class DBManager {
 	}
 
 	public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
+
 		try {
 			rs.close();
 			pstmt.close();
@@ -37,7 +37,6 @@ public class DBManager {
 		} catch (Exception e) {
 			System.out.println("DB 연동 해제 실패");
 			e.printStackTrace();
-
 		}
 	}
 

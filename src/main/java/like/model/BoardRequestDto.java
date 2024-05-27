@@ -1,8 +1,8 @@
-package like.controller;
+package like.model;
 
 import java.sql.Timestamp;
 
-public class BoardResponseDto {
+public class BoardRequestDto {
 	private int boardCode;
 	private String contents;
 	private String id;
@@ -11,7 +11,7 @@ public class BoardResponseDto {
 	private Timestamp redDate;
 	private Timestamp modDate;
 	
-	public BoardResponseDto(int boardCode, String contents, String id, String musicCode, boolean isPublic,
+	public BoardRequestDto(int boardCode, String contents, String id, String musicCode, boolean isPublic,
 			Timestamp redDate) {
 		super();
 		this.boardCode = boardCode;
@@ -21,6 +21,7 @@ public class BoardResponseDto {
 		this.isPublic = isPublic;
 		this.redDate = redDate;
 	}
+	
 	public int getBoardCode() {
 		return boardCode;
 	}
@@ -63,4 +64,6 @@ public class BoardResponseDto {
 	public void setModDate(Timestamp modDate) {
 		this.modDate = modDate;
 	}
+	
+	
 }
