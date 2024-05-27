@@ -22,8 +22,8 @@ public class FollowDao {
 		return instance;
 	}
 	
-	public List<String> findFollowingList(String followerId) {
-		List<String> list = new ArrayList<>();
+	public List<FollowResponseDto> findFollowingList(String followerId) {
+		List<FollowResponseDto> list = new ArrayList<>();
 		
 		try {
 			conn = DBManager.getConnection();
@@ -39,7 +39,7 @@ public class FollowDao {
 			while(rs.next()) {
 				String id = rs.getString(1);
 				String nickname = userDao.findNickNameById(id); // 아이디를 파라미터로 받아서 닉네임 반환하는 메소드
-				list.add(nickname);
+				list.add(new FollowResponseDto(nickname));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,8 +49,8 @@ public class FollowDao {
 		return list;
 	}
 	
-	public List<String> findFollowerList(String followedId) {
-		List<String> list = new ArrayList<>();
+	public List<FollowResponseDto> findFollowerList(String followedId) {
+		List<FollowResponseDto> list = new ArrayList<>();
 		
 		try {
 			conn = DBManager.getConnection();
@@ -66,7 +66,7 @@ public class FollowDao {
 			while(rs.next()) {
 				String id = rs.getString(1);
 				String nickname = userDao.findNickNameById(id); // 아이디를 파라미터로 받아서 닉네임 반환하는 메소드 
-				list.add(nickname);
+				list.add(new FollowResponseDto(nickname));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
