@@ -1,5 +1,6 @@
 package like.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import like.controller.action.LikeAction;
+import org.json.JSONObject;
 
 
 public class LikeServiceServlet extends HttpServlet {
@@ -30,14 +32,23 @@ public class LikeServiceServlet extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-		System.out.println("POST실행");
-        String command = request.getParameter("command");
-		System.out.println(command);
+		StringBuilder sb = new StringBuilder();
+		BufferedReader reader = request.getReader();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			sb.append(line);
+		}
+
+		JSONObject jsonObject = new JSONObject(sb.toString());
+
+		// JSON 데이터 추출
+		String command = jsonObject.getString("command");
+		System.out.println("command"+command);
 		LikeActionFactory af = LikeActionFactory.getInstance();
 		LikeAction action = af.getAction(command);
 
 		if(action != null) {
+			request.setAttribute("jsonRequest", jsonObject);
 			action.execute(request, response);
 		}
 	}
