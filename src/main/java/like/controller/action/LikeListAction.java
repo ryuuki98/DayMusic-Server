@@ -1,19 +1,22 @@
-package like.controller;
+package like.controller.action;
 
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import user.controller.Action;
+import like.model.LikeDao;
+import like.model.LikeResponseDto;
 
-public class LikeAction implements Action{
+public class LikeListAction implements LikeAction{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		System.out.println("실행됐다.");
 		
 		LikeDao likeDao = LikeDao.getInstance();
 		
@@ -25,8 +28,7 @@ public class LikeAction implements Action{
 		list = likeDao.printAllLikeList(boardCode);
 		
 		request.setAttribute("likeList", list);
-		request.getRequestDispatcher("/like").forward(request, response);
-		System.out.println("실행됐다.");
+		
 	}
 
 }
