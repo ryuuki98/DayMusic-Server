@@ -16,7 +16,13 @@ public class LikeAddAction implements LikeAction{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
+		
+		LikeDao likeDao = LikeDao.getInstance();
+		
+		int boardCode = Integer.parseInt(request.getParameter("board_code"));
+		String id = request.getParameter("id");
+		
+		likeDao.likeChange(id, boardCode);
 		
 	}
 
