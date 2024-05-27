@@ -1,3 +1,5 @@
+<%@page import="like.controller.LikeServiceServlet"%>
+<%@page import="user.controller.ServiceServlet"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.naming.Context"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -14,8 +16,7 @@
 <%
 Context context = new InitialContext();
 
-String str = (String) context.lookup("java:comp/env/mySecret");
-
+String str = (String) context.lookup("java:comp/env/daymusicDB");
 %>
 <h1><%=str %></h1>
 

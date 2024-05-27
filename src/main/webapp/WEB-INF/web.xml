@@ -33,6 +33,19 @@
   <url-pattern>/user/service</url-pattern>
   </servlet-mapping>
   
+  
+  <servlet>	
+  <servlet-name>LikeServiceServlet</servlet-name>
+  <servlet-class>like.controller.LikeServiceServlet</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+  <servlet-name>LikeServiceServlet</servlet-name>
+  <url-pattern>/like</url-pattern>
+  </servlet-mapping>
+  
+
+  
   <error-page>
   <location>/error</location>
   </error-page>

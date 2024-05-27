@@ -1,4 +1,4 @@
-package like.controller;
+package like.model;
 
 public class Like {
 	private int boardCode;

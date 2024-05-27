@@ -1,4 +1,4 @@
-package like.controller;
+package like.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
