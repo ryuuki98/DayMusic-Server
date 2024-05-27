@@ -1,57 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>DayMusic-server</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-  </welcome-file-list>
-  
-  <!-- jsp-mapping -->
-  <servlet>
-  <servlet-name>error</servlet-name>
-  <jsp-file>/error.jsp</jsp-file>
-  </servlet>
-  
-  <servlet-mapping>
-  <servlet-name>error</servlet-name>
-  <url-pattern>/error</url-pattern>
-  </servlet-mapping>
-  
-  
-  <!-- servlet-mapping -->
-  <servlet>
-  <servlet-name>UserServiceServlet</servlet-name>
-  <servlet-class>user.controller.ServiceServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  <servlet-name>UserServiceServlet</servlet-name>
-  <url-pattern>/user/service</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  <servlet-name>FollowServiceServlet</servlet-name>
-  <servlet-class>follow.controller.ServiceServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  <servlet-name>FollowServiceServlet</servlet-name>
-  <url-pattern>/follow/*</url-pattern>		
-  <!--  *이 와일드카드라서 follow 뒤에 아무거나 들어와도 FollowServiceServlet으로 감 -->
-  </servlet-mapping>
-  
-  <error-page>
-  <location>/error</location>
-  </error-page>
-  <!-- jsp-config -->
-  <jsp-config>
-  <jsp-property-group>
-  <url-pattern>*.jsp</url-pattern>
-  <include-prelude>/taglib.jsp</include-prelude>
-  </jsp-property-group>
-  </jsp-config>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>DayMusic-server</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+	</welcome-file-list>
+
+	<!-- jsp-mapping -->
+	<servlet>
+		<servlet-name>error</servlet-name>
+		<jsp-file>/error.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>error</servlet-name>
+		<url-pattern>/error</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- servlet-mapping -->
+	<servlet>
+		<servlet-name>UserServiceServlet</servlet-name>
+		<servlet-class>user.controller.UserServiceServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UserServiceServlet</servlet-name>
+		<url-pattern>/user/service</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>BoardServiceServlet</servlet-name>
+		<servlet-class>board.controller.ServiceServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BoardServiceServlet</servlet-name>
+		<url-pattern>/board/service</url-pattern>
+	</servlet-mapping>
+
+
+
+	<filter>
+		<filter-name>corsFilter</filter-name>
+		<filter-class>util.CORSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>corsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<servlet>
+		<servlet-name>FollowServiceServlet</servlet-name>
+		<servlet-class>follow.controller.ServiceServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FollowServiceServlet</servlet-name>
+		<url-pattern>/follow/*</url-pattern>
+		<!-- *이 와일드카드라서 follow 뒤에 아무거나 들어와도 FollowServiceServlet으로 감 -->
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LikeServiceServlet</servlet-name>
+		<servlet-class>like.controller.LikeServiceServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LikeServiceServlet</servlet-name>
+		<url-pattern>/like</url-pattern>
+	</servlet-mapping>
+
+
+
+	<error-page>
+		<location>/error</location>
+	</error-page>
+
+
+
+	<!-- jsp-config -->
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<include-prelude>/taglib.jsp</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
 </web-app>
