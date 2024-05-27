@@ -1,40 +1,40 @@
-package user.controller;
+package follow.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import user.controller.action.Action;
 
-
-public class ServiceServlet extends HttpServlet {
-
+public class FollowServiceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//GoF 디자인패턴
-		// ㄴ 생성패턴 싱글톤 , 팩토리메소드 , 커맨드 
+		String command = request.getPathInfo();			// / 뒤에 마지막 주소를 가져옴
+		System.out.println("ServiceServlet command : " + command);
 		
-		//input hidden 으로 넘겨도 되고 경로에 ?command = "ddd" 로 넘겨도 되고 
-		String command = request.getParameter("command");
+		FollowActionFactory af = FollowActionFactory.getInstance();
+		FollowAction action = null;
 		
-		ActionFactory af = ActionFactory.getInstance();
-		Action action = af.getAction(command);
+		String id = "";	// 현재 로그인한 유저 아이디
+		if(request.getParameter("id") != null) {
+			id = request.getParameter("id");
+			System.out.println("ServiceServlet id: "+id);
+			
+			action = af.getAction(command, id);
+		} else {
+			action = af.getAction(command);
+		}
 		
 		if(action != null) {
 			action.execute(request, response);
 		}
 	}
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		doGet(request, response);
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

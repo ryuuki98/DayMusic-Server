@@ -15,7 +15,7 @@ public class DBManager {
 
 		try {
 			Context init = new InitialContext();
-			DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/daymusicDB");
+			DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/dayMusicDB");
 
 			conn = ds.getConnection();
 
@@ -25,23 +25,25 @@ public class DBManager {
 		}
 		return conn;
 	}
-	public static void close(Connection conn, PreparedStatement pstmt , ResultSet rs) {
+
+	public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
+
 		try {
-			rs.close();			
+			rs.close();
 			pstmt.close();
 			conn.close();
-			
-			System.out.println("DB연결 해제");
+
+			System.out.println("DB 연동 해제");
 		} catch (Exception e) {
-			System.out.println("DB연결 해제 실패");
+			System.out.println("DB 연동 해제 실패");
+			e.printStackTrace();
 		}
 	}
-	
+
 	public static void close(Connection conn, PreparedStatement pstmt) {
 		try {
 			pstmt.close();
 			conn.close();
-			
 			System.out.println("DB연결 해제");
 		} catch (Exception e) {
 			System.out.println("DB연결 해제 실패");
