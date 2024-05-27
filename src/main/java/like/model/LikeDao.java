@@ -60,7 +60,7 @@ public class LikeDao {
 		try {
 			conn = DBManager.getConnection();
 			
-			String sql = "SELECT * FROM like WHERE id=? AND board_code=?";
+			String sql = "SELECT * FROM `like` WHERE id=? AND board_code=?";
 			
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -99,6 +99,7 @@ public class LikeDao {
 				deleteLike(id, boardCode);
 				message = "좋아요를 취소했습니다.";
 			}
+			System.out.println(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -114,7 +115,7 @@ public class LikeDao {
 		try {
 			conn = DBManager.getConnection();
 			
-			String Sql = "INSERT INTO like (id,boardCode) VALUES (?,?)";
+			String Sql = "INSERT INTO `like` (id,board_code) VALUES (?,?)";
 			pstmt = conn.prepareStatement(Sql);
 			
 			pstmt.setString(1, id);
@@ -138,7 +139,7 @@ public class LikeDao {
 		try {
 			conn = DBManager.getConnection();
 			
-			String sql = "DELETE FROM like WHERE board_code=? AND id=?";
+			String sql = "DELETE FROM `like` WHERE board_code=? AND id=?";
 			pstmt =conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, boardCode);
@@ -155,5 +156,29 @@ public class LikeDao {
 		
 		
 		return result;
+	}
+
+	public Integer countLike(int board_code){
+		int count = 0;
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT COUNT(*) FROM `like` WHERE board_code=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1,board_code);
+
+			pstmt.execute();
+
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+
+		return  count;
 	}
 }
