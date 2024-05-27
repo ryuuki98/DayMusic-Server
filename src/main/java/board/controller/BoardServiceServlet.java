@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 
-public class ServiceServlet extends HttpServlet {
+public class BoardServiceServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//GoF 디자인패턴
