@@ -1,5 +1,8 @@
 package follow.controller;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,10 +34,32 @@ public class FollowServiceServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		StringBuilder sb = new StringBuilder();
+		BufferedReader reader = request.getReader();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			sb.append(line);
+		}
+
+		JSONObject jsonObject = new JSONObject(sb.toString());
+
+		// JSON 데이터 추출
+		String command = jsonObject.getString("command");
+		System.out.println(command);
+		FollowActionFactory af = FollowActionFactory.getInstance();
+		FollowAction action = af.getAction(command);
+
+		String followerId = jsonObject.getString("followerId");
+		String followedId = jsonObject.getString("followedId");
+
+		if(action != null) {
+			request.setAttribute("jsonRequest", jsonObject);
+			action.execute(request, response);
+		}
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		doPost(request, response);
 	}
 }

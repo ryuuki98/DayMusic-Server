@@ -80,7 +80,7 @@ public class FollowDao {
 		try {
 			conn = DBManager.getConnection();
 			
-			String sql = "INSERT INTO (`follower_id`, `followed_id`, `reg_date`, `mod_date`) VALUES(?, ?, NOW(), NOW())";
+			String sql = "INSERT INTO follow (`follower_id`, `followed_id`, `reg_date`, `mod_date`) VALUES(?, ?, NOW(), NOW())";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, followerId);
