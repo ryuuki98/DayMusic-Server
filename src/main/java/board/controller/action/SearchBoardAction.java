@@ -2,6 +2,7 @@ package board.controller.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,25 +22,29 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json;charset=UTF-8");
 
-        JSONObject[] jsonObject = (JSONObject[]) request.getAttribute("data");
-        
+//        System.out.println("Request attributes: " + request.getAttributeNames());
         int publics = 0;
 
         BoardDao boardDao = BoardDao.getInstance();
-        List<BoardResponseDto> boardList = boardDao.findBoardList(publics);
+        List<BoardResponseDto> boardList = boardDao.findBoardList();
+
+        System.out.println("boardList : " + boardList);
+        for(int i =0; i < boardList.size(); i++){
+            BoardResponseDto board = boardList.get(i);
+            System.out.println("board : " + board);
+        }
+
+        System.out.println("Total boards fetched: " + boardList.size());
         
         List<BoardResponseDto> filteredBoardList = boardList.stream()
-                .filter(board -> board.isPublic() != 0) // Assuming isPublic() returns true for public, false for non-public
+                .filter(board -> board.isPublic() == 0)
                 .collect(Collectors.toList());
 
+        System.out.println("Total public boards: " + filteredBoardList.size());
+        response.setStatus(HttpServletResponse.SC_OK);
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("status", 200);
-        
-        System.out.println();
-        
-        
 
         JSONArray boardArray = new JSONArray();
         for (BoardResponseDto board : filteredBoardList) {
@@ -53,10 +58,12 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
         }
 
         jsonResponse.put("boardList", boardArray);
+        System.out.println("JSON Response: " + jsonResponse.toString());
 
         PrintWriter out = response.getWriter();
+
         out.print(jsonResponse.toString());
         out.flush();
-        out.close();
+
     }
 }
