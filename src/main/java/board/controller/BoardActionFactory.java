@@ -26,6 +26,8 @@ public class BoardActionFactory {
 			action = new UpdateBoardAction();
 		else if(command.equals("detail"))
 			action = new DetailBoardAction();
+		else if(command.equals("myBoard"))
+			action = new MyBoardAction();
 		
 		return action;
 		
