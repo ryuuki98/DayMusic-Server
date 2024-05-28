@@ -18,10 +18,10 @@ public class LikeActionFactory {
 	public LikeAction getAction(String command) {
 		LikeAction action = null;
 		if(command.equals("like")) {
+			System.out.println("좋아요 리스트 액션실행");
 			action = new LikeListAction();
-			System.out.println("좋아요 리스트 ");
 		}else if(command.equals("likeAdd")) {
-			System.out.println("좋아요 추가/제거");
+			System.out.println("좋아요 추가/제거 액셩실행");
 			action = new LikeAddAction();
 		}
 		return action;

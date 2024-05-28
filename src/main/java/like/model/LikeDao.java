@@ -30,7 +30,7 @@ public class LikeDao {
 	    try {
 	        conn = DBManager.getConnection();
 	        
-	        String sql = "SELECT * FROM `like` WHERE board_code=?";
+	        String sql = "SELECT id FROM `like` WHERE board_code=?";
 	        
 	        pstmt = conn.prepareStatement(sql);
 	        pstmt.setInt(1, boardCode);
@@ -169,14 +169,16 @@ public class LikeDao {
 
 			pstmt.setInt(1,board_code);
 
-			pstmt.execute();
+			rs = pstmt.executeQuery();
 
 			if(rs.next()){
 				count = rs.getInt(1);
 			}
-
+			System.out.println("카운트 세기 완료");
 		} catch (Exception e){
 			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt,rs);
 		}
 
 		return  count;
