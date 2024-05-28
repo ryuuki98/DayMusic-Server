@@ -17,7 +17,10 @@ public class FollowActionFactory {
 		FollowAction action = null;
 		System.out.println("command : " + command);
 		
-		if(command == null) {
+		if(command.equals("add")) {
+			action = new FollowAddAction();
+		}
+		else if(command.equals("delete")) {
 			action = new FollowDeleteAction();
 		}
 		return action;
