@@ -30,7 +30,7 @@ public class LikeDao {
 	    try {
 	        conn = DBManager.getConnection();
 	        
-	        String sql = "SELECT * FROM `like` WHERE board_code=?";
+	        String sql = "SELECT id FROM `like` WHERE board_code=?";
 	        
 	        pstmt = conn.prepareStatement(sql);
 	        pstmt.setInt(1, boardCode);
