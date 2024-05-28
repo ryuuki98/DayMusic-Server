@@ -22,7 +22,7 @@ public class FollowDeleteAction extends HttpServlet implements FollowAction{
 		String followerId = request.getParameter("followerId");
 		String followedId = request.getParameter("followedId");
 
-		followDao.deleteFollow(followerId, followedId);
+		followDao.followChange(followerId, followedId);
 
 		String message = "팔로우 취소 성공";
 		request.setAttribute("message", message);

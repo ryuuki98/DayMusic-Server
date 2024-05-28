@@ -19,9 +19,11 @@ public class FollowActionFactory {
 		
 		if(command.equals("add")) {
 			action = new FollowAddAction();
+			System.out.println("add로들어오나?");
 		}
 		else if(command.equals("delete")) {
 			action = new FollowDeleteAction();
+			System.out.println("delete로들어오나?");
 		}
 		return action;
 	}

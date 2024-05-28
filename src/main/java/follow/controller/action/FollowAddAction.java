@@ -23,7 +23,7 @@ public class FollowAddAction extends HttpServlet implements FollowAction {
 		String followerId = jsonObject.getString("followerId");
 		String followedId = jsonObject.getString("followedId");
 
-		followDao.addFollow(followerId, followedId);
+		followDao.followChange(followerId, followedId);
 
 		String message = "팔로우 성공";
 		request.setAttribute("message", message);
