@@ -23,5 +23,8 @@ public class FollowDeleteAction extends HttpServlet implements FollowAction{
 		String followedId = request.getParameter("followedId");
 
 		followDao.deleteFollow(followerId, followedId);
+
+		String message = "팔로우 취소 성공";
+		request.setAttribute("message", message);
 	}
 }
