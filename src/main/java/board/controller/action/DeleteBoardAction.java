@@ -45,7 +45,7 @@ public class DeleteBoardAction extends HttpServlet implements BoardAction {
                 jsonResponse.put("message", "Delete success.");
             } else {
                 System.out.println("게시글 삭제 실패");
-                jsonResponse.put("status", 500);
+                jsonResponse.put("status", 404);
                 jsonResponse.put("message", "Delete failed.");
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500 상태 코드 설정
             }

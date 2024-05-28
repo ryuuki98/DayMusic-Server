@@ -27,36 +27,38 @@ public class BoardDao {
 	// 나의 게시물 찾기
 	public List<BoardResponseDto> findBoardMyID(String userId) {
 		List<BoardResponseDto> list = new ArrayList<BoardResponseDto>();
-		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
 		try {
 			conn = DBManager.getConnection();
-			
+
+			// SQL query to select posts by user ID
 			String sql = "SELECT id, contents, music_code, board_code, reg_date, mod_date, is_public FROM board WHERE id=?";
-			
+
 			pstmt = conn.prepareStatement(sql);
-			
+			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				String id = rs.getString(1);
-				if(id.equals(userId)) {
-					String contents = rs.getString(2);
-					String musicCode = rs.getString(3);
-					int boardCode = rs.getInt(4);
-					java.sql.Timestamp reg_date = rs.getTimestamp(5);
-					java.sql.Timestamp mod_date = rs.getTimestamp(6);
-					int isPublic = rs.getInt(7);
-					
-					BoardResponseDto board = new BoardResponseDto(boardCode, id, contents, musicCode, isPublic, reg_date, mod_date);
-					list.add(board);
-				}
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String contents = rs.getString("contents");
+				String musicCode = rs.getString("music_code");
+				int boardCode = rs.getInt("board_code");
+				java.sql.Timestamp regDate = rs.getTimestamp("reg_date");
+				java.sql.Timestamp modDate = rs.getTimestamp("mod_date");
+				int isPublic = rs.getInt("is_public");
+
+				BoardResponseDto board = new BoardResponseDto(boardCode, id, contents, musicCode, isPublic, regDate, modDate);
+				list.add(board);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
 		}
-		
+
 		return list;
 		
 	}
