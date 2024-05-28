@@ -33,6 +33,9 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 			 publics = 0;
 		 } else 
 			 publics = 1;
+
+		String userId = jsonObject.getString("userId");
+		System.out.println("userId : " + userId);
 		 
 		 
 //	        System.out.println("public : " + isPublic);
@@ -55,10 +58,11 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 //	            String userId = "user2";
 
 	            System.out.println("user : " + user);
+				System.out.println("nickname : " + nickname);
 	            System.out.println("contents : " + contents);
 	            System.out.println("public : " + publics);
 
-	            BoardRequestDto boardDto = new BoardRequestDto(nickname, contents, publics);
+	            BoardRequestDto boardDto = new BoardRequestDto(user, contents, publics);
 
 	            BoardDao boardDao = BoardDao.getInstance();
 	            BoardResponseDto board = boardDao.createBoard(boardDto);
