@@ -32,7 +32,7 @@ public class BoardServiceServlet extends HttpServlet {
 		while ((line = reader.readLine()) != null) {
 			sb.append(line);
 		}
-		System.out.println(sb.toString());
+		System.out.println("sb.toString() : " + sb.toString());
 		JSONObject jsonObject = new JSONObject(sb.toString());
 		
 		
