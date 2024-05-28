@@ -62,42 +62,43 @@ public class BoardDao {
 	}
 	
 	// 공개 게시글 리스트
-	public List<BoardResponseDto> findBoardList(int isPublic) {
+	public List<BoardResponseDto> findBoardList() {
 		List<BoardResponseDto> list = new ArrayList<BoardResponseDto>();
-		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
 		try {
 			conn = DBManager.getConnection();
-			
-			String sql = "SELECT is_public, id, contents, music_code, board_code, reg_date, mod_date FROM board WHERE is_public=?";
-			
+
+			// SQL query to select only public posts
+			String sql = "SELECT is_public, id, contents, music_code, board_code, reg_date, mod_date FROM board WHERE is_public=0";
+
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, isPublic);
-			
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-			int publics = 0;  
-				if(publics == isPublic) {
-					String id = rs.getString(2);
-					String contents = rs.getString(3);
-					String musicCode = rs.getString(4);
-					int boardCode = rs.getInt(5);
-					java.sql.Timestamp reg_date = rs.getTimestamp(6);
-					java.sql.Timestamp mod_date = rs.getTimestamp(7);
-					
-					BoardResponseDto board = new BoardResponseDto(boardCode, id, contents, musicCode, isPublic, reg_date, mod_date);
-					list.add(board);
-				}
+			while (rs.next()) {
+				// Only public posts are fetched by the query, so no need to filter here
+				int isPublic = rs.getInt("is_public");
+				String id = rs.getString("id");
+				String contents = rs.getString("contents");
+				String musicCode = rs.getString("music_code");
+				int boardCode = rs.getInt("board_code");
+				java.sql.Timestamp regDate = rs.getTimestamp("reg_date");
+				java.sql.Timestamp modDate = rs.getTimestamp("mod_date");
+
+				BoardResponseDto board = new BoardResponseDto(boardCode, id, contents, musicCode, isPublic, regDate, modDate);
+				list.add(board);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
 		}
-		
+
 		return list;
-		
 	}
-	
+
+
 	// 게시물 번호로 찾기
 	public BoardResponseDto findBoardByCode(int boardCode) {
 		BoardResponseDto board = null;
