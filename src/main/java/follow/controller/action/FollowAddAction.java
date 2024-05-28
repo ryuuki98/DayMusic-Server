@@ -10,15 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import follow.controller.FollowAction;
 import follow.model.FollowDao;
+import org.json.JSONObject;
 
 public class FollowAddAction extends HttpServlet implements FollowAction {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
+		JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
+
 		FollowDao followDao = FollowDao.getInstance();
-		String followerId = request.getParameter("followerId");
-		String followedId = request.getParameter("followedId");
+		String followerId = jsonObject.getString("followerId");
+		String followedId = jsonObject.getString("followedId");
 
 		followDao.addFollow(followerId, followedId);
 	}
