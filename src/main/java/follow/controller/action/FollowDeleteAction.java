@@ -16,9 +16,9 @@ public class FollowDeleteAction extends HttpServlet implements FollowAction{
 		request.setCharacterEncoding("UTF-8");
 
 		FollowDao followDao = FollowDao.getInstance();
-		String followedId = request.getParameter("followedId");
 		String followerId = request.getParameter("followerId");
+		String followedId = request.getParameter("followedId");
 
-		followDao.deleteFollow(followedId, followerId);
+		followDao.deleteFollow(followerId, followedId);
 	}
 }

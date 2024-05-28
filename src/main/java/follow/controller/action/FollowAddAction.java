@@ -17,9 +17,9 @@ public class FollowAddAction extends HttpServlet implements FollowAction {
 		request.setCharacterEncoding("UTF-8");
 
 		FollowDao followDao = FollowDao.getInstance();
-		String followedId = request.getParameter("followedId");
 		String followerId = request.getParameter("followerId");
+		String followedId = request.getParameter("followedId");
 
-		followDao.addFollow(followedId, followerId);
+		followDao.addFollow(followerId, followedId);
 	}
 }
