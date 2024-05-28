@@ -38,7 +38,7 @@
 
 	<servlet>
 		<servlet-name>BoardServiceServlet</servlet-name>
-		<servlet-class>board.controller.ServiceServlet</servlet-class>
+		<servlet-class>board.controller.BoardServiceServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -60,7 +60,7 @@
 
 	<servlet>
 		<servlet-name>FollowServiceServlet</servlet-name>
-		<servlet-class>follow.controller.ServiceServlet</servlet-class>
+		<servlet-class>follow.controller.FollowServiceServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
