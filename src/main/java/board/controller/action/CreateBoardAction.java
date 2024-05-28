@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -15,7 +14,6 @@ import board.controller.BoardAction;
 import board.module.BoardDao;
 import board.module.BoardRequestDto;
 import board.module.BoardResponseDto;
-import user.model.UserResponseDto;
 
 public class CreateBoardAction extends HttpServlet implements BoardAction {
 
@@ -33,6 +31,11 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 			 publics = 0;
 		 } else 
 			 publics = 1;
+
+		String userId = jsonObject.getString("userId");
+		System.out.println("userId : " + userId);
+		String nickname = jsonObject.getString("nickname");
+		System.out.println("nickname : " + nickname);
 		 
 		 
 //	        System.out.println("public : " + isPublic);
@@ -49,12 +52,13 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 	        PrintWriter out = response.getWriter();
 
 	        if (isValid) {
-	             HttpSession session = request.getSession();
-				String user = (String) session.getAttribute("userId");
-	        	 String nickname = (String) session.getAttribute("nickname");
+//	             HttpSession session = request.getSession();
+//				String user = (String) session.getAttribute("userId");
+//	        	 String nickname = (String) session.getAttribute("nickname");
 //	            String userId = "user2";
 
-	            System.out.println("user : " + user);
+	            System.out.println("user : " + nickname);
+				System.out.println("nickname : " + nickname);
 	            System.out.println("contents : " + contents);
 	            System.out.println("public : " + publics);
 
