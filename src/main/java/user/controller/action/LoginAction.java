@@ -45,7 +45,6 @@ public class LoginAction implements UserAction {
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write(jsonResponse.toString());
 
-            // test
         }
     }
 }
