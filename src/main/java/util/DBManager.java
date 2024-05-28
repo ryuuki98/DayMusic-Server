@@ -15,7 +15,7 @@ public class DBManager {
 
 		try {
 			Context init = new InitialContext();
-			DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/daymusic_DB");
+			DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/daymusicDB");
 
 			conn = ds.getConnection();
 
