@@ -27,6 +27,11 @@ public class UserDao {
 
 		String encryptPassword = user.getPassword();
 
+		System.out.println(encryptPassword);
+		System.out.println(userRequestDto.getPassword());
+
+
+		System.out.println();
 		if (!PasswordCrypto.decrypt(userRequestDto.getPassword(), encryptPassword)) {
 			System.out.println("비밀번호 불일치");
 			user = null;
@@ -89,7 +94,7 @@ public class UserDao {
 				String phone = rs.getString(6);
 				String telecom = rs.getString(7);
 				String nickname = rs.getString(8);
-				String profile_img_url = rs.getString(9);
+				String profile_img_url = rs.getString(9) == null ? "" : rs.getString(9);
 				boolean is_staff = rs.getBoolean(10);
 
 				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
@@ -166,7 +171,7 @@ public class UserDao {
 	public boolean duplicateEmail(String id, String newEmail) {
 		boolean isDuplicated = false;
 		conn = DBManager.getConnection();
-		String sql = "SELECT COUNT(*) FROM users WHERE id != ? AND newEmail = ?";
+		String sql = "SELECT COUNT(*) FROM users WHERE id != ? AND email = ?";
 
 		try {
 			pstmt = conn.prepareStatement(sql);

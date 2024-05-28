@@ -1,16 +1,6 @@
 package user.controller;
 
-import user.controller.action.DeleteUserAction;
-import user.controller.action.DuplicateEmail;
-import user.controller.action.DuplicateId;
-import user.controller.action.DuplicateNickname;
-import user.controller.action.DuplicatePhone;
-import user.controller.action.JoinAction;
-import user.controller.action.LoginAction;
-import user.controller.action.UpdateInformation;
-import user.controller.action.UpdateNicknameAction;
-import user.controller.action.UpdatePasswordAction;
-import user.controller.action.UpdateProfileImage;
+import user.controller.action.*;
 
 public class UserActionFactory {
 	private UserActionFactory() {
@@ -48,6 +38,10 @@ public class UserActionFactory {
 			action = new DuplicatePhone();
 		}else if (command.equals("duplicateNickname")) {
 			action = new DuplicateNickname();
+		} else if (command.equals("getUserInfo")) {
+			action = new GetUserInfo();
+			//와서 1사람 정보 가져오는거 해야됨
+
 		}
 		return action;
 		

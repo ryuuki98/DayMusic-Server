@@ -15,6 +15,7 @@ public class LoginAction implements UserAction {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setCharacterEncoding("UTF-8");
         System.out.println("로그인 처리 로직!");
         UserDao userDao = UserDao.getInstance();
        
