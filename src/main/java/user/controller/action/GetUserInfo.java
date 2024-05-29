@@ -19,7 +19,7 @@ public class GetUserInfo implements UserAction {
         JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
 
         String id = jsonObject.getString("id");
-        System.out.println(id);
+        System.out.println("[22] GetUserInfo Id : " + id);
 
         UserResponseDto user = userDao.findUserById(id);
 

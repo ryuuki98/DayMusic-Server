@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class BoardResponseDto {
 	private int boardCode;
 	private String id;
+	private String nickname;
 	private String contents;
 	private String musicCode;
 	private int isPublic;
@@ -13,11 +14,12 @@ public class BoardResponseDto {
 	
 	public BoardResponseDto() {}
 	
-	public BoardResponseDto(int boardCode, String id, String contents, String musicCode, int isPublic,
+	public BoardResponseDto(int boardCode, String id, String nickname, String contents, String musicCode, int isPublic,
 			Timestamp regDate, Timestamp modDate) {
 		super();
 		this.boardCode = boardCode;
 		this.id = id;
+		this.nickname = nickname;
 		this.contents = contents;
 		this.musicCode = musicCode;
 		this.isPublic = isPublic;
@@ -40,6 +42,10 @@ public class BoardResponseDto {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	public String getNickname() {return nickname; }
+
+	public void setNickname(String nickname) { this.nickname = nickname; }
 
 	public String getContents() {
 		return contents;

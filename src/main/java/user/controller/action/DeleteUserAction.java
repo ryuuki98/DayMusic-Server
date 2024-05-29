@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import user.controller.UserAction;
 import user.model.UserDao;
 import user.model.UserRequestDto;
@@ -17,15 +18,20 @@ public class DeleteUserAction implements UserAction {
 		System.out.println("회원 삭제 로직");
 		
 		UserDao userDao = UserDao.getInstance();
-		
-		String id = request.getParameter("id");
-		
+
+		JSONObject jsonObject = (JSONObject)request.getAttribute("jsonRequest");
+		String id = jsonObject.getString("id");
 		boolean isDeleted = userDao.deleteUserById(id);
 		
 		if (isDeleted) {
 			System.out.println("삭제 완료");
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.getWriter().write("{\"message\":\"delete success\"}");
+
 		}else {
 			System.out.println("삭제 실패");
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().write("{\"message\":\"delete fail\"}");
 		}
 		
 	}

@@ -24,16 +24,9 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 //        System.out.println("Request attributes: " + request.getAttributeNames());
-        int publics = 0;
 
         BoardDao boardDao = BoardDao.getInstance();
         List<BoardResponseDto> boardList = boardDao.findBoardList();
-
-        System.out.println("boardList : " + boardList);
-        for(int i =0; i < boardList.size(); i++){
-            BoardResponseDto board = boardList.get(i);
-            System.out.println("board : " + board);
-        }
 
         System.out.println("Total boards fetched: " + boardList.size());
         
@@ -54,6 +47,7 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
             boardJson.put("board_code", board.getBoardCode());
             boardJson.put("music_code", board.getMusicCode());
             boardJson.put("is_public", board.isPublic());
+            boardJson.put("nickname", board.getNickname());
             boardArray.put(boardJson);
         }
 

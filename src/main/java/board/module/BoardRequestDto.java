@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class BoardRequestDto {
 	private int boardCode;
 	private String id;
+	private String nickname;
 	private String contents;
 	private String musicCode;
 	private int isPublic;
@@ -13,11 +14,12 @@ public class BoardRequestDto {
 	
 	public BoardRequestDto() {}
 	
-	public BoardRequestDto(int boardCode, String id, String contents, String musicCode, int isPublic,
+	public BoardRequestDto(int boardCode, String nickname, String id, String contents, String musicCode, int isPublic,
 			Timestamp regDate, Timestamp modDate) {
 		super();
 		this.boardCode = boardCode;
 		this.id = id;
+		this.nickname = nickname;
 		this.contents = contents;
 		this.musicCode = musicCode;
 		this.isPublic = isPublic;
@@ -25,18 +27,20 @@ public class BoardRequestDto {
 		this.modDate = modDate;
 	}
 
-	public BoardRequestDto (String id, String contents, String musicCode, int isPublic) {
+	public BoardRequestDto (String id, String nickname, String contents, String musicCode, int isPublic) {
 		super();
 		this.id = id;
+		this.nickname = nickname;
 		this.contents = contents;
 		this.musicCode = musicCode;
 		this.isPublic = isPublic;
 	}
 	
 	// 글 작성 되는지 먼저 확인
-	public BoardRequestDto (String id, String contents, int isPublic) {
+	public BoardRequestDto (String id, String nickname, String contents, int isPublic) {
 		super();
 		this.id = id;
+		this.nickname = nickname;
 		this.contents = contents;
 		this.isPublic = isPublic;
 	}
@@ -53,6 +57,8 @@ public class BoardRequestDto {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public String getNickname() { return nickname; }
+	public void setNickname(String nickname) { this.nickname = nickname; }
 	public String getContents() {
 		return contents;
 	}

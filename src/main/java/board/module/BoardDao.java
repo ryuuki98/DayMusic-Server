@@ -35,7 +35,7 @@ public class BoardDao {
 			conn = DBManager.getConnection();
 
 			// SQL query to select posts by user ID
-			String sql = "SELECT id, contents, music_code, board_code, reg_date, mod_date, is_public FROM board WHERE id=?";
+			String sql = "SELECT id, contents, music_code, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -49,8 +49,9 @@ public class BoardDao {
 				java.sql.Timestamp regDate = rs.getTimestamp("reg_date");
 				java.sql.Timestamp modDate = rs.getTimestamp("mod_date");
 				int isPublic = rs.getInt("is_public");
+				String nickname = rs.getString("nickname");
 
-				BoardResponseDto board = new BoardResponseDto(boardCode, id, contents, musicCode, isPublic, regDate, modDate);
+				BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicCode, isPublic, regDate, modDate);
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -74,7 +75,7 @@ public class BoardDao {
 			conn = DBManager.getConnection();
 
 			// SQL query to select only public posts
-			String sql = "SELECT is_public, id, contents, music_code, board_code, reg_date, mod_date FROM board WHERE is_public=0";
+			String sql = "SELECT is_public, id, contents, music_code, board_code, reg_date, mod_date, nickname FROM board WHERE is_public=0";
 
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -87,8 +88,9 @@ public class BoardDao {
 				int boardCode = rs.getInt("board_code");
 				java.sql.Timestamp regDate = rs.getTimestamp("reg_date");
 				java.sql.Timestamp modDate = rs.getTimestamp("mod_date");
+				String nickname = rs.getString("nickname");
 
-				BoardResponseDto board = new BoardResponseDto(boardCode, id, contents, musicCode, isPublic, regDate, modDate);
+				BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicCode, isPublic, regDate, modDate);
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -109,7 +111,7 @@ public class BoardDao {
 		try {
 			conn = DBManager.getConnection();
 			
-			String sql = "SELECT board_code, id, contents, music_code, reg_date, mod_date, is_public FROM board WHERE board_code=?";
+			String sql = "SELECT board_code, id, contents, music_code, reg_date, mod_date, is_public, nickname FROM board WHERE board_code=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardCode);
@@ -123,8 +125,9 @@ public class BoardDao {
 				java.sql.Timestamp reg_date = rs.getTimestamp(5);
 				java.sql.Timestamp mod_date = rs.getTimestamp(6);
 				int isPublic = rs.getInt(7);
+				String nickname = rs.getString(8);
 				
-				board = new BoardResponseDto(boardCode, id, contents, musicCode, isPublic, reg_date, mod_date);
+				board = new BoardResponseDto(boardCode, id, nickname, contents, musicCode, isPublic, reg_date, mod_date);
 			}
 			
 		} catch (Exception e) {
@@ -143,7 +146,7 @@ public class BoardDao {
 		try {
 			conn = DBManager.getConnection();
 			
-			String sql = "SELECT id, contents, music_code, board_code, reg_date, mod_date, is_public FROM board WHERE id=?";
+			String sql = "SELECT id, contents, music_code, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -157,8 +160,9 @@ public class BoardDao {
 				java.sql.Timestamp reg_date = rs.getTimestamp(5);
 				java.sql.Timestamp mod_date = rs.getTimestamp(6);
 				int isPublic = rs.getInt(7);
+				String nickname = rs.getString(8);
 				
-				board = new BoardResponseDto(boardCode, userId, contents, musicCode, isPublic, reg_date, mod_date);
+				board = new BoardResponseDto(boardCode, userId, nickname, contents, musicCode, isPublic, reg_date, mod_date);
 			}
 			
 		} catch (Exception e) {
@@ -173,7 +177,7 @@ public class BoardDao {
 		
 		try {
 			conn = DBManager.getConnection();
-			String sql = "INSERT INTO board(id, contents, is_public) VALUES(?, ?, ?)";
+			String sql = "INSERT INTO board(id, contents, is_public, nickname) VALUES(?, ?, ?, ?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -181,6 +185,7 @@ public class BoardDao {
 			pstmt.setString(2, boardDto.getContents());
 //			pstmt.setString(3, boardDto.getMusicCode());
 			pstmt.setInt(3, boardDto.isPublic());
+			pstmt.setString(4, boardDto.getNickname());
 			
 			pstmt.execute();
 			
@@ -225,22 +230,18 @@ public class BoardDao {
 	}
 	
 	// 게시글 삭제
-	public boolean deleteBoard(BoardRequestDto boardDto) {
-		
-		if(findBoardByCode(boardDto.getBoardCode()) == null)
-			return false;
-		
+	public boolean deleteBoard(String userId, int boardCode) {
 		try {
 			conn = DBManager.getConnection();
-			
-			String sql = "DELETE FROM board WHERE board_code=?";
+			String sql = "DELETE FROM board WHERE id=? AND board_code=?";
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, boardDto.getBoardCode());
-			
-			pstmt.execute();
-			
-			return true;
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, boardCode);
+
+			int rowsAffected = pstmt.executeUpdate();
+			if (rowsAffected > 0) {
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
