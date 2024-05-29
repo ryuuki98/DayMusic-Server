@@ -14,7 +14,6 @@ import board.module.BoardDao;
 import board.module.BoardRequestDto;
 import org.json.JSONObject;
 
-@WebServlet("/deleteBoard")
 public class DeleteBoardAction extends HttpServlet implements BoardAction {
 
     @Override
@@ -22,40 +21,38 @@ public class DeleteBoardAction extends HttpServlet implements BoardAction {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
 
-        int boardCode = Integer.parseInt(request.getParameter("boardCode"));
+//        StringBuilder sb = new StringBuilder();
+//        String line;
+//        while ((line = request.getReader().readLine()) != null) {
+//            sb.append(line);
+//        }
+//        System.out.println("sb : " + sb);
+//        String jsonString = sb.toString();
+        JSONObject jsonObject = (JSONObject) request.getAttribute("data");
+//        JSONObject jsonObject = new JSONObject(jsonString);
+
+        String userId = jsonObject.getString("id");
+        System.out.println("id : " + userId);
+        int boardCode = jsonObject.getInt("board_code");
         System.out.println("boardCode : " + boardCode);
 
+        // Delete the board from the database
         BoardDao boardDao = BoardDao.getInstance();
-        boolean isValid = boardDao.findBoardByCode(boardCode) != null;
+        boolean success = boardDao.deleteBoard(userId, boardCode);
 
-        System.out.println(isValid);
-
+        // Prepare the JSON response
         JSONObject jsonResponse = new JSONObject();
-        PrintWriter out = response.getWriter();
-
-        if (isValid) {
-            BoardRequestDto boardDto = new BoardRequestDto();
-            boardDto.setBoardCode(boardCode);
-
-            boolean result = boardDao.deleteBoard(boardDto);
-
-            if (result) {
-                System.out.println("게시글 삭제 완료");
-                jsonResponse.put("status", 200);
-                jsonResponse.put("message", "Delete success.");
-            } else {
-                System.out.println("게시글 삭제 실패");
-                jsonResponse.put("status", 404);
-                jsonResponse.put("message", "Delete failed.");
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500 상태 코드 설정
-            }
+        if (success) {
+            jsonResponse.put("status", 200);
+            response.setStatus(HttpServletResponse.SC_OK);
+            jsonResponse.put("message", "Post deleted successfully");
         } else {
-            System.out.println("게시글 삭제 실패: 게시물을 찾을 수 없음");
-            jsonResponse.put("status", 404);
-            jsonResponse.put("message", "Board not found.");
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404 상태 코드 설정
+            jsonResponse.put("status", 400);
+            jsonResponse.put("message", "Failed to delete post");
         }
 
+        // Write the JSON response to the output
+        PrintWriter out = response.getWriter();
         out.print(jsonResponse.toString());
         out.flush();
         out.close();

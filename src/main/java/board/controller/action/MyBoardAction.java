@@ -23,6 +23,9 @@ public class MyBoardAction  extends HttpServlet implements BoardAction  {
 //        System.out.println("Request attributes: " + request.getAttributeNames());
         JSONObject jsonObject = (JSONObject) request.getAttribute("data");
         String userId = jsonObject.getString("id");
+
+        System.out.println("userId : " + userId);
+
         BoardDao boardDao = BoardDao.getInstance();
         List<BoardResponseDto> boardList = boardDao.findBoardMyID(userId);
 
@@ -34,16 +37,17 @@ public class MyBoardAction  extends HttpServlet implements BoardAction  {
 
 //        System.out.println("Total boards fetched: " + boardList.size());
 
-//        List<BoardResponseDto> filteredBoardList = boardList.stream()
-//                .collect(Collectors.toList());
+        List<BoardResponseDto> filteredBoardList = boardList.stream()
+                .filter(board -> board.getId().equals(userId))
+                .collect(Collectors.toList());
 //
-//        System.out.println("Total public boards: " + filteredBoardList.size());
+        System.out.println("Total public boards: " + filteredBoardList.size());
 
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("status", 200);
 
         JSONArray boardArray = new JSONArray();
-        for (BoardResponseDto board : boardList) {
+        for (BoardResponseDto board : filteredBoardList) {
             JSONObject boardJson = new JSONObject();
             boardJson.put("id", board.getId());
             boardJson.put("contents", board.getContents());

@@ -66,7 +66,7 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 
 	            BoardDao boardDao = BoardDao.getInstance();
 	            BoardResponseDto board = boardDao.createBoard(boardDto);
-				response.setStatus(HttpServletResponse.SC_OK); // 400 상태 코드 설정
+				response.setStatus(HttpServletResponse.SC_OK);
 	            System.out.println("게시글 작성 완료");
 	            out.print("게시글 작성 완료");
 	        } else {
