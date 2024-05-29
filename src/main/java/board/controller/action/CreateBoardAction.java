@@ -62,7 +62,7 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 	            System.out.println("contents : " + contents);
 	            System.out.println("public : " + publics);
 
-	            BoardRequestDto boardDto = new BoardRequestDto(userId, contents, publics);
+	            BoardRequestDto boardDto = new BoardRequestDto(userId, nickname, contents, publics);
 
 	            BoardDao boardDao = BoardDao.getInstance();
 	            BoardResponseDto board = boardDao.createBoard(boardDto);
