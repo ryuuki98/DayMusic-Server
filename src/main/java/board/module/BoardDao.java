@@ -225,22 +225,18 @@ public class BoardDao {
 	}
 	
 	// 게시글 삭제
-	public boolean deleteBoard(BoardRequestDto boardDto) {
-		
-		if(findBoardByCode(boardDto.getBoardCode()) == null)
-			return false;
-		
+	public boolean deleteBoard(String userId, int boardCode) {
 		try {
 			conn = DBManager.getConnection();
-			
-			String sql = "DELETE FROM board WHERE board_code=?";
+			String sql = "DELETE FROM board WHERE id=? AND board_code=?";
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, boardDto.getBoardCode());
-			
-			pstmt.execute();
-			
-			return true;
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, boardCode);
+
+			int rowsAffected = pstmt.executeUpdate();
+			if (rowsAffected > 0) {
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
