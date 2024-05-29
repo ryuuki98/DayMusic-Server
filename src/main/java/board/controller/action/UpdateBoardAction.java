@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import board.controller.BoardAction;
@@ -24,32 +25,46 @@ public class UpdateBoardAction extends HttpServlet implements BoardAction {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        BoardDao boardDao = BoardDao.getInstance();
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
-        JSONObject jsonObject = (JSONObject) request.getAttribute("data");
+        try {
+                JSONObject jsonObject = (JSONObject) request.getAttribute("data");
 
-        System.out.println(jsonObject.toString());
+                System.out.println(jsonObject.toString());
 
-        String id = jsonObject.getString("id");
-        String contents = jsonObject.getString("contents");
-        int boardCode = jsonObject.getInt("board_code");
+                String id = jsonObject.getString("id");
+                String nickname = jsonObject.getString("nickname");
+                String contents = jsonObject.getString("contents");
+                int boardCode = jsonObject.getInt("board_code");
+
+                System.out.println("id : " + id);
+                System.out.println("nickname : " + nickname);
+                System.out.println("contents : " + contents);
+                System.out.println("boardCode " + boardCode);
 
 
-        BoardRequestDto boardRequestDto = new BoardRequestDto();
-        boardRequestDto.setId(id);
-        boardRequestDto.setContents(contents);
-        boardRequestDto.setBoardCode(boardCode);
+                BoardRequestDto boardRequestDto = new BoardRequestDto();
+                boardRequestDto.setId(id);
+                boardRequestDto.setNickname(nickname);
+                boardRequestDto.setContents(contents);
+                boardRequestDto.setBoardCode(boardCode);
 
 
-        BoardResponseDto board = boardDao.updateBoardContents(boardRequestDto);
+                BoardDao boardDao = BoardDao.getInstance();
+                BoardResponseDto board = boardDao.updateBoardContents(boardRequestDto);
 
-        if (board == null) {
-            System.out.println("업데이트 실패");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        }else {
-            System.out.println("업데이트 성공");
-            response.setStatus(HttpServletResponse.SC_OK);
-
+                if (board == null) {
+                        System.out.println("업데이트 실패");
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                } else {
+                        System.out.println("업데이트 성공");
+                        response.setStatus(HttpServletResponse.SC_OK);
+                }
+        } catch (Exception e) {
+                e.printStackTrace();
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.getWriter().write("{\"message\":\"서버 오류 발생\"}");
         }
 
 
