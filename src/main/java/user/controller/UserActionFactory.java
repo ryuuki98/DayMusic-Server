@@ -40,8 +40,10 @@ public class UserActionFactory {
 			action = new DuplicateNickname();
 		} else if (command.equals("getUserInfo")) {
 			action = new GetUserInfo();
-			//와서 1사람 정보 가져오는거 해야됨
-
+		} else if (command.equals("duplicateEmailForUpdate")) {
+			action = new DuplicateEmailForUpdate();
+		} else if (command.equals("duplicatePhoneForUpdate")) {
+			action = new DuplicatePhoneForUpdate();
 		}
 		return action;
 		

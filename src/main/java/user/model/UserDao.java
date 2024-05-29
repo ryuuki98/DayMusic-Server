@@ -9,9 +9,9 @@ import util.DBManager;
 import util.PasswordCrypto;
 
 public class UserDao {
-	private Connection conn;
-	private PreparedStatement pstmt;
-	private ResultSet rs;
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
 
 	private UserDao() {
 	}
@@ -97,12 +97,16 @@ public class UserDao {
 				String profile_img_url = rs.getString(9) == null ? "" : rs.getString(9);
 				boolean is_staff = rs.getBoolean(10);
 
+
 				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
 						is_staff);
+				System.out.println("rs name" + name);
+
 			}
 
 		} catch (SQLException e) {
 			System.out.println("findUserById 메소드 오류 ");
+			System.out.println( "catch문 name : " + user.getName());
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
