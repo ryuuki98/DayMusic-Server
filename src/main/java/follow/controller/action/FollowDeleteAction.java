@@ -16,15 +16,18 @@ public class FollowDeleteAction extends HttpServlet implements FollowAction{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
+		JSONObject jsonResponse = new JSONObject();
 		JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
 
 		FollowDao followDao = FollowDao.getInstance();
-		String followerId = request.getParameter("followerId");
-		String followedId = request.getParameter("followedId");
+		String followerId = jsonObject.getString("followerId");
+		String followedId = jsonObject.getString("followedId");
 
-		followDao.followChange(followerId, followedId);
+		String message = followDao.followChange(followerId, followedId);
+		jsonResponse.put("message", message);
 
-		String message = "팔로우 취소 성공";
-		request.setAttribute("message", message);
+		// JSON 응답으로 반환
+		response.setContentType("application/json");
+		response.getWriter().write(jsonResponse.toString());
 	}
 }

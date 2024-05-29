@@ -6,10 +6,10 @@ public class FollowRequestDto {
 	
 	public FollowRequestDto() {}
 	
-	public FollowRequestDto(String followedId, String followerId) {
+	public FollowRequestDto(String followerId, String followedId) {
 		super();
-		this.followedId = followedId;
 		this.followerId = followerId;
+		this.followedId = followedId;
 	}
 
 	public String getFollowedId() {

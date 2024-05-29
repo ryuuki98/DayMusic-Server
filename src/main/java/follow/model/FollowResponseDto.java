@@ -1,14 +1,14 @@
 package follow.model;
 
 public class FollowResponseDto {
-	private String followedId;
 	private String followerId;
+	private String followedId;
 	private String nickname;
 	
-	public FollowResponseDto(String followedId, String followerId) {
+	public FollowResponseDto(String followerId, String followedId) {
 		super();
-		this.followedId = followedId;
 		this.followerId = followerId;
+		this.followedId = followedId;
 	}
 	public FollowResponseDto(String nickname) {
 		super();

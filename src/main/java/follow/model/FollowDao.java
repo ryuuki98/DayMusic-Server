@@ -100,12 +100,12 @@ public class FollowDao {
 		try {
 			conn = DBManager.getConnection();
 			
-			String sql = "DELETE FROM follow WHERE followed_id = ? AND follower_id = ?";
+			String sql = "DELETE FROM follow WHERE follower_id = ? AND followed_id = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, followerId);
 			pstmt.setString(2, followedId);
-			
+
 			pstmt.execute();
 			return true;
 		} catch (Exception e) {
@@ -124,11 +124,9 @@ public class FollowDao {
 			if (check == null) {
 				addFollow(followerId, followedId);
 				message = "팔로우 성공";
-				System.out.println("check가 널이야?");
 			} else {
 				deleteFollow(followerId, followedId);
 				message = "팔로우 취소 성공";
-				System.out.println("check가 널이아니야?");
 			}
 			System.out.println(message);
 		} catch (Exception e) {
@@ -138,14 +136,14 @@ public class FollowDao {
 		return message;
 	}
 
-	private FollowResponseDto isFollowing(String followerId, String followedId) {
+	public FollowResponseDto isFollowing(String followerId, String followedId) {
 		FollowResponseDto result = null;
 
 		try {
 			conn = DBManager.getConnection();
-
 			String sql = "SELECT follower_id, followed_id FROM follow WHERE follower_id = ? AND followed_id = ?";
 			pstmt = conn.prepareStatement(sql);
+
 			pstmt.setString(1, followerId);
 			pstmt.setString(2, followedId);
 
@@ -155,6 +153,7 @@ public class FollowDao {
 				String refollowerId = rs.getString(1);
 				String refollowedId = rs.getString(2);
 
+
 				result = new FollowResponseDto(refollowerId, refollowedId);
 			}
 		} catch (Exception e) {
@@ -162,7 +161,6 @@ public class FollowDao {
 		} finally {
 			DBManager.close(conn, pstmt, rs);
 		}
-
 		return result;
 	}
 }
