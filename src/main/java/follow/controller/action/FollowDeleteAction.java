@@ -19,8 +19,8 @@ public class FollowDeleteAction extends HttpServlet implements FollowAction{
 		JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
 
 		FollowDao followDao = FollowDao.getInstance();
-		String followerId = request.getParameter("followerId");
-		String followedId = request.getParameter("followedId");
+		String followerId = jsonObject.getString("followerId");
+		String followedId = jsonObject.getString("followedId");
 
 		followDao.followChange(followerId, followedId);
 
