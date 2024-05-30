@@ -123,16 +123,15 @@ public class FollowDao {
 			FollowResponseDto check = isFollowing(followerId, followedId);
 			if (check == null) {
 				addFollow(followerId, followedId);
-				message = "팔로우 성공";
+				message = "Follow Success";
 			} else {
 				deleteFollow(followerId, followedId);
-				message = "팔로우 취소 성공";
+				message = "Follow Cancel Success";
 			}
 			System.out.println(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return message;
 	}
 
