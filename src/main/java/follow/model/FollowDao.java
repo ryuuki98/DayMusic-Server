@@ -132,7 +132,6 @@ public class FollowDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// JSON 인코딩 설정
 		return message;
 	}
 
