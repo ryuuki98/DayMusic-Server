@@ -13,4 +13,4 @@ context.xml
 /docs
 /out
 
-/lib
+/WEB-INF/lib
