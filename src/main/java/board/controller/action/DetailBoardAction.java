@@ -42,7 +42,9 @@ public class DetailBoardAction extends HttpServlet implements BoardAction {
             jsonResponse.put("board_code", board.getBoardCode());
             jsonResponse.put("id", board.getId());
             jsonResponse.put("contents", board.getContents());
-            jsonResponse.put("music_code", board.getMusicCode());
+            jsonResponse.put("music_track", board.getMusicTrack());
+            jsonResponse.put("music_album", board.getMusicAlbum());
+            jsonResponse.put("music_artist", board.getMusicArtist());
             jsonResponse.put("reg_date", board.getRegDate().toString());
             jsonResponse.put("mod_date", board.getModDate().toString());
             jsonResponse.put("is_public", board.isPublic());

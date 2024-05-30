@@ -36,18 +36,18 @@ public class UpdateBoardAction extends HttpServlet implements BoardAction {
                 String id = jsonObject.getString("id");
                 String nickname = jsonObject.getString("nickname");
                 String contents = jsonObject.getString("contents");
+                String musicTrack = jsonObject.getString("musicTrack");
+                String musicAlbum = jsonObject.getString("musicAlbum");
+                String musicArtist = jsonObject.getString("musicArtist");
                 int boardCode = jsonObject.getInt("board_code");
-
-                System.out.println("id : " + id);
-                System.out.println("nickname : " + nickname);
-                System.out.println("contents : " + contents);
-                System.out.println("boardCode " + boardCode);
-
 
                 BoardRequestDto boardRequestDto = new BoardRequestDto();
                 boardRequestDto.setId(id);
                 boardRequestDto.setNickname(nickname);
                 boardRequestDto.setContents(contents);
+                boardRequestDto.setMusicTrack(musicTrack);
+                boardRequestDto.setMusicAlbum(musicAlbum);
+                boardRequestDto.setMusicArtist(musicArtist);
                 boardRequestDto.setBoardCode(boardCode);
 
 
