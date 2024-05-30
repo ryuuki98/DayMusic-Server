@@ -79,6 +79,16 @@
 		<url-pattern>/like</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>ImageServiceServlet</servlet-name>
+		<servlet-class>image.controller.ImageServiceServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ImageServiceServlet</servlet-name>
+		<url-pattern>/image/service</url-pattern>
+	</servlet-mapping>
+
 
 
 	<error-page>

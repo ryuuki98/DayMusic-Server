@@ -27,10 +27,6 @@ public class UserDao {
 
 		String encryptPassword = user.getPassword();
 
-		System.out.println(encryptPassword);
-		System.out.println(userRequestDto.getPassword());
-
-
 		System.out.println();
 		if (!PasswordCrypto.decrypt(userRequestDto.getPassword(), encryptPassword)) {
 			System.out.println("비밀번호 불일치");
