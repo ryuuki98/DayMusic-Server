@@ -8,19 +8,23 @@ public class Board {
 	private String id;
 	private String nickname;
 	private String contents;
-	private String musicCode;
+	private String musicTrack;
+	private String musicAlbum;
+	private String musicArtist;
 	private boolean isPublic;
 	private java.sql.Timestamp regDate;
 	private java.sql.Timestamp modDate;
 	
-	public Board(int boardCode, String id, String nickname, String contents, String musicCode, boolean isPublic, Timestamp regDate,
+	public Board(int boardCode, String id, String nickname, String contents, String musicTrack, String musicAlbum, String musicArtist, boolean isPublic, Timestamp regDate,
 			Timestamp modDate) {
 		super();
 		this.boardCode = boardCode;
 		this.id = id;
 		this.nickname = nickname;
 		this.contents = contents;
-		this.musicCode = musicCode;
+		this.musicTrack = musicTrack;
+		this.musicAlbum = musicAlbum;
+		this.musicArtist = musicArtist;
 		this.isPublic = isPublic;
 		this.regDate = regDate;
 		this.modDate = modDate;
@@ -41,8 +45,12 @@ public class Board {
 	}
 
 	public String getMusicCode() {
-		return musicCode;
+		return musicTrack;
 	}
+
+	public String getMusicAlbum() { return musicAlbum; }
+
+	public String getMusicArtist() { return musicArtist; }
 
 	public boolean isPublic() {
 		return isPublic;

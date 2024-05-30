@@ -52,7 +52,9 @@ public class MyBoardAction  extends HttpServlet implements BoardAction  {
             boardJson.put("id", board.getId());
             boardJson.put("contents", board.getContents());
             boardJson.put("board_code", board.getBoardCode());
-            boardJson.put("music_code", board.getMusicCode());
+            boardJson.put("music_track", board.getMusicTrack());
+            boardJson.put("music_album", board.getMusicAlbum());
+            boardJson.put("music_artist", board.getMusicArtist());
             boardJson.put("is_public", board.isPublic());
             boardArray.put(boardJson);
         }
