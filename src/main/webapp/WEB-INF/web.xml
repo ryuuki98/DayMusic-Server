@@ -90,6 +90,24 @@
 	</servlet-mapping>
 
 
+		<resource-env-ref>
+			<description>Amazon AWS Access Key</description>
+			<resource-env-ref-name>awsAccessKey</resource-env-ref-name>
+			<resource-env-ref-type>java.lang.String</resource-env-ref-type>
+		</resource-env-ref>
+
+		<resource-env-ref>
+			<description>Amazon AWS Secret Key</description>
+			<resource-env-ref-name>awsSecretKey</resource-env-ref-name>
+			<resource-env-ref-type>java.lang.String</resource-env-ref-type>
+		</resource-env-ref>
+
+	<resource-env-ref>
+		<description>Bucket Name </description>
+		<resource-env-ref-name>bucketName</resource-env-ref-name>
+		<resource-env-ref-type>java.lang.String</resource-env-ref-type>
+	</resource-env-ref>
+
 
 	<error-page>
 		<location>/error</location>
