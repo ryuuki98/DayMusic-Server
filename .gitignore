@@ -12,3 +12,5 @@ context.xml
 *.iml
 /docs
 /out
+
+/lib
