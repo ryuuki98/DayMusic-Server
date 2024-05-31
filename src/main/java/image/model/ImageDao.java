@@ -28,21 +28,20 @@ public class ImageDao {
         String sql = "UPDATE users SET profile_img_url = ? WHERE id = ?";
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, imageUrl);
             pstmt.setString(2, userId);
-            update = pstmt.execute();
+            update = pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("duplicateEmail method 오류");
             e.printStackTrace();
-        }finally {
-            DBManager.close(conn,pstmt);
+        } finally {
+            DBManager.close(conn, pstmt);
         }
 
         return update;
 
     }
-
 
 
 }
