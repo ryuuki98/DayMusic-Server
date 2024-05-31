@@ -455,4 +455,27 @@ public class UserDao {
 		}
 		return nickname;
 	}
+
+	public String getProfileImageUrl(String userId) {
+		String profileImageUrl = null;
+
+		conn = DBManager.getConnection();
+		String sql = "SELECT profile_img_url FROM users WHERE id = ?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				profileImageUrl = rs.getString("profile_img_url");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return profileImageUrl;
+	}
 }
