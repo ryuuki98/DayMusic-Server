@@ -23,6 +23,14 @@ public class Comment {
         this.modDate = modDate;
     }
 
+    public Comment(String id, int boardCode, String contents, int parent) {
+        super();
+        this.id = id;
+        this.boardCode = boardCode;
+        this.contents = contents;
+        this.parent = parent;
+    }
+
     public String getId() {
         return id;
     }
