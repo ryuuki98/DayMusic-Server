@@ -37,17 +37,17 @@ public class MyBoardAction  extends HttpServlet implements BoardAction  {
 
 //        System.out.println("Total boards fetched: " + boardList.size());
 
-        List<BoardResponseDto> filteredBoardList = boardList.stream()
-                .filter(board -> board.getId().equals(userId))
-                .collect(Collectors.toList());
-//
-        System.out.println("Total public boards: " + filteredBoardList.size());
+//        List<BoardResponseDto> filteredBoardList = boardList.stream()
+//                .filter(board -> board.getId().equals(userId))
+//                .collect(Collectors.toList());
+////
+//        System.out.println("Total public boards: " + filteredBoardList.size());
 
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("status", 200);
 
         JSONArray boardArray = new JSONArray();
-        for (BoardResponseDto board : filteredBoardList) {
+        for (BoardResponseDto board : boardList) {
             JSONObject boardJson = new JSONObject();
             boardJson.put("id", board.getId());
             boardJson.put("contents", board.getContents());
