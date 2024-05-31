@@ -39,7 +39,7 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 		String musicTrack = jsonObject.getString("musicTrack");
 		String musicArtist = jsonObject.getString("musicArtist");
 		String musicPreviewUrl = jsonObject.getString("musicPreviewUrl");
-		String musicThumbnailUrl = jsonObject.getString("musicThumbnailUrl");
+		String musicThumbnailUrl = jsonObject.getString("musicThumbnail");
 
 		boolean isValid = true;
 
