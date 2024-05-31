@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MyBoardAction  extends HttpServlet implements BoardAction  {
+public class MyBoardAction extends HttpServlet implements BoardAction {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -23,9 +23,10 @@ public class MyBoardAction  extends HttpServlet implements BoardAction  {
 //        System.out.println("Request attributes: " + request.getAttributeNames());
         JSONObject jsonObject = (JSONObject) request.getAttribute("data");
         String userId = jsonObject.getString("id");
+        String nickname = jsonObject.getString("nickname");
 
         System.out.println("userId : " + userId);
-
+        System.out.println("nickname : " + nickname);
         BoardDao boardDao = BoardDao.getInstance();
         List<BoardResponseDto> boardList = boardDao.findBoardMyID(userId);
 
@@ -35,19 +36,19 @@ public class MyBoardAction  extends HttpServlet implements BoardAction  {
 //            System.out.println("board : " + board);
 //        }
 
-//        System.out.println("Total boards fetched: " + boardList.size());
+        System.out.println("Total boards fetched: " + boardList.size());
 
-        List<BoardResponseDto> filteredBoardList = boardList.stream()
-                .filter(board -> board.getId().equals(userId))
-                .collect(Collectors.toList());
-//
-        System.out.println("Total public boards: " + filteredBoardList.size());
+//        List<BoardResponseDto> filteredBoardList = boardList.stream()
+//                .filter(board -> board.getId().equals(userId))
+//                .collect(Collectors.toList());
+
+//        System.out.println("Total public boards: " + filteredBoardList.size());
 
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("status", 200);
 
         JSONArray boardArray = new JSONArray();
-        for (BoardResponseDto board : filteredBoardList) {
+        for (BoardResponseDto board : boardList) {
             JSONObject boardJson = new JSONObject();
             boardJson.put("id", board.getId());
             boardJson.put("contents", board.getContents());
