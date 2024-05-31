@@ -89,7 +89,7 @@ public class BoardDao {
 				String contents = rs.getString("contents");
 				String musicTrack = rs.getString("music_track");
 				String musicArtist = rs.getString("music_artist");
-				String musicPreviewUrl = rs.getString("music_previewUrl");
+				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
 				int boardCode = rs.getInt("board_code");
 				java.sql.Timestamp regDate = rs.getTimestamp("reg_date");
