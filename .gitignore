@@ -12,3 +12,6 @@ context.xml
 *.iml
 /docs
 /out
+
+/WEB-INF/lib
+/src/main/webapp/WEB-INF/lib
