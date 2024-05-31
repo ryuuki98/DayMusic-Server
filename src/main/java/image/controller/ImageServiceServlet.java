@@ -108,25 +108,15 @@ public class ImageServiceServlet extends HttpServlet {
                 System.out.println("프로필 이미지 변경 실패");
             }
 
-
-//			// RDS에 URL 저장
-//			try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-//				String sql = "";
-//				try (PreparedStatement statement = connection.prepareStatement(sql)) {
-//					statement.setString(1, imageUrl);
-//					statement.setString(2, userId);
-//					statement.executeUpdate();
-//				}
-//			}
-
             response.getWriter().write("Profile image uploaded and URL saved to DB: " + imageUrl);
 
         } catch (Exception ex) {
             throw new ServletException("File upload failed", ex);
         }
-
-
     }
+
+
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

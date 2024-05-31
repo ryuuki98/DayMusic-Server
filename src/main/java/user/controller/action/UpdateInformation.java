@@ -37,7 +37,7 @@ public class UpdateInformation implements UserAction {
 		userRequestDto.setPhone(phone);
 		userRequestDto.setTelecom(telecom);
 		
-		UserResponseDto user = userDao.UpdateInformation(userRequestDto);
+		UserResponseDto user = userDao.updateInformation(userRequestDto);
 		
 		if (user == null) {
 			System.out.println("기타정보 업데이트 실패");

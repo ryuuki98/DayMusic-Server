@@ -9,10 +9,6 @@ import util.DBManager;
 import util.PasswordCrypto;
 
 public class UserDao {
-	private Connection conn = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rs = null;
-
 	private UserDao() {
 	}
 
@@ -37,12 +33,14 @@ public class UserDao {
 	}
 
 	public UserResponseDto joinUser(UserRequestDto userRequestDto) {
-		conn = DBManager.getConnection();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		UserResponseDto user = null;
 
 		String sql = "INSERT INTO users (id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff) values (?,?,?,?,?,?,?,?,?,?)";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userRequestDto.getId());
 			pstmt.setString(2, PasswordCrypto.encrypt(userRequestDto.getPassword()));
@@ -68,18 +66,17 @@ public class UserDao {
 		return user;
 	}
 
-	// id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
-	// is_staff
 	public UserResponseDto findUserById(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		UserResponseDto user = null;
-
-		conn = DBManager.getConnection();
 		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE id = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
-
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -93,16 +90,11 @@ public class UserDao {
 				String profile_img_url = rs.getString(9) == null ? "" : rs.getString(9);
 				boolean is_staff = rs.getBoolean(10);
 
-
-				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
-						is_staff);
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url, is_staff);
 				System.out.println("rs name" + name);
-
 			}
-
 		} catch (SQLException e) {
 			System.out.println("findUserById 메소드 오류 ");
-			System.out.println( "catch문 name : " + user.getName());
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -111,15 +103,17 @@ public class UserDao {
 	}
 
 	public boolean duplicateNickname(String id, String newNickname) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		boolean isDuplicated = false;
-		conn = DBManager.getConnection();
 		String sql = "SELECT COUNT(*) FROM users WHERE id != ? AND nickname = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, newNickname);
-
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -128,7 +122,6 @@ public class UserDao {
 					isDuplicated = true;
 				}
 			}
-
 		} catch (SQLException e) {
 			System.out.println("duplicateNickname method 오류");
 			e.printStackTrace();
@@ -140,15 +133,17 @@ public class UserDao {
 	}
 
 	public boolean duplicatePhone(String id, String newPhone) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		boolean isDuplicated = false;
-		conn = DBManager.getConnection();
 		String sql = "SELECT COUNT(*) FROM users WHERE id != ? AND phone = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, newPhone);
-
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -157,7 +152,6 @@ public class UserDao {
 					isDuplicated = true;
 				}
 			}
-
 		} catch (SQLException e) {
 			System.out.println("duplicatePhone method 오류");
 			e.printStackTrace();
@@ -169,15 +163,17 @@ public class UserDao {
 	}
 
 	public boolean duplicateEmail(String id, String newEmail) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		boolean isDuplicated = false;
-		conn = DBManager.getConnection();
 		String sql = "SELECT COUNT(*) FROM users WHERE id != ? AND email = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, newEmail);
-
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -186,7 +182,6 @@ public class UserDao {
 					isDuplicated = true;
 				}
 			}
-
 		} catch (SQLException e) {
 			System.out.println("duplicateEmail method 오류");
 			e.printStackTrace();
@@ -198,11 +193,13 @@ public class UserDao {
 	}
 
 	public UserResponseDto updateNickname(String id, String newNickname) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		UserResponseDto user = null;
-		conn = DBManager.getConnection();
 		String sql = "UPDATE users SET nickname = ? WHERE id = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, newNickname);
 			pstmt.setString(2, id);
@@ -219,15 +216,16 @@ public class UserDao {
 	}
 
 	public UserResponseDto updatePassword(String id, String newPassword) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		UserResponseDto user = null;
-		conn = DBManager.getConnection();
 		String sql = "UPDATE users SET password = ? WHERE id = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, PasswordCrypto.encrypt(newPassword));
 			pstmt.setString(2, id);
-
 			pstmt.execute();
 
 			user = findUserById(id);
@@ -242,7 +240,8 @@ public class UserDao {
 	}
 
 	public UserResponseDto updateProfileImage(String id, String profile_img_url) {
-		conn = DBManager.getConnection();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		UserResponseDto user = null;
 
 		System.out.println(id);
@@ -251,6 +250,7 @@ public class UserDao {
 		String sql = "UPDATE users SET profile_img_url = ? WHERE id = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, profile_img_url);
 			pstmt.setString(2, id);
@@ -260,12 +260,16 @@ public class UserDao {
 		} catch (SQLException e) {
 			System.out.println("updateProfileImage 메소드 오류");
 			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
 		}
 
 		return user;
 	}
 
-	public UserResponseDto UpdateInformation(UserRequestDto userRequestDto) {
+	public UserResponseDto updateInformation(UserRequestDto userRequestDto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		UserResponseDto user = null;
 
 		String id = userRequestDto.getId();
@@ -277,10 +281,10 @@ public class UserDao {
 			return user;
 		}
 
-		conn = DBManager.getConnection();
 		String sql = "UPDATE users SET name = ?, gender = ? ,email = ?,phone = ? ,telecom = ? WHERE id = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userRequestDto.getName());
 			pstmt.setString(2, userRequestDto.getGender());
@@ -292,7 +296,7 @@ public class UserDao {
 
 			user = findUserById(userRequestDto.getId());
 		} catch (SQLException e) {
-			System.out.println("updateinformation 메소드 오류");
+			System.out.println("updateInformation 메소드 오류");
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt);
@@ -302,13 +306,14 @@ public class UserDao {
 	}
 
 	public boolean deleteUserById(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		boolean isDeleted = false;
 
-		conn = DBManager.getConnection();
-
-		String sql = "DELETE FROM users WHERE id = ? ";
+		String sql = "DELETE FROM users WHERE id = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 
@@ -321,21 +326,24 @@ public class UserDao {
 		} catch (SQLException e) {
 			System.out.println("deleteUserById 메소드 오류 ");
 			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
 		}
 
 		return isDeleted;
 	}
 
 	public UserResponseDto findUserByEmail(String email) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		UserResponseDto user = null;
-
-		conn = DBManager.getConnection();
 		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE email = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
-
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -349,12 +357,10 @@ public class UserDao {
 				String profile_img_url = rs.getString(9);
 				boolean is_staff = rs.getBoolean(10);
 
-				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
-						is_staff);
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url, is_staff);
 			}
-
 		} catch (SQLException e) {
-			System.out.println("findUserById 메소드 오류 ");
+			System.out.println("findUserByEmail 메소드 오류 ");
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -363,15 +369,16 @@ public class UserDao {
 	}
 
 	public UserResponseDto findUserByPhone(String phone) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		UserResponseDto user = null;
-
-		conn = DBManager.getConnection();
 		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE phone = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, phone);
-
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -385,12 +392,10 @@ public class UserDao {
 				String profile_img_url = rs.getString(9);
 				boolean is_staff = rs.getBoolean(10);
 
-				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
-						is_staff);
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url, is_staff);
 			}
-
 		} catch (SQLException e) {
-			System.out.println("findUserById 메소드 오류 ");
+			System.out.println("findUserByPhone 메소드 오류 ");
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -399,15 +404,16 @@ public class UserDao {
 	}
 
 	public UserResponseDto findUserByNickname(String nickname) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		UserResponseDto user = null;
-
-		conn = DBManager.getConnection();
 		String sql = "SELECT id,password,name,gender,email,phone,telecom,nickname,profile_img_url,is_staff FROM users WHERE nickname = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, nickname);
-
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -421,12 +427,10 @@ public class UserDao {
 				String profile_img_url = rs.getString(9);
 				boolean is_staff = rs.getBoolean(10);
 
-				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url,
-						is_staff);
+				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url, is_staff);
 			}
-
 		} catch (SQLException e) {
-			System.out.println("findUserById 메소드 오류 ");
+			System.out.println("findUserByNickname 메소드 오류 ");
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -435,17 +439,19 @@ public class UserDao {
 	}
 
 	public String findNickNameById(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		String nickname = null;
+
+		String sql = "SELECT nickname FROM users WHERE id = ?";
 		try {
 			conn = DBManager.getConnection();
-
-			String sql = "SELECT nickname FROM users WHERE id = ?";
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 
-			if(rs.next()) {
+			if (rs.next()) {
 				nickname = rs.getString(1);
 			}
 		} catch (Exception e) {
@@ -457,12 +463,14 @@ public class UserDao {
 	}
 
 	public String getProfileImageUrl(String userId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		String profileImageUrl = null;
-
-		conn = DBManager.getConnection();
 		String sql = "SELECT profile_img_url FROM users WHERE id = ?";
 
 		try {
+			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
