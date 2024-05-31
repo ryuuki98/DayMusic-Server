@@ -57,6 +57,7 @@ public class GetCommentListAction extends HttpServlet implements CommentAction {
                     replyObject.put("modDate", reply.getModDate().toString());
                     replyArray.put(replyObject);
                 }
+
                 jsonObject.put("replies", replyArray);
                 jsonObject.put("count", replies.size());
             }
