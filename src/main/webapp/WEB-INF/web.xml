@@ -46,6 +46,16 @@
 		<url-pattern>/board/service</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>CommentServiceServlet</servlet-name>
+		<servlet-class>comment.controller.CommentServiceServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CommentServiceServlet</servlet-name>
+		<url-pattern>/comment/service</url-pattern>
+	</servlet-mapping>
+
 
 
 	<filter>
