@@ -4,12 +4,14 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import image.model.ImageDao;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import user.model.UserDao;
 import util.DBManager;
 
 import javax.naming.InitialContext;
@@ -51,7 +53,6 @@ public class ImageServiceServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("이미지 업로드 요청");
         ImageDao imageDao = ImageDao.getInstance();
-        String command = "";
 
         if (!ServletFileUpload.isMultipartContent(request)) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Form must have enctype=multipart/form-data.");
@@ -72,8 +73,6 @@ public class ImageServiceServlet extends HttpServlet {
                     if (item.isFormField()) {
                         if (item.getFieldName().equals("userId")) {
                             userId = item.getString();
-                        } else if (item.getFieldName().equals("command")) {
-                            command = item.getString();
                         }
                     } else {
                         fileName = new File(item.getName()).getName();
@@ -83,7 +82,6 @@ public class ImageServiceServlet extends HttpServlet {
             }
 
             System.out.println("userId: " + userId);
-            System.out.println("command: " + command);
 
             if (userId == null || fileContent == null) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing form data");
@@ -126,5 +124,41 @@ public class ImageServiceServlet extends HttpServlet {
         } catch (Exception ex) {
             throw new ServletException("File upload failed", ex);
         }
+
+
     }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=utf-8");
+
+        System.out.println("프로필 이미지 불러오기");
+        String userId = request.getParameter("userId");
+        if (userId == null || userId.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("{\"error\":\"Missing userId parameter\"}");
+            return;
+        }
+
+        UserDao userDao = UserDao.getInstance();
+        String profileImageUrl = userDao.getProfileImageUrl(userId);
+
+        if (profileImageUrl != null) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("{\"profileImageUrl\":\"" + profileImageUrl + "\"}");
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.getWriter().write("{\"error\":\"Profile image not found\"}");
+        }
+    }
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+
+        System.out.println("프로필 이미지 불러오기");
+        response.getWriter().write("통신 잘 됩니다.");
+        String id = request.getParameter("userId");
+    }
+
+
 }

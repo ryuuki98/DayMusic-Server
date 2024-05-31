@@ -37,8 +37,9 @@ public class UpdateBoardAction extends HttpServlet implements BoardAction {
                 String nickname = jsonObject.getString("nickname");
                 String contents = jsonObject.getString("contents");
                 String musicTrack = jsonObject.getString("musicTrack");
-                String musicAlbum = jsonObject.getString("musicAlbum");
                 String musicArtist = jsonObject.getString("musicArtist");
+                String musicPreviewUrl = jsonObject.getString("musicPreviewUrl");
+                String musicThumbnailUrl = jsonObject.getString("musicThumbnailUrl");
                 int boardCode = jsonObject.getInt("board_code");
 
                 BoardRequestDto boardRequestDto = new BoardRequestDto();
@@ -46,8 +47,9 @@ public class UpdateBoardAction extends HttpServlet implements BoardAction {
                 boardRequestDto.setNickname(nickname);
                 boardRequestDto.setContents(contents);
                 boardRequestDto.setMusicTrack(musicTrack);
-                boardRequestDto.setMusicAlbum(musicAlbum);
                 boardRequestDto.setMusicArtist(musicArtist);
+                boardRequestDto.setMusicPreviewUrl(musicPreviewUrl);
+                boardRequestDto.setMusicThumbnail(musicThumbnailUrl);
                 boardRequestDto.setBoardCode(boardCode);
 
 

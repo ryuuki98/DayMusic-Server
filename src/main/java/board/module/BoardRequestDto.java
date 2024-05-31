@@ -8,37 +8,40 @@ public class BoardRequestDto {
 	private String nickname;
 	private String contents;
 	private String musicTrack;
-	private String musicAlbum;
 	private String musicArtist;
+	private String musicPreviewUrl;
+	private String musicThumbnail;
 	private int isPublic;
 	private java.sql.Timestamp regDate;
 	private java.sql.Timestamp modDate;
 	
 	public BoardRequestDto() {}
 	
-	public BoardRequestDto(int boardCode, String nickname, String id, String contents, String musicTrack, String musicAlbum, String musicArtist, int isPublic,
-			Timestamp regDate, Timestamp modDate) {
+	public BoardRequestDto(int boardCode, String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, int isPublic, Timestamp regDate,
+						   Timestamp modDate) {
 		super();
 		this.boardCode = boardCode;
 		this.id = id;
 		this.nickname = nickname;
 		this.contents = contents;
 		this.musicTrack = musicTrack;
-		this.musicAlbum = musicAlbum;
 		this.musicArtist = musicArtist;
+		this.musicPreviewUrl = musicPreviewUrl;
+		this.musicThumbnail = musicThumbnail;
 		this.isPublic = isPublic;
 		this.regDate = regDate;
 		this.modDate = modDate;
 	}
 
-	public BoardRequestDto (String id, String nickname, String contents, String musicTrack, String musicAlbum, String musicArtist, int isPublic) {
+	public BoardRequestDto (String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, int isPublic) {
 		super();
 		this.id = id;
 		this.nickname = nickname;
 		this.contents = contents;
 		this.musicTrack = musicTrack;
-		this.musicAlbum = musicAlbum;
 		this.musicArtist = musicArtist;
+		this.musicPreviewUrl = musicPreviewUrl;
+		this.musicThumbnail = musicThumbnail;
 		this.isPublic = isPublic;
 	}
 	
@@ -77,10 +80,12 @@ public class BoardRequestDto {
 	public void setMusicTrack(String musicTrack) {
 		this.musicTrack = musicTrack;
 	}
-	public String getMusicAlbum() { return musicAlbum; }
-	public void setMusicAlbum(String musicAlbum) { this.musicAlbum = musicAlbum; }
 	public String getMusicArtist() { return musicArtist; }
 	public void setMusicArtist(String musicArtist) { this.musicArtist = musicArtist; }
+	public String getMusicPreviewUrl() { return musicPreviewUrl; }
+	public void setMusicPreviewUrl(String musicPreviewUrl) { this.musicPreviewUrl = musicPreviewUrl; }
+	public String getMusicThumbnail() { return musicThumbnail; }
+	public void setMusicThumbnail(String musicThumbnail) { this.musicThumbnail = musicThumbnail; }
 	public int isPublic() {
 		return isPublic; 
 	}
