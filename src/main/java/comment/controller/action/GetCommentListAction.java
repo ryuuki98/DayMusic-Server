@@ -17,9 +17,12 @@ import java.util.List;
 public class GetCommentListAction extends HttpServlet implements CommentAction {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("리스트업 실행중");
         request.setCharacterEncoding("UTF-8");
 
-        int boardCode = Integer.parseInt(request.getParameter("boardCode"));
+        JSONObject jsonObjects = (JSONObject) request.getAttribute("data");
+        int boardCode = jsonObjects.getInt("boardCode");
+        System.out.println("[23]boardCode = " + boardCode);
 
         CommentDao commentDao = CommentDao.getInstance();
         List<Comment> comments = commentDao.getCommentsByBoardCode(boardCode);
@@ -38,6 +41,8 @@ public class GetCommentListAction extends HttpServlet implements CommentAction {
             jsonObject.put("regDate", comment.getRegDate().toString());
             jsonObject.put("modDate", comment.getModDate().toString());
 
+            System.out.println(jsonObject.toString());
+
             if (comment.getParent() == 0) {
                 List<Comment> replies = commentDao.getRepliesByParentCode(comment.getCmtCode());
                 JSONArray replyArray = new JSONArray();
@@ -53,6 +58,7 @@ public class GetCommentListAction extends HttpServlet implements CommentAction {
                     replyArray.put(replyObject);
                 }
                 jsonObject.put("replies", replyArray);
+                jsonObject.put("count", replies.size());
             }
 
             jsonArray.put(jsonObject);
