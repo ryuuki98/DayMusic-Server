@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import board.controller.BoardAction;
 import board.module.BoardDao;
 import board.module.BoardResponseDto;
+import like.model.LikeDao;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,6 +25,9 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 //        System.out.println("Request attributes: " + request.getAttributeNames());
+        LikeDao likeDao = LikeDao.getInstance();
+
+
 
         BoardDao boardDao = BoardDao.getInstance();
         List<BoardResponseDto> boardList = boardDao.findBoardList();
@@ -42,6 +46,7 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
         JSONArray boardArray = new JSONArray();
         for (BoardResponseDto board : filteredBoardList) {
             JSONObject boardJson = new JSONObject();
+            int likeCount = likeDao.countLike(board.getBoardCode());
             boardJson.put("id", board.getId());
             boardJson.put("contents", board.getContents());
             boardJson.put("board_code", board.getBoardCode());
@@ -50,6 +55,7 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
             boardJson.put("music_artist", board.getMusicArtist());
             boardJson.put("is_public", board.isPublic());
             boardJson.put("nickname", board.getNickname());
+            boardJson.put("likeCount", likeCount);
             boardArray.put(boardJson);
         }
 
