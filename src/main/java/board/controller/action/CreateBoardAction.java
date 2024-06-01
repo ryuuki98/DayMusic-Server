@@ -29,8 +29,9 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 		System.out.println("public : " + isPublic);
 		if (isPublic) {
 			publics = 0;
-		} else
+		} else {
 			publics = 1;
+		}
 
 		String userId = jsonObject.getString("id");
 		System.out.println("userId : " + userId);
@@ -43,26 +44,37 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 
 		boolean isValid = true;
 
-		if (contents == null || contents.equals(""))
+		if (contents == null || contents.equals("")) {
 			isValid = false;
+		}
 
 		System.out.println(isValid);
 
-		response.setContentType("text/plain; charset=UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
 		if (isValid) {
-			BoardRequestDto boardDto = new BoardRequestDto(userId, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnailUrl,  publics);
+			BoardRequestDto boardDto = new BoardRequestDto(userId, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnailUrl, publics);
 
 			BoardDao boardDao = BoardDao.getInstance();
 			BoardResponseDto board = boardDao.createBoard(boardDto);
 			response.setStatus(HttpServletResponse.SC_OK);
+
+			JSONObject responseJson = new JSONObject();
+			responseJson.put("status", "success");
+			responseJson.put("message", "게시글 작성 완료");
+			responseJson.put("boardCode", board.getBoardCode());
+
 			System.out.println("게시글 작성 완료");
-			out.print("게시글 작성 완료");
+			out.print(responseJson.toString());
 		} else {
 			System.out.println("게시글 작성 실패");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 상태 코드 설정
-			out.print("게시글 작성 실패");
+			JSONObject responseJson = new JSONObject();
+			responseJson.put("status", "fail");
+			responseJson.put("message", "게시글 작성 실패");
+
+			out.print(responseJson.toString());
 		}
 
 		out.flush();

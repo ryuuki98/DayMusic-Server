@@ -143,8 +143,10 @@ public class ImageServiceServlet extends HttpServlet {
         }
     }
 
+    @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("이미지 업로드 요청");
+
         ImageDao imageDao = ImageDao.getInstance();
 
         if (!ServletFileUpload.isMultipartContent(request)) {
@@ -166,11 +168,15 @@ public class ImageServiceServlet extends HttpServlet {
                     if (item.isFormField()) {
                         if (item.getFieldName().equals("boardCode")) {
                             boardCode = item.getString();
+                            System.out.println("[170] boardCode : " +  boardCode);
                         }
                     } else {
                         String fileName = new File(item.getName()).getName();
                         String fileType = getFileExtension(fileName).toUpperCase();
                         InputStream fileContent = item.getInputStream();
+
+                        System.out.println("fileName: " + fileName);
+                        System.out.println("fileType: " + fileType);
 
                         // AWS S3에 파일 업로드
                         BasicAWSCredentials awsCreds = new BasicAWSCredentials(getAWSAccessKey(), getAWSSecretKey());
@@ -191,8 +197,9 @@ public class ImageServiceServlet extends HttpServlet {
                 }
             }
 
+            response.setContentType("application/json;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("{\"imageUrls\":" + imageUrls + "}");
+            response.getWriter().write("{\"imageUrls\":" + imageUrls.toString() + "}");
 
         } catch (Exception ex) {
             throw new ServletException("File upload failed", ex);
@@ -206,8 +213,6 @@ public class ImageServiceServlet extends HttpServlet {
         int lastDotIndex = fileName.lastIndexOf('.');
         return (lastDotIndex == -1) ? "" : fileName.substring(lastDotIndex + 1);
     }
-
-
 
 
 }

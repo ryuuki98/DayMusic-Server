@@ -158,19 +158,17 @@ public class BoardDao {
 				String musicArtist = rs.getString("music_artist");
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
-				int boardCode = rs.getInt(6);
-				java.sql.Timestamp reg_date = rs.getTimestamp(7);
-				java.sql.Timestamp mod_date = rs.getTimestamp(8);
-				int isPublic = rs.getInt(9);
-				String nickname = rs.getString(10);
+				int boardCode = rs.getInt(7);
+				java.sql.Timestamp reg_date = rs.getTimestamp(8);
+				java.sql.Timestamp mod_date = rs.getTimestamp(9);
+				int isPublic = rs.getInt(10);
+				String nickname = rs.getString(11);
 
 				board = new BoardResponseDto(boardCode, userId, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, reg_date, mod_date);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			closeStatementAndResultSet();
 		}
 
 		return board;
@@ -198,8 +196,6 @@ public class BoardDao {
 			return findBoardById(boardDto.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			closeStatementAndResultSet();
 		}
 
 		return null;
