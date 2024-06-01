@@ -58,6 +58,9 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 			BoardResponseDto board = boardDao.createBoard(boardDto);
 			response.setStatus(HttpServletResponse.SC_OK);
 			System.out.println("게시글 작성 완료");
+			JSONObject jsonResponse = new JSONObject();
+			jsonResponse.put("boardCode", board.getBoardCode());
+			response.getWriter().write(jsonResponse.toString());
 			out.print("게시글 작성 완료");
 		} else {
 			System.out.println("게시글 작성 실패");
