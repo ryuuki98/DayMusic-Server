@@ -76,4 +76,23 @@ public class ImageDao {
         return profileImages;
     }
 
+
+    public void saveImage(int boardCode, String imageUrl, String imageName, String imageType) {
+        String sql = "INSERT INTO image (board_code, image_path, image_name, image_type) VALUES (?, ?, ?, ?)";
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, boardCode);
+            pstmt.setString(2, imageUrl);
+            pstmt.setString(3, imageName);
+            pstmt.setString(4, imageType);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+    }
+
+
 }

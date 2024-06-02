@@ -59,7 +59,10 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 			if(board != null) {
 				response.setStatus(HttpServletResponse.SC_OK);
 				System.out.println("게시글 작성 완료");
-				out.print("게시글 작성 완료");
+
+				System.out.println("새 게시글 보드 번호 : " + board.getBoardCode());
+				jsonObject.put("boardCode", board.getBoardCode());
+				out.print(jsonObject.toString());
 			}
 			else {
 				System.out.println("게시글 작성 실패");
