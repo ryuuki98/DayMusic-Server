@@ -39,7 +39,7 @@ public class DeleteBoardAction extends HttpServlet implements BoardAction {
         // Delete the board from the database
         BoardDao boardDao = BoardDao.getInstance();
         boolean success = boardDao.deleteBoard(userId, boardCode);
-
+        System.out.println("success : " + success );
         // Prepare the JSON response
         JSONObject jsonResponse = new JSONObject();
         if (success) {
