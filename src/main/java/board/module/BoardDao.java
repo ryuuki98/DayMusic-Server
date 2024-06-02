@@ -1,40 +1,25 @@
 package board.module;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
 
 import util.DBManager;
 
 public class BoardDao {
-	private Connection conn;
-	private PreparedStatement pstmt;
-	private ResultSet rs;
-
-	private BoardDao() {
-		conn = DBManager.getConnection();
-	}
-
 	private static BoardDao instance = new BoardDao();
 
 	public static BoardDao getInstance() {
 		return instance;
 	}
 
-	private void closeResources() {
-		DBManager.close(conn, pstmt, rs);
-	}
-
-	private void closeStatementAndResultSet() {
-		DBManager.close(null, pstmt, rs);
-	}
-
 	// 나의 게시물 찾기
 	public List<BoardResponseDto> findBoardMyID(String userId) {
+		Connection conn = DBManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
 			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
@@ -50,8 +35,8 @@ public class BoardDao {
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
 				int boardCode = rs.getInt("board_code");
-				java.sql.Timestamp regDate = rs.getTimestamp("reg_date");
-				java.sql.Timestamp modDate = rs.getTimestamp("mod_date");
+				Timestamp regDate = rs.getTimestamp("reg_date");
+				Timestamp modDate = rs.getTimestamp("mod_date");
 				int isPublic = rs.getInt("is_public");
 				String nickname = rs.getString("nickname");
 
@@ -61,7 +46,7 @@ public class BoardDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeStatementAndResultSet();
+			DBManager.close(conn, pstmt, rs);
 		}
 
 		return list;
@@ -69,6 +54,10 @@ public class BoardDao {
 
 	// 공개 게시글 리스트
 	public List<BoardResponseDto> findBoardList() {
+		Connection conn = DBManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
 			String sql = "SELECT is_public, id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, board_code, reg_date, mod_date, nickname FROM board WHERE is_public=0";
@@ -83,8 +72,8 @@ public class BoardDao {
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
 				int boardCode = rs.getInt("board_code");
-				java.sql.Timestamp regDate = rs.getTimestamp("reg_date");
-				java.sql.Timestamp modDate = rs.getTimestamp("mod_date");
+				Timestamp regDate = rs.getTimestamp("reg_date");
+				Timestamp modDate = rs.getTimestamp("mod_date");
 				String nickname = rs.getString("nickname");
 
 				BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, regDate, modDate);
@@ -93,7 +82,7 @@ public class BoardDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeStatementAndResultSet();
+			DBManager.close(conn, pstmt, rs);
 		}
 
 		return list;
@@ -124,8 +113,8 @@ public class BoardDao {
 				String musicArtist = rs.getString("music_artist");
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
-				java.sql.Timestamp reg_date = rs.getTimestamp("reg_date");
-				java.sql.Timestamp mod_date = rs.getTimestamp("mod_date");
+				Timestamp reg_date = rs.getTimestamp("reg_date");
+				Timestamp mod_date = rs.getTimestamp("mod_date");
 				int isPublic = rs.getInt("is_public");
 				String nickname = rs.getString("nickname");
 
@@ -144,6 +133,10 @@ public class BoardDao {
 	// 아이디로 개시물 찾기
 	public BoardResponseDto findBoardById(String userId) {
 		BoardResponseDto board = null;
+		Connection conn = DBManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
 
 		try {
 			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
@@ -159,8 +152,8 @@ public class BoardDao {
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
 				int boardCode = rs.getInt(7);
-				java.sql.Timestamp reg_date = rs.getTimestamp(8);
-				java.sql.Timestamp mod_date = rs.getTimestamp(9);
+				Timestamp reg_date = rs.getTimestamp(8);
+				Timestamp mod_date = rs.getTimestamp(9);
 				int isPublic = rs.getInt(10);
 				String nickname = rs.getString(11);
 
@@ -169,6 +162,8 @@ public class BoardDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
 		}
 
 		return board;
@@ -176,11 +171,14 @@ public class BoardDao {
 
 	// 게시글 작성
 	public BoardResponseDto createBoard(BoardRequestDto boardDto) {
+		Connection conn = DBManager.getConnection();
+		PreparedStatement pstmt = null;
+		int boardCode = 0;
 
 		try {
 			String sql = "INSERT INTO board(id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, is_public, nickname) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setString(1, boardDto.getId());
 			pstmt.setString(2, boardDto.getContents());
@@ -193,9 +191,14 @@ public class BoardDao {
 
 			pstmt.execute();
 
-			return findBoardById(boardDto.getId());
+			ResultSet boardCodeRs = pstmt.getGeneratedKeys();
+			if (boardCodeRs.next()) {boardCode = boardCodeRs.getInt(1);}
+
+			return findBoardByCode(boardCode);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
 		}
 
 		return null;
@@ -204,6 +207,8 @@ public class BoardDao {
 	// 게시글 수정
 	public BoardResponseDto updateBoardContents(BoardRequestDto boardDto) {
 		BoardResponseDto board = null;
+		Connection conn = DBManager.getConnection();
+		PreparedStatement pstmt = null;
 
 		if (findBoardById(boardDto.getId()) == null)
 			return board;
@@ -227,7 +232,7 @@ public class BoardDao {
 			e.printStackTrace();
 			System.out.println("게시글 수정 실패");
 		} finally {
-			closeStatementAndResultSet();
+			DBManager.close(conn, pstmt);
 		}
 
 		return board;
@@ -235,6 +240,9 @@ public class BoardDao {
 
 	// 게시글 삭제
 	public boolean deleteBoard(String userId, int boardCode) {
+		Connection conn = DBManager.getConnection();
+		PreparedStatement pstmt = null;
+
 		try {
 			String sql = "DELETE FROM board WHERE id=? AND board_code=?";
 			pstmt = conn.prepareStatement(sql);
@@ -248,7 +256,7 @@ public class BoardDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeStatementAndResultSet();
+			DBManager.close(conn, pstmt);
 		}
 
 		return false;

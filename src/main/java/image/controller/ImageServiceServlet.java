@@ -4,7 +4,7 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
+
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import image.model.ImageDao;
 import org.apache.commons.fileupload.FileItem;
@@ -12,7 +12,6 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import user.model.UserDao;
-import util.DBManager;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -20,13 +19,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +62,8 @@ public class ImageServiceServlet extends HttpServlet {
         String userId = null;
         InputStream fileContent = null;
         String fileName = null;
+        String boardCode = "";
+        String command = "";
 
         try {
             List<FileItem> formItems = upload.parseRequest(new ServletRequestContext(request));
@@ -74,6 +72,10 @@ public class ImageServiceServlet extends HttpServlet {
                     if (item.isFormField()) {
                         if (item.getFieldName().equals("userId")) {
                             userId = item.getString();
+                        } else if (item.getFieldName().equals("boardCode")) {
+                            boardCode = item.getString();
+                        } else if (item.getFieldName().equals("command")) {
+                            command = item.getString();
                         }
                     } else {
                         fileName = new File(item.getName()).getName();
@@ -82,34 +84,65 @@ public class ImageServiceServlet extends HttpServlet {
                 }
             }
 
+            System.out.println("command = " + command);
             System.out.println("userId: " + userId);
+            System.out.println("boardCode: " + boardCode);
 
-            if (userId == null || fileContent == null) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing form data");
-                return;
+
+
+
+
+
+            if (command.equals("profileImage")){
+
+                if (userId == null || fileContent == null) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing form data");
+                    return;
+                }
+
+                // AWS S3에 파일 업로드
+                BasicAWSCredentials awsCreds = new BasicAWSCredentials(getAWSAccessKey(), getAWSSecretKey());
+                AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                        .withRegion(AWS_REGION)
+                        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                        .build();
+
+                String s3FileName = System.currentTimeMillis() + "_" + fileName;
+                s3Client.putObject(new PutObjectRequest(getS3BucketName(), s3FileName, fileContent, null));
+
+                String imageUrl = s3Client.getUrl(getS3BucketName(), s3FileName).toString();
+                boolean updateSuccess = imageDao.updateProfile(userId, imageUrl);
+
+                if (updateSuccess) {
+                    System.out.println("프로필 이미지 변경 완료");
+                } else {
+                    System.out.println("프로필 이미지 변경 실패");
+                }
+
+                response.getWriter().write("Profile image uploaded and URL saved to DB: " + imageUrl);
+            } else if (command.equals("boardImage")){
+
+                if (boardCode == null || fileContent == null) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing form data");
+                    return;
+                }
+
+                // AWS S3에 파일 업로드
+                BasicAWSCredentials awsCreds = new BasicAWSCredentials(getAWSAccessKey(), getAWSSecretKey());
+                AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                        .withRegion(AWS_REGION)
+                        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                        .build();
+
+                String s3FileName = System.currentTimeMillis() + "_" + fileName;
+                s3Client.putObject(new PutObjectRequest(getS3BucketName(), s3FileName, fileContent, null));
+
+                String imageUrl = s3Client.getUrl(getS3BucketName(), s3FileName).toString();
+                System.out.println("보드 테이블에 저장 처리 ");
+                response.getWriter().write("Profile image uploaded and URL saved to DB: " + imageUrl);
+
             }
 
-            // AWS S3에 파일 업로드
-            BasicAWSCredentials awsCreds = new BasicAWSCredentials(getAWSAccessKey(), getAWSSecretKey());
-            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                    .withRegion(AWS_REGION)
-                    .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-                    .build();
-
-            String s3FileName = System.currentTimeMillis() + "_" + fileName;
-            s3Client.putObject(new PutObjectRequest(getS3BucketName(), s3FileName, fileContent, null));
-
-            String imageUrl = s3Client.getUrl(getS3BucketName(), s3FileName).toString();
-
-            boolean updateSuccess = imageDao.updateProfile(userId, imageUrl);
-
-            if (updateSuccess) {
-                System.out.println("프로필 이미지 변경 완료");
-            } else {
-                System.out.println("프로필 이미지 변경 실패");
-            }
-
-            response.getWriter().write("Profile image uploaded and URL saved to DB: " + imageUrl);
 
         } catch (Exception ex) {
             throw new ServletException("File upload failed", ex);
@@ -142,77 +175,5 @@ public class ImageServiceServlet extends HttpServlet {
             response.getWriter().write("{\"error\":\"Profile image not found\"}");
         }
     }
-
-    @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("이미지 업로드 요청");
-
-        ImageDao imageDao = ImageDao.getInstance();
-
-        if (!ServletFileUpload.isMultipartContent(request)) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Form must have enctype=multipart/form-data.");
-            return;
-        }
-
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(factory);
-
-        String boardCode = null;
-        List<String> imageUrls = new ArrayList<>();
-        List<FileItem> formItems;
-
-        try {
-            formItems = upload.parseRequest(new ServletRequestContext(request));
-            if (formItems != null && formItems.size() > 0) {
-                for (FileItem item : formItems) {
-                    if (item.isFormField()) {
-                        if (item.getFieldName().equals("boardCode")) {
-                            boardCode = item.getString();
-                            System.out.println("[170] boardCode : " +  boardCode);
-                        }
-                    } else {
-                        String fileName = new File(item.getName()).getName();
-                        String fileType = getFileExtension(fileName).toUpperCase();
-                        InputStream fileContent = item.getInputStream();
-
-                        System.out.println("fileName: " + fileName);
-                        System.out.println("fileType: " + fileType);
-
-                        // AWS S3에 파일 업로드
-                        BasicAWSCredentials awsCreds = new BasicAWSCredentials(getAWSAccessKey(), getAWSSecretKey());
-                        AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                                .withRegion(AWS_REGION)
-                                .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-                                .build();
-
-                        String s3FileName = System.currentTimeMillis() + "_" + fileName;
-                        s3Client.putObject(new PutObjectRequest(getS3BucketName(), s3FileName, fileContent, null));
-
-                        String imageUrl = s3Client.getUrl(getS3BucketName(), s3FileName).toString();
-                        imageUrls.add(imageUrl);
-
-                        // 이미지 정보를 DB에 저장
-                        imageDao.saveImage(Integer.parseInt(boardCode), imageUrl, fileName, fileType);
-                    }
-                }
-            }
-
-            response.setContentType("application/json;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("{\"imageUrls\":" + imageUrls.toString() + "}");
-
-        } catch (Exception ex) {
-            throw new ServletException("File upload failed", ex);
-        }
-    }
-
-    private String getFileExtension(String fileName) {
-        if (fileName == null) {
-            return null;
-        }
-        int lastDotIndex = fileName.lastIndexOf('.');
-        return (lastDotIndex == -1) ? "" : fileName.substring(lastDotIndex + 1);
-    }
-
 
 }
