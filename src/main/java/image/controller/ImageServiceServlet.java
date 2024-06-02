@@ -88,29 +88,24 @@ public class ImageServiceServlet extends HttpServlet {
             System.out.println("userId: " + userId);
             System.out.println("boardCode: " + boardCode);
 
+            // AWS S3에 파일 업로드
+            BasicAWSCredentials awsCreds = new BasicAWSCredentials(getAWSAccessKey(), getAWSSecretKey());
+            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                    .withRegion(AWS_REGION)
+                    .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+                    .build();
 
+            String s3FileName = System.currentTimeMillis() + "_" + fileName;
+            s3Client.putObject(new PutObjectRequest(getS3BucketName(), s3FileName, fileContent, null));
 
+            String imageUrl = s3Client.getUrl(getS3BucketName(), s3FileName).toString();
 
-
-
-            if (command.equals("profileImage")){
-
+            if (command.equals("profileImage")) {
                 if (userId == null || fileContent == null) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing form data");
                     return;
                 }
 
-                // AWS S3에 파일 업로드
-                BasicAWSCredentials awsCreds = new BasicAWSCredentials(getAWSAccessKey(), getAWSSecretKey());
-                AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                        .withRegion(AWS_REGION)
-                        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-                        .build();
-
-                String s3FileName = System.currentTimeMillis() + "_" + fileName;
-                s3Client.putObject(new PutObjectRequest(getS3BucketName(), s3FileName, fileContent, null));
-
-                String imageUrl = s3Client.getUrl(getS3BucketName(), s3FileName).toString();
                 boolean updateSuccess = imageDao.updateProfile(userId, imageUrl);
 
                 if (updateSuccess) {
@@ -120,34 +115,39 @@ public class ImageServiceServlet extends HttpServlet {
                 }
 
                 response.getWriter().write("Profile image uploaded and URL saved to DB: " + imageUrl);
-            } else if (command.equals("boardImage")){
 
+            } else if (command.equals("boardImage")) {
                 if (boardCode == null || fileContent == null) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing form data");
                     return;
                 }
 
-                // AWS S3에 파일 업로드
-                BasicAWSCredentials awsCreds = new BasicAWSCredentials(getAWSAccessKey(), getAWSSecretKey());
-                AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                        .withRegion(AWS_REGION)
-                        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-                        .build();
+                int boardCodeInt = Integer.parseInt(boardCode);
+                String fileType = getFileExtension(fileName).toUpperCase();
 
-                String s3FileName = System.currentTimeMillis() + "_" + fileName;
-                s3Client.putObject(new PutObjectRequest(getS3BucketName(), s3FileName, fileContent, null));
+                boolean saveSuccess = imageDao.saveBoardImage(boardCodeInt, imageUrl, fileName, fileType);
 
-                String imageUrl = s3Client.getUrl(getS3BucketName(), s3FileName).toString();
-                System.out.println("보드 테이블에 저장 처리 ");
-                response.getWriter().write("Profile image uploaded and URL saved to DB: " + imageUrl);
+                if (saveSuccess) {
+                    System.out.println("보드 이미지 저장 완료");
+                } else {
+                    System.out.println("보드 이미지 저장 실패");
+                }
 
+                response.getWriter().write("Board image uploaded and URL saved to DB: " + imageUrl);
             }
-
-
         } catch (Exception ex) {
             throw new ServletException("File upload failed", ex);
         }
     }
+
+    private String getFileExtension(String fileName) {
+        if (fileName == null) {
+            return null;
+        }
+        int lastDotIndex = fileName.lastIndexOf('.');
+        return (lastDotIndex == -1) ? "" : fileName.substring(lastDotIndex + 1);
+    }
+
 
 
 

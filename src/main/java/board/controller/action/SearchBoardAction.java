@@ -41,6 +41,9 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
         System.out.println("Total public boards: " + filteredBoardList.size());
 
         Map<String, String> profileImages = imageDao.getAllProfileImages();
+        Map<Integer, String> boardImages = imageDao.getAllBoardImage();
+
+
 
         response.setStatus(HttpServletResponse.SC_OK);
         JSONObject jsonResponse = new JSONObject();
@@ -52,6 +55,7 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
             int likeCount = likeDao.countLike(board.getBoardCode());
             boardJson.put("id", board.getId());
             boardJson.put("profileImg", profileImages.get(board.getId())); // 프로필 이미지 URL을 맵에서 가져옴
+            boardJson.put("image_url", boardImages.get(board.getBoardCode())); // 프로필 이미지 URL을 맵에서 가져옴
             boardJson.put("contents", board.getContents());
             boardJson.put("board_code", board.getBoardCode());
             boardJson.put("music_track", board.getMusicTrack());

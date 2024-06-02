@@ -34,6 +34,8 @@ public class FollowListAction extends HttpServlet implements FollowAction {
 		System.out.println("FollowingList : " + FollowingList);
 		System.out.println("FollowerList : " + FollowerList);
 
+//		FollowResponseDto isFollowing = followDao.isFollowing()
+
 		JSONArray result = new JSONArray();
 		result.put(FollowingList);
 		result.put(FollowerList);

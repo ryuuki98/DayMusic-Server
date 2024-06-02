@@ -76,21 +76,49 @@ public class ImageDao {
         return profileImages;
     }
 
+    public Map<Integer, String> getAllBoardImage() {
+        Map<Integer, String> boardImages = new HashMap<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-    public void saveImage(int boardCode, String imageUrl, String imageName, String imageType) {
-        String sql = "INSERT INTO image (board_code, image_path, image_name, image_type) VALUES (?, ?, ?, ?)";
+        String sql = "SELECT board_code,image_path FROM image";
+
         try {
             conn = DBManager.getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, boardCode);
-            pstmt.setString(2, imageUrl);
-            pstmt.setString(3, imageName);
-            pstmt.setString(4, imageType);
-            pstmt.executeUpdate();
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int board_code = Integer.parseInt(rs.getString(1)) ;
+                String boardImageUrl = rs.getString(2);
+                boardImages.put(board_code, boardImageUrl);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBManager.close(conn, pstmt);
+            DBManager.close(conn, pstmt, rs);
+        }
+
+        System.out.println(boardImages.toString());
+
+        return boardImages;
+    }
+
+
+    public boolean saveBoardImage(int boardCode, String imagePath, String imageName, String imageType) {
+        String sql = "INSERT INTO image (board_code, image_path, image_name, image_type) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, boardCode);
+            pstmt.setString(2, imagePath);
+            pstmt.setString(3, imageName);
+            pstmt.setString(4, imageType);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
