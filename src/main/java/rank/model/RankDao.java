@@ -38,12 +38,12 @@ public class RankDao {
 
             while (rs.next()) {
                 if(!rs.getString("music_Track").equals("")) {
-                    int count = rs.getInt("count");
-                    String musicTrack = rs.getString("music_Track");
-                    String musicArtist = rs.getString("music_Artist");
-                    String musicThumbnail = rs.getString("music_Thumbnail");
-                    String musicPreviewUrl = rs.getString("music_PreviewUrl");
-                    list.add(new RankResponseDto(count, musicTrack, musicArtist, musicThumbnail, musicPreviewUrl));
+                    int count = rs.getInt(1);
+                    String musicTrack = rs.getString(2);
+                    String musicArtist = rs.getString(3);
+                    String musicThumbnail = rs.getString(4);
+                    String musicPreviewUrl = rs.getString(5);
+                    list.add(new RankResponseDto(count, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail));
                     System.out.println(count);
                     System.out.println(musicTrack);
                     System.out.println(musicArtist);
