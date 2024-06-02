@@ -21,10 +21,10 @@
             return instance;
         }
 
-        public RankAction getAtion(String command){
+        public RankAction getAction(String command){
             RankAction action = null;
 
-            if(command.equals("search")){
+            if(command.equals("rank")){
                 System.out.println("랭킹리스트 액션실행");
                 action = new RankListAction();
             }
