@@ -1,6 +1,7 @@
 package comment.controller.action;
 
 import comment.controller.CommentAction;
+import comment.module.Comment;
 import comment.module.CommentDao;
 import org.json.JSONObject;
 
@@ -32,9 +33,9 @@ public class CommentModifyAction extends HttpServlet implements CommentAction {
 
         if (isValid) {
             CommentDao commentDao = CommentDao.getInstance();
-            boolean isSuccess = commentDao.updateComment(cmtCode, newContents);
+            Comment isSuccess = commentDao.updateComment(cmtCode, newContents);
 
-            if (isSuccess) {
+            if (isSuccess != null) {
                 response.setStatus(HttpServletResponse.SC_OK);
                 System.out.println("댓글 수정 완료");
                 out.print("댓글 수정 완료");

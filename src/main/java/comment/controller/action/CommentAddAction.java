@@ -34,14 +34,19 @@ public class CommentAddAction extends HttpServlet implements CommentAction {
             Comment comment = new Comment(userId, boardCode, contents, parent);
 
             CommentDao commentDao = CommentDao.getInstance();
-            boolean isSuccess = commentDao.addComment(comment);
+            Comment isSuccess = commentDao.addComment(comment);
 
-            if (isSuccess) {
+            if (isSuccess != null) {
+                JSONObject jsonResponse = new JSONObject();
+                jsonResponse.put("message", "댓글 작성 완료");
+                jsonResponse.put("comment", new JSONObject(isSuccess));
                 response.setStatus(HttpServletResponse.SC_OK);
                 System.out.println("댓글 작성 완료");
                 out.print("댓글 작성 완료");
             } else {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                JSONObject jsonResponse = new JSONObject();
+                jsonResponse.put("message", "댓글 작성 실패");
                 System.out.println("댓글 작성 실패");
                 out.print("댓글 작성 실패");
             }

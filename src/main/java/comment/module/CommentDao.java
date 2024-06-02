@@ -21,12 +21,12 @@ public class CommentDao {
     }
 
     // 댓글 추가
-    public boolean addComment(Comment comment) {
+    public Comment addComment(Comment comment) {
         String sql = "INSERT INTO comment (board_code, id, contents, parent) VALUES (?, ?, ?, ?)";
 
         try {
             conn = DBManager.getConnection();
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, comment.getBoardCode());
             pstmt.setString(2, comment.getId());
             pstmt.setString(3, comment.getContents());
@@ -36,14 +36,21 @@ public class CommentDao {
                 pstmt.setInt(4, comment.getParent());
             }
 
-            pstmt.executeUpdate();
-            return true;
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int cmtCode = rs.getInt(1);
+                    Timestamp regDate = new Timestamp(System.currentTimeMillis());
+                    return new Comment(comment.getId(), cmtCode, comment.getBoardCode(), comment.getContents(), comment.getParent(), regDate, regDate);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBManager.close(conn, pstmt);
+            DBManager.close(conn, pstmt, rs);
         }
-        return false;
+        return null;
     }
 
     // 특정 게시물의 모든 댓글 조회
@@ -108,7 +115,7 @@ public class CommentDao {
     }
 
     // 댓글 수정
-    public boolean updateComment(int cmtCode, String newContent) {
+    public Comment updateComment(int cmtCode, String newContent) {
         String sql = "UPDATE comment SET contents = ? WHERE cmt_code = ?";
 
         try {
@@ -118,13 +125,43 @@ public class CommentDao {
             pstmt.setInt(2, cmtCode);
 
             int rowsUpdated = pstmt.executeUpdate();
-            return rowsUpdated > 0;
+            if (rowsUpdated > 0) {
+                return getCommentById(cmtCode); // 업데이트된 댓글 반환
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, pstmt);
         }
-        return false;
+        return null;
+    }
+
+    // 특정 댓글 조회
+    public Comment getCommentById(int cmtCode) {
+        String sql = "SELECT * FROM comment WHERE cmt_code = ?";
+
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, cmtCode);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String id = rs.getString("id");
+                int boardCode = rs.getInt("board_code");
+                String contents = rs.getString("contents");
+                int parent = rs.getInt("parent");
+                Timestamp regDate = rs.getTimestamp("reg_date");
+                Timestamp modDate = rs.getTimestamp("mod_date");
+
+                return new Comment(id, cmtCode, boardCode, contents, parent, regDate, modDate);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return null;
     }
 
     // 댓글 삭제
