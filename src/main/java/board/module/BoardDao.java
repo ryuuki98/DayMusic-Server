@@ -164,15 +164,15 @@ public class BoardDao {
 			
 			if(rs.next()) {
 				String contents = rs.getString(2);
-				String musicTrack = rs.getString("music_track");
-				String musicArtist = rs.getString("music_artist");
-				String musicPreviewUrl = rs.getString("music_previewUrl");
-				String musicThumbnail = rs.getString("music_Thumbnail");
-				int boardCode = rs.getInt(6);
-				java.sql.Timestamp reg_date = rs.getTimestamp(7);
-				java.sql.Timestamp mod_date = rs.getTimestamp(8);
-				int isPublic = rs.getInt(9);
-				String nickname = rs.getString(10);
+				String musicTrack = rs.getString(3);
+				String musicArtist = rs.getString(4);
+				String musicPreviewUrl = rs.getString(5);
+				String musicThumbnail = rs.getString(6);
+				int boardCode = rs.getInt(7);
+				java.sql.Timestamp reg_date = rs.getTimestamp(8);
+				java.sql.Timestamp mod_date = rs.getTimestamp(9);
+				int isPublic = rs.getInt(10);
+				String nickname = rs.getString(11);
 				
 				board = new BoardResponseDto(boardCode, userId, nickname, contents,musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, reg_date, mod_date);
 			}
