@@ -24,7 +24,6 @@
 		<url-pattern>/error</url-pattern>
 	</servlet-mapping>
 
-
 	<!-- servlet-mapping -->
 	<servlet>
 		<servlet-name>UserServiceServlet</servlet-name>
@@ -35,7 +34,17 @@
 		<servlet-name>UserServiceServlet</servlet-name>
 		<url-pattern>/user/service</url-pattern>
 	</servlet-mapping>
-
+	
+	<servlet>
+		<servlet-name>RankServiceServlet</servlet-name>
+		<servlet-class>rank.controller.RankServiceServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>RankServiceServlet</servlet-name>
+		<url-pattern>/rank</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>BoardServiceServlet</servlet-name>
 		<servlet-class>board.controller.BoardServiceServlet</servlet-class>
@@ -55,8 +64,6 @@
 		<servlet-name>CommentServiceServlet</servlet-name>
 		<url-pattern>/comment/service</url-pattern>
 	</servlet-mapping>
-
-
 
 	<filter>
 		<filter-name>corsFilter</filter-name>
