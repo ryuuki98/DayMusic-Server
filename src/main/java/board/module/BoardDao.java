@@ -88,6 +88,42 @@ public class BoardDao {
 		return list;
 	}
 
+	// 팔로우 게시글 리스트
+	public List<BoardResponseDto> followBoardList(String userId) {
+		Connection conn = DBManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<BoardResponseDto> list = new ArrayList<>();
+		try {
+			String sql = "select * from board WHERE ID IN (SELECT follower_id FROM follow WHERE followed_id = ?) order by reg_date desc ";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int isPublic = rs.getInt("is_public");
+				String id = rs.getString("id");
+				String contents = rs.getString("contents");
+				String musicTrack = rs.getString("music_track");
+				String musicArtist = rs.getString("music_artist");
+				String musicPreviewUrl = rs.getString("music_PreviewUrl");
+				String musicThumbnail = rs.getString("music_Thumbnail");
+				int boardCode = rs.getInt("board_code");
+				Timestamp regDate = rs.getTimestamp("reg_date");
+				Timestamp modDate = rs.getTimestamp("mod_date");
+				String nickname = rs.getString("nickname");
+
+				BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, regDate, modDate);
+				list.add(board);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return list;
+	}
+
 	// 게시물 번호로 찾기
 	public BoardResponseDto findBoardByCode(int boardCode) {
 		BoardResponseDto board = null;
