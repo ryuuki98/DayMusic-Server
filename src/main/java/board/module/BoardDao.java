@@ -52,6 +52,45 @@ public class BoardDao {
 		return list;
 	}
 
+	// 나의 음악 게시물 찾기
+	public List<BoardResponseDto> findMusicBoardMyID(String userId) {
+		Connection conn = DBManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<BoardResponseDto> list = new ArrayList<>();
+		try {
+			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String contents = rs.getString("contents");
+				String musicTrack = rs.getString("music_track");
+				String musicArtist = rs.getString("music_artist");
+				String musicPreviewUrl = rs.getString("music_PreviewUrl");
+				String musicThumbnail = rs.getString("music_Thumbnail");
+				int boardCode = rs.getInt("board_code");
+				Timestamp regDate = rs.getTimestamp("reg_date");
+				Timestamp modDate = rs.getTimestamp("mod_date");
+				int isPublic = rs.getInt("is_public");
+				String nickname = rs.getString("nickname");
+
+				if(!musicTrack.equals("")) {
+					BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, regDate, modDate);
+					list.add(board);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return list;
+	}
+
 	// 공개 게시글 리스트
 	public List<BoardResponseDto> findBoardList() {
 		Connection conn = DBManager.getConnection();
