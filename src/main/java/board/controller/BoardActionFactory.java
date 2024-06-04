@@ -28,7 +28,7 @@ public class BoardActionFactory {
 			action = new DetailBoardAction();
 		else if(command.equals("myBoard"))
 			action = new MyBoardAction();
-		else if(command.equals("myBoardMusic"))
+		else if(command.equals("myMusicBoard"))
 			action = new MyBoardMusicAction();
 		return action;
 		
