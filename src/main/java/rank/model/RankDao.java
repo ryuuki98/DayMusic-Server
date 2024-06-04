@@ -61,4 +61,44 @@ public class RankDao {
         }
         return list;
     }
+
+    public List<RankResponseDto> sideList() {
+        List<RankResponseDto> list = new ArrayList<RankResponseDto>();
+
+        try {
+            conn = DBManager.getConnection();
+            String sql = "SELECT COUNT(*) AS count, music_Track, music_Artist, music_Thumbnail, music_PreviewUrl " +
+                    "FROM board " +
+                    "GROUP BY music_Track, music_Artist, music_Thumbnail, music_PreviewUrl " +
+                    "ORDER BY count DESC LIMIT 5";
+
+            pstmt = conn.prepareStatement(sql);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                if(!rs.getString("music_Track").equals("")) {
+                    int count = rs.getInt(1);
+                    String musicTrack = rs.getString(2);
+                    String musicArtist = rs.getString(3);
+                    String musicThumbnail = rs.getString(4);
+                    String musicPreviewUrl = rs.getString(5);
+                    list.add(new RankResponseDto(count, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail));
+                    System.out.println(count);
+                    System.out.println(musicTrack);
+                    System.out.println(musicArtist);
+                    System.out.println(musicThumbnail);
+                    System.out.println(musicPreviewUrl);
+                }
+
+            }
+
+            System.out.println("rank 리스트 불러오기 성공");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return list;
+    }
 }
