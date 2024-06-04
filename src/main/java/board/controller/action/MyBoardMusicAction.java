@@ -3,6 +3,8 @@ package board.controller.action;
 import board.controller.BoardAction;
 import board.module.BoardDao;
 import board.module.BoardResponseDto;
+import image.model.ImageDao;
+import like.model.LikeDao;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,18 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MyBoardMusicAction extends HttpServlet implements BoardAction {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         JSONObject jsonObject = (JSONObject) request.getAttribute("data");
         String userId = jsonObject.getString("id");
         System.out.println("userId : " + userId);
 
         BoardDao boardDao = BoardDao.getInstance();
-        List<BoardResponseDto> boardList = boardDao.findBoardMyID(userId);
+        List<BoardResponseDto> boardList = boardDao.findMusicBoardMyID(userId);
         System.out.println("boardList : " + boardList);
 
         JSONObject jsonResponse = new JSONObject();
