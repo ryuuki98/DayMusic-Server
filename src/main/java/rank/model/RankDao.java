@@ -70,7 +70,7 @@ public class RankDao {
             String sql = "SELECT COUNT(*) AS count, music_Track, music_Artist, music_Thumbnail, music_PreviewUrl " +
                     "FROM board " +
                     "GROUP BY music_Track, music_Artist, music_Thumbnail, music_PreviewUrl " +
-                    "ORDER BY count DESC LIMIT 5";
+                    "ORDER BY count DESC LIMIT 6";
 
             pstmt = conn.prepareStatement(sql);
 
