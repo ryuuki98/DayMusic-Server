@@ -10,6 +10,7 @@ public class CommentDao {
     private Connection conn;
     private PreparedStatement pstmt;
     private ResultSet rs;
+    private int count;
 
     private CommentDao() {
     }
@@ -112,6 +113,34 @@ public class CommentDao {
             DBManager.close(conn, pstmt, rs);
         }
         return comments;
+    }
+
+    public Integer countComment(int board_code){
+        int count = 0;
+
+        try {
+            conn = DBManager.getConnection();
+            String sql = "SELECT COUNT(*) FROM `comment` WHERE board_code=?";
+            pstmt = conn.prepareStatement(sql);
+
+
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1,board_code);
+
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+            System.out.println("카운트 세기 완료");
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt,rs);
+        }
+
+        return  count;
     }
 
     // 댓글 수정
