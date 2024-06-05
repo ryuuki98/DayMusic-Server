@@ -66,6 +66,7 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
             boardJson.put("is_public", board.isPublic());
             boardJson.put("nickname", board.getNickname());
             boardJson.put("likeCount", likeCount);
+            boardJson.put("createdAt", board.getModDate());
             boardArray.put(boardJson);
         }
 
