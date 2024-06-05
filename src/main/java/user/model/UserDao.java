@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import util.DBManager;
 import util.PasswordCrypto;
@@ -485,5 +487,24 @@ public class UserDao {
 		}
 
 		return profileImageUrl;
+	}
+
+	public List<UserResponseDto> searchUsersByNickname(String nickname) {
+		List<UserResponseDto> userList = new ArrayList<>();
+		String sql = "SELECT id,nickname FROM users WHERE nickname LIKE ?";
+
+		try (Connection conn = DBManager.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, "%" + nickname + "%");
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					UserResponseDto user = new UserResponseDto(rs.getString(1),rs.getString(2));
+					userList.add(user);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userList;
 	}
 }
