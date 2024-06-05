@@ -27,9 +27,9 @@ public class RankDao {
 
         try {
             conn = DBManager.getConnection();
-            String sql = "SELECT COUNT(*) AS count, music_Track, music_Artist, music_Thumbnail, music_PreviewUrl " +
+            String sql = "SELECT COUNT(*) AS count, music_Track, music_Artist, music_Thumbnail, music_PreviewUrl,music_Url " +
                     "FROM board " +
-                    "GROUP BY music_Track, music_Artist, music_Thumbnail, music_PreviewUrl " +
+                    "GROUP BY music_Track, music_Artist, music_Thumbnail, music_PreviewUrl, music_Url " +
                     "ORDER BY count DESC";
 
             pstmt = conn.prepareStatement(sql);
@@ -43,12 +43,8 @@ public class RankDao {
                     String musicArtist = rs.getString(3);
                     String musicThumbnail = rs.getString(4);
                     String musicPreviewUrl = rs.getString(5);
-                    list.add(new RankResponseDto(count, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail));
-                    System.out.println(count);
-                    System.out.println(musicTrack);
-                    System.out.println(musicArtist);
-                    System.out.println(musicThumbnail);
-                    System.out.println(musicPreviewUrl);
+                    String musicUrl = rs.getString(6);
+                    list.add(new RankResponseDto(count, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, musicUrl));
                 }
 
             }

@@ -6,6 +6,7 @@ public class RankResponseDto {
     private String musicArtist;
     private String musicPreviewUrl;
     private String musicThumbnail;
+    private String musicUrl;
 
     public RankResponseDto(int count, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail) {
         this.count = count;
@@ -14,6 +15,16 @@ public class RankResponseDto {
         this.musicPreviewUrl = musicPreviewUrl;
         this.musicThumbnail = musicThumbnail;
     }
+
+    public RankResponseDto(int count, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, String musicUrl) {
+        this.count = count;
+        this.musicTrack = musicTrack;
+        this.musicArtist = musicArtist;
+        this.musicPreviewUrl = musicPreviewUrl;
+        this.musicThumbnail = musicThumbnail;
+        this.musicUrl = musicUrl;
+    }
+
     public int getCount() {
         return count;
     }
@@ -43,5 +54,11 @@ public class RankResponseDto {
     }
     public void setMusicThumbnail(String musicThumbnail) {
         this.musicThumbnail = musicThumbnail;
+    }
+    public String getMusicUrl() {
+        return musicUrl;
+    }
+    public void setMusicUrl(String musicUrl) {
+        this.musicUrl = musicUrl;
     }
 }
