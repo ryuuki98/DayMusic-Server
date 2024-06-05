@@ -2,7 +2,9 @@ package comment.module;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import util.DBManager;
 
@@ -54,6 +56,35 @@ public class CommentDao {
         return null;
     }
 
+    public Map<String, String> getAllCommentNickname() {
+        Map<String, String> commentNickname = new HashMap<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT id, nickname FROM users";
+
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String userId = rs.getString(1) ;
+                String userNickname = rs.getString(2);
+                commentNickname.put(userId, userNickname);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+
+        System.out.println(commentNickname.toString());
+
+        return commentNickname;
+    }
+
     // 특정 게시물의 모든 댓글 조회
     public List<Comment> getCommentsByBoardCode(int boardCode) {
         String sql = "SELECT * FROM comment WHERE board_code = ?";
@@ -83,6 +114,7 @@ public class CommentDao {
         }
         return comments;
     }
+
 
     // 특정 댓글의 대댓글 조회
     public List<Comment> getRepliesByParentCode(int parentCode) {
