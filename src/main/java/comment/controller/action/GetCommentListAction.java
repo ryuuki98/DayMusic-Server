@@ -26,6 +26,7 @@ public class GetCommentListAction extends HttpServlet implements CommentAction {
 
         CommentDao commentDao = CommentDao.getInstance();
         List<Comment> comments = commentDao.getCommentsByBoardCode(boardCode);
+        int count = commentDao.countComment(boardCode);
 
         response.setContentType("application/json; charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -40,6 +41,7 @@ public class GetCommentListAction extends HttpServlet implements CommentAction {
             jsonObject.put("parent", comment.getParent());
             jsonObject.put("regDate", comment.getRegDate().toString());
             jsonObject.put("modDate", comment.getModDate().toString());
+            jsonObject.put("count", count);
 
             System.out.println(jsonObject.toString());
 
