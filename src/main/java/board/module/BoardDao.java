@@ -22,7 +22,7 @@ public class BoardDao {
 		
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
-			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
+			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail,music_url board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
@@ -34,13 +34,14 @@ public class BoardDao {
 				String musicArtist = rs.getString("music_artist");
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
+				String musicUrl = rs.getString("music_url");
 				int boardCode = rs.getInt("board_code");
 				Timestamp regDate = rs.getTimestamp("reg_date");
 				Timestamp modDate = rs.getTimestamp("mod_date");
 				int isPublic = rs.getInt("is_public");
 				String nickname = rs.getString("nickname");
 
-				BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, regDate, modDate);
+				BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, musicUrl, isPublic, regDate, modDate);
 				list.add(board);
 			}
 		} catch (SQLException e) {
@@ -60,7 +61,7 @@ public class BoardDao {
 
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
-			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
+			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
@@ -73,13 +74,14 @@ public class BoardDao {
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
 				int boardCode = rs.getInt("board_code");
+				String musicUrl = rs.getString("music_url");
 				Timestamp regDate = rs.getTimestamp("reg_date");
 				Timestamp modDate = rs.getTimestamp("mod_date");
 				int isPublic = rs.getInt("is_public");
 				String nickname = rs.getString("nickname");
 
 				if(!musicTrack.equals("")) {
-					BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, regDate, modDate);
+					BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, musicUrl, isPublic, regDate, modDate);
 					list.add(board);
 				}
 			}
@@ -99,7 +101,7 @@ public class BoardDao {
 		
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
-			String sql = "SELECT is_public, id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, board_code, reg_date, mod_date, nickname FROM board WHERE is_public=0";
+			String sql = "SELECT is_public, id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, nickname FROM board WHERE is_public=0";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -110,12 +112,13 @@ public class BoardDao {
 				String musicArtist = rs.getString("music_artist");
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
+				String musicUrl = rs.getString("music_url");
 				int boardCode = rs.getInt("board_code");
 				Timestamp regDate = rs.getTimestamp("reg_date");
 				Timestamp modDate = rs.getTimestamp("mod_date");
 				String nickname = rs.getString("nickname");
 
-				BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, regDate, modDate);
+				BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, musicUrl, isPublic, regDate, modDate);
 				list.add(board);
 			}
 		} catch (SQLException e) {
@@ -139,7 +142,7 @@ public class BoardDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "SELECT board_code, id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, reg_date, mod_date, is_public, nickname FROM board WHERE board_code=?";
+			String sql = "SELECT board_code, id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, reg_date, mod_date, is_public, nickname FROM board WHERE board_code=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardCode);
 
@@ -152,12 +155,13 @@ public class BoardDao {
 				String musicArtist = rs.getString("music_artist");
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
+				String musicUrl = rs.getString("music_url");
 				Timestamp reg_date = rs.getTimestamp("reg_date");
 				Timestamp mod_date = rs.getTimestamp("mod_date");
 				int isPublic = rs.getInt("is_public");
 				String nickname = rs.getString("nickname");
 
-				board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, reg_date, mod_date);
+				board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, musicUrl, isPublic, reg_date, mod_date);
 			}
 
 		} catch (SQLException e) {
@@ -178,7 +182,7 @@ public class BoardDao {
 		
 		
 		try {
-			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
+			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 
@@ -190,13 +194,14 @@ public class BoardDao {
 				String musicArtist = rs.getString("music_artist");
 				String musicPreviewUrl = rs.getString("music_PreviewUrl");
 				String musicThumbnail = rs.getString("music_Thumbnail");
+				String musicUrl = rs.getString("music_url");
 				int boardCode = rs.getInt(7);
 				Timestamp reg_date = rs.getTimestamp(8);
 				Timestamp mod_date = rs.getTimestamp(9);
 				int isPublic = rs.getInt(10);
 				String nickname = rs.getString(11);
 
-				board = new BoardResponseDto(boardCode, userId, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, isPublic, reg_date, mod_date);
+				board = new BoardResponseDto(boardCode, userId, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, musicUrl, isPublic, reg_date, mod_date);
 			}
 
 		} catch (SQLException e) {
@@ -215,7 +220,7 @@ public class BoardDao {
 		int boardCode = 0;
 		
 		try {
-			String sql = "INSERT INTO board(id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, is_public, nickname) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO board(id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, is_public, nickname) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?)";
 
 			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -225,8 +230,9 @@ public class BoardDao {
 			pstmt.setString(4, boardDto.getMusicArtist());
 			pstmt.setString(5, boardDto.getMusicPreviewUrl());
 			pstmt.setString(6, boardDto.getMusicThumbnail());
-			pstmt.setInt(7, boardDto.isPublic());
-			pstmt.setString(8, boardDto.getNickname());
+			pstmt.setString(7,boardDto.getMusicUrl());
+			pstmt.setInt(8, boardDto.isPublic());
+			pstmt.setString(9, boardDto.getNickname());
 
 			pstmt.execute();
 			
@@ -253,15 +259,16 @@ public class BoardDao {
 			return board;
 
 		try {
-			String sql = "UPDATE board SET contents=?, music_track=?, music_artist=?, music_PreviewUrl=?, music_Thumbnail=? WHERE id=? AND board_code=?";
+			String sql = "UPDATE board SET contents=?, music_track=?, music_artist=?, music_PreviewUrl=?, music_Thumbnail=?, music_url=? WHERE id=? AND board_code=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, boardDto.getContents());
 			pstmt.setString(2, boardDto.getMusicTrack());
 			pstmt.setString(3, boardDto.getMusicArtist());
 			pstmt.setString(4, boardDto.getMusicPreviewUrl());
 			pstmt.setString(5, boardDto.getMusicThumbnail());
-			pstmt.setString(6, boardDto.getId());
-			pstmt.setInt(7, boardDto.getBoardCode());
+			pstmt.setString(6, boardDto.getMusicUrl());
+			pstmt.setString(7, boardDto.getId());
+			pstmt.setInt(8, boardDto.getBoardCode());
 
 			pstmt.execute();
 

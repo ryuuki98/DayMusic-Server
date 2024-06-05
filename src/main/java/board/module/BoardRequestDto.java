@@ -11,13 +11,14 @@ public class BoardRequestDto {
 	private String musicArtist;
 	private String musicPreviewUrl;
 	private String musicThumbnail;
+	private String musicUrl;
 	private int isPublic;
 	private java.sql.Timestamp regDate;
 	private java.sql.Timestamp modDate;
 	
 	public BoardRequestDto() {}
 	
-	public BoardRequestDto(int boardCode, String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, int isPublic, Timestamp regDate,
+	public BoardRequestDto(int boardCode, String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, String musicUrl, int isPublic, Timestamp regDate,
 						   Timestamp modDate) {
 		super();
 		this.boardCode = boardCode;
@@ -28,12 +29,13 @@ public class BoardRequestDto {
 		this.musicArtist = musicArtist;
 		this.musicPreviewUrl = musicPreviewUrl;
 		this.musicThumbnail = musicThumbnail;
+		this.musicUrl = musicUrl;
 		this.isPublic = isPublic;
 		this.regDate = regDate;
 		this.modDate = modDate;
 	}
 
-	public BoardRequestDto (String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, int isPublic) {
+	public BoardRequestDto (String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, String musicUrl, int isPublic) {
 		super();
 		this.id = id;
 		this.nickname = nickname;
@@ -42,6 +44,7 @@ public class BoardRequestDto {
 		this.musicArtist = musicArtist;
 		this.musicPreviewUrl = musicPreviewUrl;
 		this.musicThumbnail = musicThumbnail;
+		this.musicUrl = musicUrl;
 		this.isPublic = isPublic;
 	}
 	
@@ -89,6 +92,14 @@ public class BoardRequestDto {
 	public int isPublic() {
 		return isPublic; 
 	}
+
+	public String getMusicUrl() {
+		return musicUrl;
+	}
+	public void setMusicUrl(String musicUrl) {
+		this.musicUrl = musicUrl;
+	}
+
 	public void setPublic(int isPublic) {
 		this.isPublic = isPublic;
 	}
