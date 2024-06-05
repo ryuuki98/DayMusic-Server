@@ -44,6 +44,8 @@ public class UserActionFactory {
 			action = new DuplicateEmailForUpdate();
 		} else if (command.equals("duplicatePhoneForUpdate")) {
 			action = new DuplicatePhoneForUpdate();
+		} else if (command.equals("searchUserList")) {
+			action = new SearchUserList();
 		}
 		return action;
 		
