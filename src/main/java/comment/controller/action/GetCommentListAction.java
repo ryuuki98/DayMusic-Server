@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 public class GetCommentListAction extends HttpServlet implements CommentAction {
     @Override
@@ -28,6 +29,8 @@ public class GetCommentListAction extends HttpServlet implements CommentAction {
         List<Comment> comments = commentDao.getCommentsByBoardCode(boardCode);
         int count = commentDao.countComment(boardCode);
 
+        Map<String, String> commentNickname = commentDao.getAllCommentNickname();
+
         response.setContentType("application/json; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
@@ -36,6 +39,7 @@ public class GetCommentListAction extends HttpServlet implements CommentAction {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", comment.getId());
             jsonObject.put("cmtCode", comment.getCmtCode());
+            jsonObject.put("nickname", commentNickname.get(comment.getId()));
             jsonObject.put("boardCode", comment.getBoardCode());
             jsonObject.put("contents", comment.getContents());
             jsonObject.put("parent", comment.getParent());

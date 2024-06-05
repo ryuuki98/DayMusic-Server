@@ -27,7 +27,7 @@ public class UserServiceServlet extends HttpServlet {
 
 		// JSON 데이터 추출
 		String command = jsonObject.getString("command");
-		System.out.println(command);
+		System.out.println("user command" + command);
 		UserActionFactory af = UserActionFactory.getInstance();
 		UserAction action = af.getAction(command);
 
