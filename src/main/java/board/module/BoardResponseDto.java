@@ -11,13 +11,14 @@ public class BoardResponseDto {
 	private String musicArtist;
 	private String musicPreviewUrl;
 	private String musicThumbnail;
+	private String musicUrl;
 	private int isPublic;
 	private java.sql.Timestamp regDate;
 	private java.sql.Timestamp modDate;
 	
 	public BoardResponseDto() {}
 
-	public BoardResponseDto(int boardCode, String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, int isPublic, Timestamp regDate,
+	public BoardResponseDto(int boardCode, String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, String musicUrl, int isPublic, Timestamp regDate,
 							Timestamp modDate) {
 		super();
 		this.boardCode = boardCode;
@@ -28,6 +29,7 @@ public class BoardResponseDto {
 		this.musicArtist = musicArtist;
 		this.musicPreviewUrl = musicPreviewUrl;
 		this.musicThumbnail = musicThumbnail;
+		this.musicUrl = musicUrl;
 		this.isPublic = isPublic;
 		this.regDate = regDate;
 		this.modDate = modDate;
@@ -73,6 +75,10 @@ public class BoardResponseDto {
 	public void setMusicPreviewUrl(String musicPreviewUrl) { this.musicPreviewUrl = musicPreviewUrl; }
 	public String getMusicThumbnail() { return musicThumbnail; }
 	public void setMusicThumbnail(String musicThumbnail) { this.musicThumbnail = musicThumbnail; }
+
+	public String getMusicUrl() { return musicUrl; }
+	public void setMusicUrl(String musicUrl) { this.musicUrl = musicUrl; }
+
 	public int isPublic() {
 		return isPublic;
 	}

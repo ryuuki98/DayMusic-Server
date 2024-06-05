@@ -39,6 +39,7 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 		String musicArtist = jsonObject.getString("musicArtist");
 		String musicPreviewUrl = jsonObject.getString("musicPreviewUrl");
 		String musicThumbnailUrl = jsonObject.getString("musicThumbnail");
+		String musicUrl = jsonObject.getString("musicUrl");
 
 		boolean isValid = true;
 
@@ -51,7 +52,7 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 		PrintWriter out = response.getWriter();
 
 		if (isValid) {
-			BoardRequestDto boardDto = new BoardRequestDto(userId, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnailUrl,  publics);
+			BoardRequestDto boardDto = new BoardRequestDto(userId, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnailUrl, musicUrl,  publics);
 
 			BoardDao boardDao = BoardDao.getInstance();
 			BoardResponseDto board = boardDao.createBoard(boardDto);

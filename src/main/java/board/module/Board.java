@@ -12,11 +12,12 @@ public class Board {
 	private String musicArtist;
 	private String musicPreviewUrl;
 	private String musicThumbnail;
+	private String musicUrl;
 	private boolean isPublic;
 	private java.sql.Timestamp regDate;
 	private java.sql.Timestamp modDate;
 	
-	public Board(int boardCode, String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, boolean isPublic, Timestamp regDate,
+	public Board(int boardCode, String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicUrl, String musicThumbnail, boolean isPublic, Timestamp regDate,
 			Timestamp modDate) {
 		super();
 		this.boardCode = boardCode;
@@ -27,6 +28,7 @@ public class Board {
 		this.musicArtist = musicArtist;
 		this.musicPreviewUrl = musicPreviewUrl;
 		this.musicThumbnail = musicThumbnail;
+		this.musicUrl = musicUrl;
 		this.isPublic = isPublic;
 		this.regDate = regDate;
 		this.modDate = modDate;
@@ -53,6 +55,8 @@ public class Board {
 	public String getMusicPreviewUrl() { return musicPreviewUrl; }
 
 	public String getMusicThumbnail() { return musicThumbnail; }
+
+	public String getMusicUrl() { return musicUrl; }
 
 	public boolean isPublic() {
 		return isPublic;
