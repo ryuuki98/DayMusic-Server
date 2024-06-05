@@ -1,6 +1,7 @@
 package board.controller;
 
 import board.controller.action.*;
+import follow.controller.FollowAction;
 
 public class BoardActionFactory {
 	private BoardActionFactory() {
@@ -30,6 +31,8 @@ public class BoardActionFactory {
 			action = new MyBoardAction();
 		else if(command.equals("myMusicBoard"))
 			action = new MyBoardMusicAction();
+		else if(command.equals("follow"))
+			action = new FollowBoardAction();
 		return action;
 		
 	}

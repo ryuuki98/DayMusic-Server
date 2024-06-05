@@ -35,6 +35,8 @@ public class BoardResponseDto {
 		this.modDate = modDate;
 	}
 
+//	public BoardResponseDto(int boardCode, String id, String nickname, String contents, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, String musicUrl, int isPublic, Timestamp regDate, Timestamp modDate) {}
+
 	public int getBoardCode() {
 		return boardCode;
 	}
