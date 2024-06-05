@@ -22,7 +22,7 @@ public class BoardDao {
 		
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
-			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail,music_url board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
+			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail,music_url board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=? ORDER BY reg_date DESC";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
@@ -61,7 +61,7 @@ public class BoardDao {
 
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
-			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
+			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=? ORDER BY reg_date DESC";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
@@ -101,7 +101,7 @@ public class BoardDao {
 		
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
-			String sql = "SELECT is_public, id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, nickname FROM board WHERE is_public=0";
+			String sql = "SELECT is_public, id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, nickname FROM board WHERE is_public=0 ORDER BY reg_date DESC";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
