@@ -1,6 +1,6 @@
 # daymusic 
 
-## 개요
+## 프로젝트 개요
 Daymusic은 사용자가 듣는 음악을 공유하고 하루 단위로 집계된 랭킹을 통해 인기 음악을 확인할 수 있는 소셜 네트워크 서비스입니다.
 
 ## 활용 기술
@@ -14,6 +14,9 @@ Daymusic은 사용자가 듣는 음악을 공유하고 하루 단위로 집계�
 - Database
    - MySQL
    - Amazon RDS
+
+- Storage
+   - Amazon S3 
 
 ## 관련 서류
 1. [요구사항 정의서](https://docs.google.com/spreadsheets/d/1DEs6AO6Vde9YA7t175AY5tj_RtLegTo_/edit?usp=drive_link&ouid=114769171991263143206&rtpof=true&sd=true)
