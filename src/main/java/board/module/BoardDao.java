@@ -18,8 +18,8 @@ public class BoardDao {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		
+
+
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
 			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail,music_url, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=? ORDER BY reg_date DESC";
@@ -98,7 +98,7 @@ public class BoardDao {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
 			String sql = "SELECT is_public, id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, nickname FROM board WHERE is_public=0 ORDER BY reg_date DESC";
@@ -218,8 +218,8 @@ public class BoardDao {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		
+
+
 		try {
 			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
 			pstmt = conn.prepareStatement(sql);
@@ -257,7 +257,7 @@ public class BoardDao {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
 		int boardCode = 0;
-		
+
 		try {
 			String sql = "INSERT INTO board(id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, is_public, nickname) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?)";
 
@@ -274,7 +274,7 @@ public class BoardDao {
 			pstmt.setString(9, boardDto.getNickname());
 
 			pstmt.execute();
-			
+
 			ResultSet boardCodeRs = pstmt.getGeneratedKeys();
 			if (boardCodeRs.next()) {boardCode = boardCodeRs.getInt(1);}
 
@@ -327,7 +327,7 @@ public class BoardDao {
 	public boolean deleteBoard(String userId, int boardCode) {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			String sql = "DELETE FROM board WHERE id=? AND board_code=?";
 			pstmt = conn.prepareStatement(sql);
