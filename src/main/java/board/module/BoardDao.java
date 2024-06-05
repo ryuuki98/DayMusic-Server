@@ -18,11 +18,11 @@ public class BoardDao {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		
+
+
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
-			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail,music_url board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=? ORDER BY reg_date DESC";
+			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail,music_url, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=? ORDER BY reg_date DESC";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
@@ -98,11 +98,50 @@ public class BoardDao {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
 			String sql = "SELECT is_public, id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, nickname FROM board WHERE is_public=0 ORDER BY reg_date DESC";
 			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int isPublic = rs.getInt("is_public");
+				String id = rs.getString("id");
+				String contents = rs.getString("contents");
+				String musicTrack = rs.getString("music_track");
+				String musicArtist = rs.getString("music_artist");
+				String musicPreviewUrl = rs.getString("music_PreviewUrl");
+				String musicThumbnail = rs.getString("music_Thumbnail");
+				String musicUrl = rs.getString("music_url");
+				int boardCode = rs.getInt("board_code");
+				Timestamp regDate = rs.getTimestamp("reg_date");
+				Timestamp modDate = rs.getTimestamp("mod_date");
+				String nickname = rs.getString("nickname");
+
+				BoardResponseDto board = new BoardResponseDto(boardCode, id, nickname, contents, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail, musicUrl, isPublic, regDate, modDate);
+				list.add(board);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return list;
+	}
+
+
+	// 팔로우 게시글 리스트
+	public List<BoardResponseDto> followBoardList(String userId) {
+		Connection conn = DBManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		List<BoardResponseDto> list = new ArrayList<>();
+		try {
+			String sql = "select * from board WHERE ID IN (SELECT follower_id FROM follow WHERE followed_id = ?) order by reg_date desc ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				int isPublic = rs.getInt("is_public");
@@ -179,8 +218,8 @@ public class BoardDao {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		
+
+
 		try {
 			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=?";
 			pstmt = conn.prepareStatement(sql);
@@ -218,7 +257,7 @@ public class BoardDao {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
 		int boardCode = 0;
-		
+
 		try {
 			String sql = "INSERT INTO board(id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail, music_url, is_public, nickname) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?)";
 
@@ -235,7 +274,7 @@ public class BoardDao {
 			pstmt.setString(9, boardDto.getNickname());
 
 			pstmt.execute();
-			
+
 			ResultSet boardCodeRs = pstmt.getGeneratedKeys();
 			if (boardCodeRs.next()) {boardCode = boardCodeRs.getInt(1);}
 
@@ -288,7 +327,7 @@ public class BoardDao {
 	public boolean deleteBoard(String userId, int boardCode) {
 		Connection conn = DBManager.getConnection();
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			String sql = "DELETE FROM board WHERE id=? AND board_code=?";
 			pstmt = conn.prepareStatement(sql);
