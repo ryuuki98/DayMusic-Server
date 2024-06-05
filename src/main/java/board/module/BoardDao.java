@@ -22,7 +22,7 @@ public class BoardDao {
 		
 		List<BoardResponseDto> list = new ArrayList<>();
 		try {
-			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail,music_url board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=? ORDER BY reg_date DESC";
+			String sql = "SELECT id, contents, music_track, music_artist, music_PreviewUrl, music_Thumbnail,music_url, board_code, reg_date, mod_date, is_public, nickname FROM board WHERE id=? ORDER BY reg_date DESC";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();

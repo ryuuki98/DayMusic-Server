@@ -7,6 +7,7 @@ public class Rank {
     private String musicArtist;
     private String musicPreviewUrl;
     private String musicThumbnail;
+    private String musicUrl;
 
     public Rank(int count, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail) {
         this.count = count;
@@ -14,6 +15,15 @@ public class Rank {
         this.musicArtist = musicArtist;
         this.musicPreviewUrl = musicPreviewUrl;
         this.musicThumbnail = musicThumbnail;
+    }
+
+    public Rank(int count, String musicTrack, String musicArtist, String musicPreviewUrl, String musicThumbnail, String musicUrl) {
+        this.count = count;
+        this.musicTrack = musicTrack;
+        this.musicArtist = musicArtist;
+        this.musicPreviewUrl = musicPreviewUrl;
+        this.musicThumbnail = musicThumbnail;
+        this.musicUrl = musicUrl;
     }
 
     public int getCount() {
@@ -25,4 +35,6 @@ public class Rank {
     public String getMusicTrack() {
         return musicTrack;
     }
+
+    public String getMusicUrl() {return musicUrl;}
 }
