@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.mysql.cj.xdevapi.PreparableStatement;
 
+import user.model.UserDao;
 import util.DBManager;
 
 public class LikeDao {
@@ -38,7 +39,7 @@ public class LikeDao {
 	        rs = pstmt.executeQuery();
 	        while (rs.next()) {
 	            String id = rs.getString(1);
-	            UserDao finder = UserDao.getInstace();
+	            UserDao finder = user.model.UserDao.getInstance();
 	            String[] user = finder.findUser(id);
 	            LikeResponseDto like = new LikeResponseDto(boardCode, id, user[0], user[1]);
 	            list.add(like);                    
@@ -144,9 +145,9 @@ public class LikeDao {
 			
 			pstmt.setInt(1, boardCode);
 			pstmt.setString(2, id);
-			
+
 			pstmt.execute();
-			
+
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
