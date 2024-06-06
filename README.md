@@ -26,7 +26,7 @@ DayMusic은 사용자가 즐겨 듣는 음악이나 게시물을 공유하고 �
 - 프로필 수정
 - 팔로우 / 팔로잉
 
-## 💡기술 스택
+## 🛠기술 스택
 ### Front-End
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
