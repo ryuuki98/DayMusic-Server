@@ -100,7 +100,7 @@ public class LikeDao {
 				deleteLike(id, boardCode);
 				message = "좋아요를 취소했습니다.";
 			}
-			System.out.println(message);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -175,7 +175,7 @@ public class LikeDao {
 			if(rs.next()){
 				count = rs.getInt(1);
 			}
-			System.out.println("카운트 세기 완료");
+			
 		} catch (Exception e){
 			e.printStackTrace();
 		} finally {

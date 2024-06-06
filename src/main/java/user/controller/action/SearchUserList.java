@@ -17,13 +17,13 @@ public class SearchUserList implements UserAction {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-        System.out.println("유저검색 시작 ");
+        
 
 
 
         JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
         String nickname = jsonObject.getString("nickname");
-        System.out.println("nickname" + nickname);
+        
 
 
         UserDao userDao = UserDao.getInstance();

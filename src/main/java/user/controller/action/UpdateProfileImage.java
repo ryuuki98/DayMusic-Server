@@ -21,9 +21,9 @@ public class UpdateProfileImage implements UserAction{
 		
 		UserResponseDto user = userDao.updateProfileImage(id,profile_img_url);
 		if (user == null) {
-			System.out.println("사진 변경 안됨");
+			
 		}else {
-			System.out.println("사진 변경 완료");
+			
 		}
 	}
 

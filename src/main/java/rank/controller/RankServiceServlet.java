@@ -14,7 +14,7 @@ public class RankServiceServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("POST 실행");
+        
         request.setCharacterEncoding("utf-8");
 
         StringBuilder sb = new StringBuilder();
@@ -27,7 +27,7 @@ public class RankServiceServlet extends HttpServlet {
 
         JSONObject jsonObject = new JSONObject(sb.toString());
         String command = jsonObject.getString("command");
-        System.out.println("Command: " + command);
+        
 
         RankActionFactory af = RankActionFactory.getInstance();
         RankAction action = af.getAction(command);

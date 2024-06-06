@@ -21,9 +21,9 @@ public class BoardServiceServlet extends HttpServlet {
 //		String command = request.getParameter("command");
 //		String contents = request.getParameter("contents");
 //        String isPublic = request.getParameter("isPublic");
-//		System.out.println("command : " + command);
-//		System.out.println("contents : " + contents);
-//		System.out.println("ispublic : " + isPublic);
+//		
+//		
+//		
 		
 		request.setCharacterEncoding("UTF-8");
 		StringBuilder sb = new StringBuilder();
@@ -32,13 +32,13 @@ public class BoardServiceServlet extends HttpServlet {
 		while ((line = reader.readLine()) != null) {
 			sb.append(line);
 		}
-//		System.out.println("sb.toString() : " + sb.toString());
+//		
 		JSONObject jsonObject = new JSONObject(sb.toString());
 		
 		
 		// JSON 데이터 추출
 		String command = jsonObject.getString("command");
-		System.out.println("command: " + command);
+		
 		
 		if(command != null) {
 			BoardActionFactory af = BoardActionFactory.getInstance();

@@ -26,9 +26,9 @@ public class LikeListAction implements LikeAction{
 
 		list = likeDao.printAllLikeList(board_code);
 		if(list == null || list.size() == 0){
-			System.out.println("좋아요리스트가 비어있다");
+			
 		}else{
-			System.out.println("좋아요리스트가 채워져있다");
+			
 		}
 
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();

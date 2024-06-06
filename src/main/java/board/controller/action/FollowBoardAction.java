@@ -22,7 +22,7 @@ public class FollowBoardAction extends HttpServlet implements BoardAction {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("팔로우 리스트업 하는중");
+        
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
@@ -34,10 +34,10 @@ public class FollowBoardAction extends HttpServlet implements BoardAction {
         JSONObject jsonObject = (JSONObject) request.getAttribute("data");
 
         String userId = jsonObject.getString("userId");
-        System.out.println("id : " + userId);
+        
         List<BoardResponseDto> boardList = boardDao.followBoardList(userId);
 
-        System.out.println("Follow boards fetched[36]: " + boardList.size());
+        
 
         Map<String, String> profileImages = imageDao.getAllProfileImages();
         Map<Integer, String> boardImages = imageDao.getAllBoardImage();
@@ -68,7 +68,7 @@ public class FollowBoardAction extends HttpServlet implements BoardAction {
         }
 
         jsonResponse.put("boardList", boardArray);
-        System.out.println("JSON Response: " + jsonResponse.toString());
+        
 
         PrintWriter out = response.getWriter();
         out.print(jsonResponse.toString());

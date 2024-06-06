@@ -18,17 +18,17 @@ public class LikeServiceServlet extends HttpServlet {
 		// GoF 디자인 패턴
 		// ㄴ 생성 패턴: 싱글톤, 팩토리 메소드, 커맨드
 		// input hidden 으로 넘겨도 되고 경로에 ?command=ddd 로 넘겨도 됩니다
-		System.out.println("LikeServiceServlet GET 실행");
+		
 		request.setCharacterEncoding("UTF-8");
 
 		// URL 파라미터에서 command 값 추출
 		String command = request.getParameter("command");
 		if (command == null || command.isEmpty()) {
-			System.out.println("Command가 null이거나 비어있습니다");
+			
 			return;
 		}
 
-		System.out.println("command: " + command);
+		
 		LikeActionFactory af = LikeActionFactory.getInstance();
 		LikeAction action = af.getAction(command);
 
@@ -36,12 +36,12 @@ public class LikeServiceServlet extends HttpServlet {
 			request.setAttribute("command", command);
 			action.execute(request, response);
 		} else {
-			System.out.println("Command에 해당하는 액션을 찾을 수 없습니다: " + command);
+			
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("POST실행");
+		
 		request.setCharacterEncoding("UTF-8");
 		StringBuilder sb = new StringBuilder();
 		BufferedReader reader = request.getReader();
@@ -54,7 +54,7 @@ public class LikeServiceServlet extends HttpServlet {
 
 		// JSON 데이터 추출
 		String command = jsonObject.getString("command");
-		System.out.println("command"+command);
+		
 		LikeActionFactory af = LikeActionFactory.getInstance();
 		LikeAction action = af.getAction(command);
 
@@ -67,9 +67,9 @@ public class LikeServiceServlet extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		System.out.println("PUT실행");
+		
 		String command = request.getParameter("command");
-		System.out.println(command);
+		
 		LikeActionFactory af = LikeActionFactory.getInstance();
 		LikeAction action = af.getAction(command);
 

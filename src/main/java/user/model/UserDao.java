@@ -25,9 +25,9 @@ public class UserDao {
 
 		String encryptPassword = user.getPassword();
 
-		System.out.println();
+		
 		if (!PasswordCrypto.decrypt(userRequestDto.getPassword(), encryptPassword)) {
-			System.out.println("비밀번호 불일치");
+			
 			user = null;
 		}
 
@@ -60,7 +60,7 @@ public class UserDao {
 			user = findUserById(userRequestDto.getId());
 
 		} catch (SQLException e) {
-			System.out.println("가입 실패");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt);
@@ -93,10 +93,10 @@ public class UserDao {
 				boolean is_staff = rs.getBoolean(10);
 
 				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url, is_staff);
-				System.out.println("rs name" + name);
+				
 			}
 		} catch (SQLException e) {
-			System.out.println("findUserById 메소드 오류 ");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -125,7 +125,7 @@ public class UserDao {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("duplicateNickname method 오류");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -155,7 +155,7 @@ public class UserDao {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("duplicatePhone method 오류");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -185,7 +185,7 @@ public class UserDao {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("duplicateEmail method 오류");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -207,7 +207,7 @@ public class UserDao {
 			pstmt.setString(2, id);
 			pstmt.execute();
 		} catch (SQLException e) {
-			System.out.println("updateNickname 메소드 오류");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt);
@@ -232,7 +232,7 @@ public class UserDao {
 
 			user = findUserById(id);
 		} catch (SQLException e) {
-			System.out.println("updatePassword 메소드 오류");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt);
@@ -246,8 +246,8 @@ public class UserDao {
 		PreparedStatement pstmt = null;
 		UserResponseDto user = null;
 
-		System.out.println(id);
-		System.out.println(profile_img_url);
+		
+		
 
 		String sql = "UPDATE users SET profile_img_url = ? WHERE id = ?";
 
@@ -260,7 +260,7 @@ public class UserDao {
 
 			user = findUserById(id);
 		} catch (SQLException e) {
-			System.out.println("updateProfileImage 메소드 오류");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt);
@@ -298,7 +298,7 @@ public class UserDao {
 
 			user = findUserById(userRequestDto.getId());
 		} catch (SQLException e) {
-			System.out.println("updateInformation 메소드 오류");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt);
@@ -326,7 +326,7 @@ public class UserDao {
 				isDeleted = true;
 			}
 		} catch (SQLException e) {
-			System.out.println("deleteUserById 메소드 오류 ");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt);
@@ -362,7 +362,7 @@ public class UserDao {
 				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url, is_staff);
 			}
 		} catch (SQLException e) {
-			System.out.println("findUserByEmail 메소드 오류 ");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -397,7 +397,7 @@ public class UserDao {
 				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url, is_staff);
 			}
 		} catch (SQLException e) {
-			System.out.println("findUserByPhone 메소드 오류 ");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -432,7 +432,7 @@ public class UserDao {
 				user = new UserResponseDto(id, password, name, gender, email, phone, telecom, nickname, profile_img_url, is_staff);
 			}
 		} catch (SQLException e) {
-			System.out.println("findUserByNickname 메소드 오류 ");
+			
 			e.printStackTrace();
 		} finally {
 			DBManager.close(conn, pstmt, rs);
@@ -506,36 +506,5 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return userList;
-	}
-
-	public String[] findUser(String id){
-		String[] user = new String[2];
-		Connection conn = null;
-		ResultSet rs = null;
-		PreparedStatement pstmt = null;
-
-
-		try {
-			conn = DBManager.getConnection();
-
-			String sql = "SELECT id, profile_img_url FROM users WHERE id=?";
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(1, id);
-
-			rs = pstmt.executeQuery();
-
-			if(rs.next()) {
-				user[0] = rs.getString(1);
-				user[1] = rs.getString(2);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, pstmt, rs);
-		}
-
-		return user;
 	}
 }

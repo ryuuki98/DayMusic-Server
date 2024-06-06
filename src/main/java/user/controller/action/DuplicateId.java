@@ -17,7 +17,7 @@ public class DuplicateId implements UserAction {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("아이디 중복 확인 로직 ");
+		
 		UserDao userDao = UserDao.getInstance();
 		
 		JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
@@ -26,13 +26,13 @@ public class DuplicateId implements UserAction {
 		UserResponseDto user = userDao.findUserById(id);
 		
 		if (user == null) {
-			System.out.println("아이디 사용 가능 ");
+			
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write("{\"exists\":\"false\"}");
 
 			
 		}else {
-			System.out.println("아이디 사용 불가 ");
+			
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write("{\"exists\":\"true\"}");
 		}

@@ -34,13 +34,13 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
 
         List<BoardResponseDto> boardList = boardDao.findBoardList();
 
-        System.out.println("Total boards fetched: " + boardList.size());
+        
 
         List<BoardResponseDto> filteredBoardList = boardList.stream()
                 .filter(board -> board.isPublic() == 0)
                 .collect(Collectors.toList());
 
-        System.out.println("Total public boards: " + filteredBoardList.size());
+        
 
         Map<String, String> profileImages = imageDao.getAllProfileImages();
         Map<Integer, String> boardImages = imageDao.getAllBoardImage();
@@ -75,7 +75,7 @@ public class SearchBoardAction extends HttpServlet implements BoardAction {
         }
 
         jsonResponse.put("boardList", boardArray);
-        System.out.println("JSON Response: " + jsonResponse.toString());
+        
 
         PrintWriter out = response.getWriter();
         out.print(jsonResponse.toString());

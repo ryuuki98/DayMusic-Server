@@ -48,7 +48,7 @@ public class ImageServiceServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("이미지 업로드 요청");
+        
         ImageDao imageDao = ImageDao.getInstance();
 
         if (!ServletFileUpload.isMultipartContent(request)) {
@@ -84,9 +84,9 @@ public class ImageServiceServlet extends HttpServlet {
                 }
             }
 
-            System.out.println("command = " + command);
-            System.out.println("userId: " + userId);
-            System.out.println("boardCode: " + boardCode);
+            
+            
+            
 
             // AWS S3에 파일 업로드
             BasicAWSCredentials awsCreds = new BasicAWSCredentials(getAWSAccessKey(), getAWSSecretKey());
@@ -109,9 +109,9 @@ public class ImageServiceServlet extends HttpServlet {
                 boolean updateSuccess = imageDao.updateProfile(userId, imageUrl);
 
                 if (updateSuccess) {
-                    System.out.println("프로필 이미지 변경 완료");
+                    
                 } else {
-                    System.out.println("프로필 이미지 변경 실패");
+                    
                 }
 
                 response.getWriter().write("Profile image uploaded and URL saved to DB: " + imageUrl);
@@ -128,9 +128,9 @@ public class ImageServiceServlet extends HttpServlet {
                 boolean saveSuccess = imageDao.saveBoardImage(boardCodeInt, imageUrl, fileName, fileType);
 
                 if (saveSuccess) {
-                    System.out.println("보드 이미지 저장 완료");
+                    
                 } else {
-                    System.out.println("보드 이미지 저장 실패");
+                    
                 }
 
                 response.getWriter().write("Board image uploaded and URL saved to DB: " + imageUrl);
@@ -156,7 +156,7 @@ public class ImageServiceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=utf-8");
 
-        System.out.println("프로필 이미지 불러오기");
+        
         String userId = request.getParameter("userId");
         if (userId == null || userId.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

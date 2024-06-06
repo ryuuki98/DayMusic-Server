@@ -16,7 +16,7 @@ public class LoginAction implements UserAction {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
-        System.out.println("로그인 처리 로직!");
+        
         UserDao userDao = UserDao.getInstance();
        
         JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
@@ -33,11 +33,11 @@ public class LoginAction implements UserAction {
         UserResponseDto user = userDao.validateUser(userRequestDto);
 
         if (user == null) {
-            System.out.println("아이디 혹은 비밀번호 불일치");
+            
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("{\"message\":\"Invalid ID or password\"}");
         } else {
-            System.out.println("로그인 성공");
+            
 
             JSONObject jsonResponse = new JSONObject();
             jsonResponse.put("id", user.getId());

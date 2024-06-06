@@ -26,11 +26,11 @@ public class MyBoardMusicAction extends HttpServlet implements BoardAction {
 
         JSONObject jsonObject = (JSONObject) request.getAttribute("data");
         String userId = jsonObject.getString("id");
-        System.out.println("userId : " + userId);
+        
 
         BoardDao boardDao = BoardDao.getInstance();
         List<BoardResponseDto> boardList = boardDao.findMusicBoardMyID(userId);
-        System.out.println("boardList : " + boardList);
+        
 
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("status", 200);
@@ -52,7 +52,7 @@ public class MyBoardMusicAction extends HttpServlet implements BoardAction {
 
         jsonResponse.put("boardList", boardArray);
         response.setStatus(HttpServletResponse.SC_OK);
-        System.out.println("JSON Response: " + jsonResponse.toString());
+        
 
         PrintWriter out = response.getWriter();
 

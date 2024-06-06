@@ -19,12 +19,12 @@ public class GetUserInfo implements UserAction {
         JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
 
         String id = jsonObject.getString("id");
-        System.out.println("[22] GetUserInfo Id : " + id);
+        
 
         UserResponseDto user = userDao.findUserById(id);
 
         if (user == null){
-            System.out.println("해당 유저를 찾을수 없음 ");
+            
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }else {
             response.setStatus(HttpServletResponse.SC_OK);

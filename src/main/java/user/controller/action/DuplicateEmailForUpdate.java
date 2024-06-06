@@ -20,13 +20,13 @@ public class DuplicateEmailForUpdate implements UserAction {
         boolean isDuplicated = userDao.duplicateEmail(id,email);
 
         if (!isDuplicated) {
-            System.out.println("이메일 사용 가능 ");
+            
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write("{\"exists\":\"false\"}");
 
 
         }else {
-            System.out.println("이메일 사용 불가 ");
+            
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write("{\"exists\":\"true\"}");
         }

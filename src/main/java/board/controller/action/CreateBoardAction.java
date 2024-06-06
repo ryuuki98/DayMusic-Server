@@ -23,18 +23,18 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 		JSONObject jsonObject = (JSONObject) request.getAttribute("data");
 		int publics = -1;
 		String contents = jsonObject.getString("contents");
-		System.out.println("contents : " + contents);
+		
 		boolean isPublic = jsonObject.getBoolean("isPublic");
-		System.out.println("public : " + isPublic);
+		
 		if (isPublic) {
 			publics = 0;
 		} else
 			publics = 1;
 
 		String userId = jsonObject.getString("id");
-		System.out.println("userId : " + userId);
+		
 		String nickname = jsonObject.getString("nickname");
-		System.out.println("nickname : " + nickname);
+		
 		String musicTrack = jsonObject.getString("musicTrack");
 		String musicArtist = jsonObject.getString("musicArtist");
 		String musicPreviewUrl = jsonObject.getString("musicPreviewUrl");
@@ -46,7 +46,7 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 		if (contents == null || contents.equals(""))
 			isValid = false;
 
-		System.out.println(isValid);
+		
 
 		response.setContentType("text/plain; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -58,19 +58,19 @@ public class CreateBoardAction extends HttpServlet implements BoardAction {
 			BoardResponseDto board = boardDao.createBoard(boardDto);
 			if(board != null) {
 				response.setStatus(HttpServletResponse.SC_OK);
-				System.out.println("게시글 작성 완료");
+				
 
-				System.out.println("새 게시글 보드 번호 : " + board.getBoardCode());
+				
 				jsonObject.put("boardCode", board.getBoardCode());
 				out.print(jsonObject.toString());
 			}
 			else {
-				System.out.println("게시글 작성 실패");
+				
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 상태 코드 설정
 				out.print("게시글 작성 실패");
 			}
 		} else {
-			System.out.println("게시글 작성 실패");
+			
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 상태 코드 설정
 			out.print("게시글 작성 실패");
 		}

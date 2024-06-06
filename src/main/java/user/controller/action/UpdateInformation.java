@@ -20,7 +20,7 @@ public class UpdateInformation implements UserAction {
 
 		JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
 
-		System.out.println(jsonObject.toString());
+		
 
 		String id = jsonObject.getString("id");
 		String name = jsonObject.getString("name");
@@ -40,10 +40,10 @@ public class UpdateInformation implements UserAction {
 		UserResponseDto user = userDao.updateInformation(userRequestDto);
 		
 		if (user == null) {
-			System.out.println("기타정보 업데이트 실패");
+			
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}else {
-			System.out.println("정보 업데이트 성공");
+			
 			response.setStatus(HttpServletResponse.SC_OK);
 
 		}

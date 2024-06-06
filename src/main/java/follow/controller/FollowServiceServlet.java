@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FollowServiceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getPathInfo();			// / 뒤에 마지막 주소를 가져옴
-		System.out.println("ServiceServlet command : " + command);
+		
 		
 		FollowActionFactory af = FollowActionFactory.getInstance();
 		FollowAction action = null;
@@ -21,7 +21,7 @@ public class FollowServiceServlet extends HttpServlet {
 		String id = "";	// 현재 로그인한 유저 아이디
 		if(request.getParameter("id") != null) {
 			id = request.getParameter("id");
-			System.out.println("ServiceServlet id: "+id);
+			
 			
 			action = af.getAction(command, id);
 		} else {
@@ -46,7 +46,7 @@ public class FollowServiceServlet extends HttpServlet {
 
 		// JSON 데이터 추출
 		String command = jsonObject.getString("command");
-		System.out.println(command);
+		
 		FollowActionFactory af = FollowActionFactory.getInstance();
 		FollowAction action = af.getAction(command);
 

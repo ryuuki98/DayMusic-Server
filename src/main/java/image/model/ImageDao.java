@@ -35,7 +35,7 @@ public class ImageDao {
             pstmt.setString(2, userId);
             update = pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.out.println("duplicateEmail method 오류");
+            
             e.printStackTrace();
         } finally {
             DBManager.close(conn, pstmt);
@@ -95,7 +95,7 @@ public class ImageDao {
             DBManager.close(conn, pstmt, rs);
         }
 
-        System.out.println(profileImages.toString());
+        
 
         return profileImages;
     }
@@ -124,7 +124,7 @@ public class ImageDao {
             DBManager.close(conn, pstmt, rs);
         }
 
-        System.out.println(boardImages.toString());
+        
 
         return boardImages;
     }

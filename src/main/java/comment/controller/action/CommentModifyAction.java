@@ -23,8 +23,8 @@ public class CommentModifyAction extends HttpServlet implements CommentAction {
 
         int cmtCode = jsonObject.getInt("cmtCode");
         String newContents = jsonObject.getString("contents");
-        System.out.println("cmtCode : " + cmtCode);
-        System.out.println("newContents : " + newContents);
+        
+        
 
         boolean isValid = newContents != null && !newContents.isEmpty();
 
@@ -37,16 +37,16 @@ public class CommentModifyAction extends HttpServlet implements CommentAction {
 
             if (isSuccess != null) {
                 response.setStatus(HttpServletResponse.SC_OK);
-                System.out.println("댓글 수정 완료");
+                
                 out.print("댓글 수정 완료");
             } else {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                System.out.println("댓글 수정 실패");
+                
                 out.print("댓글 수정 실패");
             }
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 상태 코드 설정
-            System.out.println("유효하지 않은 입력");
+            
             out.print("유효하지 않은 입력");
         }
 

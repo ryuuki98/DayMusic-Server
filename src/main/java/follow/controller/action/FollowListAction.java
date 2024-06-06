@@ -27,7 +27,7 @@ public class FollowListAction extends HttpServlet implements FollowAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JSONObject resObj = new JSONObject();
 		
-		System.out.println("내가 팔로우한 유저(팔로잉) 닉네임 읽어오기");
+		
 		FollowDao followDao = FollowDao.getInstance();
 		UserDao userDao = UserDao.getInstance();
 
@@ -35,9 +35,9 @@ public class FollowListAction extends HttpServlet implements FollowAction {
 
 		List<FollowResponseDto> FollowingList = followDao.findFollowingList(id);
 		List<FollowResponseDto> FollowerList = followDao.findFollowerList(id);
-		System.out.println("FollowingList : " + FollowingList);
-		System.out.println("FollowerList : " + FollowerList);
-		System.out.println("nickname : " + nickname);
+		
+		
+		
 
 //		FollowResponseDto isFollowing = followDao.isFollowing()
 
@@ -48,7 +48,7 @@ public class FollowListAction extends HttpServlet implements FollowAction {
 
 		resObj.put("status", 200);
 		resObj.put("result", result);
-		System.out.println(resObj);
+		
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json;charset=UTF-8");

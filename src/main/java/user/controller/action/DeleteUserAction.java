@@ -15,7 +15,7 @@ public class DeleteUserAction implements UserAction {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("회원 삭제 로직");
+		
 		
 		UserDao userDao = UserDao.getInstance();
 
@@ -24,12 +24,12 @@ public class DeleteUserAction implements UserAction {
 		boolean isDeleted = userDao.deleteUserById(id);
 		
 		if (isDeleted) {
-			System.out.println("삭제 완료");
+			
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().write("{\"message\":\"delete success\"}");
 
 		}else {
-			System.out.println("삭제 실패");
+			
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			response.getWriter().write("{\"message\":\"delete fail\"}");
 		}

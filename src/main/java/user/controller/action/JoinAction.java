@@ -17,7 +17,7 @@ public class JoinAction implements UserAction {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("가입 처리 로직");
+		
 		UserDao userDao = UserDao.getInstance();
 		UserRequestDto userRequestDto = new UserRequestDto();
 
@@ -40,11 +40,11 @@ public class JoinAction implements UserAction {
 		UserResponseDto user = userDao.joinUser(userRequestDto);
 
 		if (user == null) {
-			System.out.println("가입에 실패 하였습니다.");
+			
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			response.getWriter().write("{\"message\":\"Join failure\"}");
 		} else {
-			System.out.println("가입에 성공 하셨습니다.");
+			
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().write("{\"message\":\"Join successful\"}");
 		}

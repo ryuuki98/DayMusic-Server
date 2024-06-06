@@ -27,7 +27,7 @@ public class FollowAddAction extends HttpServlet implements FollowAction {
 		String followedId = jsonObject.getString("followedId");
 
 		boolean isFollow = followDao.isFollowing(followerId, followedId);
-		System.out.println("팔로우 추가 : " + isFollow);
+		
 		jsonObject.put("isFollow", isFollow);
 
 		String message = followDao.followChange(followerId, followedId);

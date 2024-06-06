@@ -41,18 +41,18 @@ public class CommentAddAction extends HttpServlet implements CommentAction {
                 jsonResponse.put("message", "댓글 작성 완료");
                 jsonResponse.put("comment", new JSONObject(isSuccess));
                 response.setStatus(HttpServletResponse.SC_OK);
-                System.out.println("댓글 작성 완료");
+                
                 out.print("댓글 작성 완료");
             } else {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 JSONObject jsonResponse = new JSONObject();
                 jsonResponse.put("message", "댓글 작성 실패");
-                System.out.println("댓글 작성 실패");
+                
                 out.print("댓글 작성 실패");
             }
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 상태 코드 설정
-            System.out.println("유효하지 않은 입력");
+            
             out.print("유효하지 않은 입력");
         }
 

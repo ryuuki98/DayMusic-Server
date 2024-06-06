@@ -19,7 +19,7 @@ public class UpdateNicknameAction implements UserAction {
 
 		JSONObject jsonObject = (JSONObject) request.getAttribute("jsonRequest");
 
-		System.out.println(jsonObject.toString());
+		
 
 		String id = jsonObject.getString("id");
 		String newNickname = jsonObject.getString("nickname");
@@ -27,13 +27,13 @@ public class UpdateNicknameAction implements UserAction {
 
 
 		if (userDao.duplicateNickname(id,newNickname)) {
-			System.out.println("닉네임 중복, 변경 실패");
+			
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().write("{\"message\":\"Nickname update failure\"}");
 		} else {
 			UserResponseDto user = userDao.updateNickname(id, newNickname);
-			System.out.println("닉네임 변경 완료");
-			System.out.println(user.getNickname());
+			
+			
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().write("{\"message\":\"Nickname update successful\"}");
 		}

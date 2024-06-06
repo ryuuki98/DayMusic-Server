@@ -80,7 +80,7 @@ public class CommentDao {
             DBManager.close(conn, pstmt, rs);
         }
 
-        System.out.println(commentNickname.toString());
+        
 
         return commentNickname;
     }
@@ -165,7 +165,7 @@ public class CommentDao {
             if(rs.next()){
                 count = rs.getInt(1);
             }
-            System.out.println("카운트 세기 완료");
+            
         } catch (Exception e){
             e.printStackTrace();
         } finally {

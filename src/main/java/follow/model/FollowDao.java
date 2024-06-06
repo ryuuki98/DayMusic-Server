@@ -121,7 +121,7 @@ public class FollowDao {
 
 		try {
 			boolean check = isFollowing(followerId, followedId);
-			System.out.println("아무거나 나와바" + check);
+			
 			if (!check) {
 				addFollow(followerId, followedId);
 				message = "Follow Success";
@@ -129,7 +129,7 @@ public class FollowDao {
 				deleteFollow(followerId, followedId);
 				message = "Follow Cancel Success";
 			}
-			System.out.println(message);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

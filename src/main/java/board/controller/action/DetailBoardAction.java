@@ -28,17 +28,17 @@ public class DetailBoardAction extends HttpServlet implements BoardAction {
         ImageDao imageDao = ImageDao.getInstance();
 
         String imgPath = imageDao.getProfileImgUrl(boardCode);
-        System.out.println("imgPath : " + imgPath);
-        System.out.println("boardCode : " + boardCode);
+        
+        
 
         // Retrieve the board details from the database
         BoardDao boardDao = BoardDao.getInstance();
         BoardResponseDto board = boardDao.findBoardByCode(boardCode);
 
-//        System.out.println("board-id : " + board.getId());
-//        System.out.println("board-contents : " + board.getContents());
-//        System.out.println("board-code : " + board.getBoardCode());
-        System.out.println("imgPath : " + imgPath);
+//        
+//        
+//        
+        
 
         // Prepare the JSON response
         JSONObject jsonResponse = new JSONObject();

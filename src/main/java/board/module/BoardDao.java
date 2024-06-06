@@ -172,7 +172,7 @@ public class BoardDao {
 	// 게시물 번호로 찾기
 	public BoardResponseDto findBoardByCode(int boardCode) {
 		BoardResponseDto board = null;
-		System.out.println("find code : " + boardCode);
+		
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -312,10 +312,10 @@ public class BoardDao {
 			pstmt.execute();
 
 			board = findBoardByCode(boardDto.getBoardCode());
-			System.out.println("게시글 수정 완료");
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("게시글 수정 실패");
+			
 		} finally {
 			DBManager.close(conn, pstmt);
 		}

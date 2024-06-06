@@ -31,7 +31,7 @@ public class UpdateBoardAction extends HttpServlet implements BoardAction {
         try {
                 JSONObject jsonObject = (JSONObject) request.getAttribute("data");
 
-                System.out.println(jsonObject.toString());
+                
 
                 String id = jsonObject.getString("id");
                 String nickname = jsonObject.getString("nickname");
@@ -59,10 +59,10 @@ public class UpdateBoardAction extends HttpServlet implements BoardAction {
                 BoardResponseDto board = boardDao.updateBoardContents(boardRequestDto);
 
                 if (board == null) {
-                        System.out.println("업데이트 실패");
+                        
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 } else {
-                        System.out.println("업데이트 성공");
+                        
                         response.setStatus(HttpServletResponse.SC_OK);
                 }
         } catch (Exception e) {

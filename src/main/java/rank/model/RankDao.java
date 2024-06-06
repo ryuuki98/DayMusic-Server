@@ -49,7 +49,7 @@ public class RankDao {
 
             }
 
-            System.out.println("rank 리스트 불러오기 성공");
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -80,16 +80,16 @@ public class RankDao {
                     String musicThumbnail = rs.getString(4);
                     String musicPreviewUrl = rs.getString(5);
                     list.add(new RankResponseDto(count, musicTrack, musicArtist, musicPreviewUrl, musicThumbnail));
-                    System.out.println(count);
-                    System.out.println(musicTrack);
-                    System.out.println(musicArtist);
-                    System.out.println(musicThumbnail);
-                    System.out.println(musicPreviewUrl);
+                    
+                    
+                    
+                    
+                    
                 }
 
             }
 
-            System.out.println("rank 리스트 불러오기 성공");
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

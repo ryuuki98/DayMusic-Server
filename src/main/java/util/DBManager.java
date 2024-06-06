@@ -19,9 +19,9 @@ public class DBManager {
 
 			conn = ds.getConnection();
 
-			System.out.println("DB 연동 성공");
+			
 		} catch (Exception e) {
-			System.out.println("DB 연동 실패");
+			
 		}
 		return conn;
 	}
@@ -33,9 +33,9 @@ public class DBManager {
 			pstmt.close();
 			conn.close();
 
-			System.out.println("DB 연동 해제");
+			
 		} catch (Exception e) {
-			System.out.println("DB 연동 해제 실패");
+			
 			e.printStackTrace();
 		}
 	}
@@ -44,9 +44,9 @@ public class DBManager {
 		try {
 			pstmt.close();
 			conn.close();
-			System.out.println("DB연결 해제");
+			
 		} catch (Exception e) {
-			System.out.println("DB연결 해제 실패");
+			
 		}
 	}
 }

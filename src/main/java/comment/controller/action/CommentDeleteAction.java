@@ -29,11 +29,11 @@ public class CommentDeleteAction extends HttpServlet implements CommentAction {
 
         if (isSuccess) {
             response.setStatus(HttpServletResponse.SC_OK);
-            System.out.println("댓글 삭제 완료");
+            
             out.print("댓글 삭제 완료");
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            System.out.println("댓글 삭제 실패");
+            
             out.print("댓글 삭제 실패");
         }
 
