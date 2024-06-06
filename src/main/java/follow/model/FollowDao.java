@@ -120,8 +120,9 @@ public class FollowDao {
 		String message = "";
 
 		try {
-			FollowResponseDto check = isFollowing(followerId, followedId);
-			if (check == null) {
+			boolean check = isFollowing(followerId, followedId);
+			System.out.println("아무거나 나와바" + check);
+			if (!check) {
 				addFollow(followerId, followedId);
 				message = "Follow Success";
 			} else {
@@ -135,7 +136,7 @@ public class FollowDao {
 		return message;
 	}
 
-	public FollowResponseDto isFollowing(String followerId, String followedId) {
+	public boolean isFollowing(String followerId, String followedId) {
 		FollowResponseDto result = null;
 
 		try {
@@ -160,6 +161,8 @@ public class FollowDao {
 		} finally {
 			DBManager.close(conn, pstmt, rs);
 		}
-		return result;
+		boolean followCheck = result == null ? false : true;
+
+		return followCheck;
 	}
 }
