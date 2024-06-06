@@ -45,6 +45,30 @@ public class ImageDao {
 
     }
 
+    public String getProfileImgUrl(int boardCode) {
+        String imgUrl = null;
+        conn = DBManager.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT image_path FROM image WHERE board_code = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, boardCode);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                imgUrl = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+
+        return imgUrl;
+    }
+
+
 
     // ImageDao.java
     public Map<String, String> getAllProfileImages() {
