@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import image.model.ImageDao;
 import org.json.JSONObject;
 
 import board.controller.BoardAction;
@@ -24,23 +25,27 @@ public class DetailBoardAction extends HttpServlet implements BoardAction {
         // Parse the JSON request body to extract the board_code
         JSONObject jsonObject = (JSONObject) request.getAttribute("data");
         int boardCode = jsonObject.getInt("board_code");
+        ImageDao imageDao = ImageDao.getInstance();
 
+        String imgPath = imageDao.getProfileImgUrl(boardCode);
+        System.out.println("imgPath : " + imgPath);
         System.out.println("boardCode : " + boardCode);
 
         // Retrieve the board details from the database
         BoardDao boardDao = BoardDao.getInstance();
         BoardResponseDto board = boardDao.findBoardByCode(boardCode);
 
-        System.out.println("board-id : " + board.getId());
-        System.out.println("board-contents : " + board.getContents());
-        System.out.println("board-code : " + board.getBoardCode());
-
+//        System.out.println("board-id : " + board.getId());
+//        System.out.println("board-contents : " + board.getContents());
+//        System.out.println("board-code : " + board.getBoardCode());
+        System.out.println("imgPath : " + imgPath);
 
         // Prepare the JSON response
         JSONObject jsonResponse = new JSONObject();
         if (board != null) {
             jsonResponse.put("board_code", board.getBoardCode());
             jsonResponse.put("id", board.getId());
+            jsonResponse.put("imgPath", imgPath);
             jsonResponse.put("contents", board.getContents());
             jsonResponse.put("music_track", board.getMusicTrack());
             jsonResponse.put("music_artist", board.getMusicArtist());
