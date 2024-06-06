@@ -39,7 +39,7 @@ public class LikeDao {
 	        rs = pstmt.executeQuery();
 	        while (rs.next()) {
 	            String id = rs.getString(1);
-	            UserDao finder = user.model.UserDao.getInstance();
+	            UserDao finder = UserDao.getInstance();
 	            String[] user = finder.findUser(id);
 	            LikeResponseDto like = new LikeResponseDto(boardCode, id, user[0], user[1]);
 	            list.add(like);                    
@@ -184,4 +184,5 @@ public class LikeDao {
 
 		return  count;
 	}
+
 }
