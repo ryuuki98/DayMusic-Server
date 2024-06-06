@@ -6,6 +6,26 @@ DayMusic은 사용자가 즐겨 듣는 음악이나 게시물을 공유하고 �
 ## ⏲️개발 기간
 - 2024.05.16 ~ 2024.06.06
 
+## 주요 기능
+### 🔒로그인 / 회원가입
+- 로그인
+- 회원가입
+- 유효성 검사
+
+### 🖼게시글
+- 게시글 작성 / 삭제
+- 게시글 수정
+- 댓글 작성 / 삭제
+- 게시글 좋아요
+
+### 🔍검색
+- 유저 검색
+  
+### 👨🏿‍🤝‍👨🏼프로필
+- 로그아웃
+- 프로필 수정
+- 팔로우 / 팔로잉
+
 ## 💡기술 스택
 ### Front-End
 
@@ -33,9 +53,9 @@ DayMusic은 사용자가 즐겨 듣는 음악이나 게시물을 공유하고 �
 ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
 
 ## 📁관련 서류
-1. [요구사항 정의서](https://docs.google.com/spreadsheets/d/1DEs6AO6Vde9YA7t175AY5tj_RtLegTo_/edit?usp=drive_link&ouid=114769171991263143206&rtpof=true&sd=true)
-2. [테이블 정의서](https://docs.google.com/spreadsheets/d/107IbRbbVZFkpNka-ATzKigUCcIyN4G8o/edit?usp=drive_link&ouid=114769171991263143206&rtpof=true&sd=true)
-3. [인터페이스 정의서](https://docs.google.com/spreadsheets/d/1IhD2qy7JKzvaE8Sl6orLUShqDDs6CLKh/edit?usp=drive_link&ouid=114769171991263143206&rtpof=true&sd=true)
-4. [화면 설계서](https://drive.google.com/file/d/1sHB0XIEHJKMbVjEck-VCdZ2633a50Vkm/view?usp=drive_link)
-5. [데이터베이스 ERD](https://drive.google.com/file/d/1gpx8ckk86jgeX47WdtrsMoJzEhDbTprD/view?usp=drive_link)
+- [요구사항 정의서](https://docs.google.com/spreadsheets/d/1DEs6AO6Vde9YA7t175AY5tj_RtLegTo_/edit?usp=drive_link&ouid=114769171991263143206&rtpof=true&sd=true)
+- [테이블 정의서](https://docs.google.com/spreadsheets/d/107IbRbbVZFkpNka-ATzKigUCcIyN4G8o/edit?usp=drive_link&ouid=114769171991263143206&rtpof=true&sd=true)
+- [인터페이스 정의서](https://docs.google.com/spreadsheets/d/1IhD2qy7JKzvaE8Sl6orLUShqDDs6CLKh/edit?usp=drive_link&ouid=114769171991263143206&rtpof=true&sd=true)
+- [화면 설계서](https://drive.google.com/file/d/1sHB0XIEHJKMbVjEck-VCdZ2633a50Vkm/view?usp=drive_link)
+- [데이터베이스 ERD](https://drive.google.com/file/d/1gpx8ckk86jgeX47WdtrsMoJzEhDbTprD/view?usp=drive_link)
 
