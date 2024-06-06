@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import image.model.ImageDao;
+import like.model.LikeDao;
 import org.json.JSONObject;
 
 import board.controller.BoardAction;
@@ -26,7 +27,7 @@ public class DetailBoardAction extends HttpServlet implements BoardAction {
         JSONObject jsonObject = (JSONObject) request.getAttribute("data");
         int boardCode = jsonObject.getInt("board_code");
         ImageDao imageDao = ImageDao.getInstance();
-
+        LikeDao like = LikeDao.getInstance();
         String imgPath = imageDao.getProfileImgUrl(boardCode);
         
         
@@ -55,6 +56,7 @@ public class DetailBoardAction extends HttpServlet implements BoardAction {
             jsonResponse.put("createdAt", board.getModDate());
             jsonResponse.put("is_public", board.isPublic());
             jsonResponse.put("nickname", board.getNickname());
+            jsonResponse.put("likeCount", like.countLike(boardCode));
             jsonResponse.put("status", 200);
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
