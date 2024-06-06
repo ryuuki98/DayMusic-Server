@@ -507,4 +507,35 @@ public class UserDao {
 		}
 		return userList;
 	}
+
+	public String[] findUser(String id){
+		String[] user = new String[2];
+		Connection conn = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id, profile_img_url FROM users WHERE id=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, id);
+
+			rs = pstmt.executeQuery();
+
+			if(rs.next()) {
+				user[0] = rs.getString(1);
+				user[1] = rs.getString(2);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+
+		return user;
+	}
 }
