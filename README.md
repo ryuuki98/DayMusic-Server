@@ -3,6 +3,12 @@
 ## 💡프로젝트 개요
 DayMusic은 사용자가 즐겨 듣는 음악이나 게시물을 공유하고 하루 단위로 집계된 음악 랭킹을 통해 유저들이 많이 듣는 인기 음악을 확인할 수 있으며, 서로 소통을 할 수 있는 소셜 네트워크 서비스 입니다.
 
+## 🐼 팀원 소개
+- 팀장 : 박인혁 [@ryuuki98](https://github.com/ryuuki98)
+- 서기 : 김민기 [@mingikim-giv](https://github.com/mingikim-giv)
+- 팀원 : 이인선 [@dlstjs7617](https://github.com/dlstjs7617)
+- 팀원 : 전누리 [@nooleee](https://github.com/nooleee)
+
 ## 작업 규칙
 - 질문 및 건의사항은 슬랙을 적극 사용해주세요 ! 👍
 - 작업 branch는 feature/[작업내용] 형태로 올려주세요.
