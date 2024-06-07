@@ -8,7 +8,7 @@ public class CORSFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
-		res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+		res.setHeader("Access-Control-Allow-Origin", "https://ryuuki.site/DayMusic/");
 		res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
 		res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 		res.setHeader("Access-Control-Allow-Credentials", "true");
