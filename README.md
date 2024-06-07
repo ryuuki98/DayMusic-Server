@@ -9,7 +9,7 @@ DayMusic은 사용자가 즐겨 듣는 음악이나 게시물을 공유하고 �
 - 팀원 : 이인선 [@dlstjs7617](https://github.com/dlstjs7617)
 - 팀원 : 전누리 [@nooleee](https://github.com/nooleee)
 
-## 작업 규칙
+## 🗒작업 규칙
 - 질문 및 건의사항은 슬랙을 적극 사용해주세요 ! 👍
 - 작업 branch는 feature/[작업내용] 형태로 올려주세요.
 - Commit Message는 최대한 자세히 적어주세요.
