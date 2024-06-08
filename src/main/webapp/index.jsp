@@ -10,7 +10,5 @@
 </head>
 <body>
 
-<%=DBManager.getConnection()%>
-
 </body>
 </html>

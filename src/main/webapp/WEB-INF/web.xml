@@ -65,14 +65,6 @@
 		<url-pattern>/comment/service</url-pattern>
 	</servlet-mapping>
 
-	<filter>
-		<filter-name>corsFilter</filter-name>
-		<filter-class>util.CORSFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>corsFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 
 
 	<servlet>
@@ -130,7 +122,41 @@
 		<location>/error</location>
 	</error-page>
 
-
+	<!-- CORS -->
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+		<init-param>
+			<param-name>cors.allowed.origins</param-name>
+			<param-value>https://ryuuki.site,https://ryuuki98.github.io</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.allowed.methods</param-name>
+			<param-value>GET,POST,DELETE,PUT</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.allowed.headers</param-name>
+			<param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cors.exposed.headers</param-name>
+			<param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials</param-value>
+		</init-param>
+		<!--
+		<init-param>
+			<param-name>cors.support.credentials</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		-->
+		<init-param>
+			<param-name>cors.preflight.maxage</param-name>
+			<param-value>10</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<!-- jsp-config -->
 	<jsp-config>
